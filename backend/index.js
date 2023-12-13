@@ -1,7 +1,9 @@
 const express = require("express");
 const userRouter = require("./routes/users/userRoutes");
+const postRouter = require("./routes/posts/postRoutes");
 require("dotenv").config();
 require("./config/dbConnect");
+
 
 const app = express();
 
@@ -12,81 +14,10 @@ const app = express();
 // user route
 app.use("/api/v1/users/",userRouter)
 
-
-
-//PUT /api/v1/users/:id
-app.put("/api/v1/users/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "update user Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
-
 //---------------------------------
 // posts route
 //POST /api/v1/posts
-app.post("/api/v1/posts", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "post registration",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
-
-//GET /api/v1/posts
-app.get("/api/v1/posts/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "Posts Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
-
-//GET /api/v1/posts
-app.post("/api/v1/posts", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "Posts Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
-
-//Delete /api/v1/posts/:id
-app.delete("/api/v1/posts/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "delete post Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
-
-//PUT /api/v1/posts/:id
-app.put("/api/v1/posts/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "update post Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+app.use("/api/v1/posts",postRouter)
 
 //----------------------
 // comments route
