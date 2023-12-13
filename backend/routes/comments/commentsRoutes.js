@@ -1,52 +1,23 @@
 const express = require("express");
+const {
+  addcommentCtrl,
+  singlecommentsCtrl,
+  deleteCommentCtrl,
+  updateCommentCtrl,
+  singlecommentsCtrl,
+} = require("../../controllers/comments/commentCtrl");
 
 const commentRouter = express.Router();
 
-commentRouter.post("/", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "comment registration",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+commentRouter.post("/", addcommentCtrl);
 
 //GET /api/v1/comments
-commentRouter.get("/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "comment Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+commentRouter.get("/:id", singlecommentsCtrl);
 
 //Delete /api/v1/comments/:id
-commentRouter.delete("/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "delete comment Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+commentRouter.delete("/:id", deleteCommentCtrl);
 
 //PUT /api/v1/comments/:id
-commentRouter.put("/:id", async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "update comment Route",
-    });
-  } catch (error) {
-    res.json(error.message);
-  }
-});
+commentRouter.put("/:id", updateCommentCtrl);
 
 module.exports = commentRouter;
