@@ -11,26 +11,14 @@ const app = express();
 // middlewares
 //routes
 
-//----------------------------------
 // user route
 app.use("/api/v1/users/", userRouter);
-
-//---------------------------------
 // posts route
-//POST /api/v1/posts
 app.use("/api/v1/posts", postRouter);
-
-//----------------------
 // comments route
-//POST /api/v1/comments
 app.use("/api/v1/comments", commentRouter);
-
-//---------------
 // category route
-
-//POST /api/v1/categories
 app.use("/api/v1/categories", categoryRouter);
-//-----
 
 //Error handlers middleware
 //Listen to server
