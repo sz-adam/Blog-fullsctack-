@@ -5,22 +5,22 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
     firstname: {
-      typeof: "string",
+      type: "String",
       required: [true, "First Name is required"],
     },
     lastname: {
-      typeof: "string",
+      type: "String",
       required: [true, "Last Name is required"],
     },
     profilePhoto: {
-      typeof: "string",
+      type: "String",
     },
     email: {
-      typeof: "string",
+      type: "String",
       required: [true, "Email is required"],
     },
     password: {
-      typeof: "string",
+      type: "String",
       required: [true, "Password is required"],
     },
     postCount: {
@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
     isAdmin: {
-      typeof: Boolean,
+      type: Boolean,
       default: false,
     },
     role: {
@@ -75,6 +75,6 @@ const userSchema = new mongoose.Schema(
 
 //Compile the user model
 
-const User = mongoose.model("User,userShema");
+const User = mongoose.model("User",userSchema);
 
 module.exports = User;
