@@ -5,12 +5,12 @@ const mongoose = require("mongoose");
 const postSchema = new mongoose.Schema(
   {
     title: {
-      type: "string",
+      type: String,
       required: [true, "Post Title is required"],
       trim: true,
     },
     description: {
-      type: "string",
+      type: String,
       required: [true, "Post description is required"],
     },
     category: {

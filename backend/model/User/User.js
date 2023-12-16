@@ -5,22 +5,22 @@ const mongoose = require("mongoose");
 const userSchema = new mongoose.Schema(
   {
     firstname: {
-      type: "String",
+      type: String,
       required: [true, "First Name is required"],
     },
     lastname: {
-      type: "String",
+      type: String,
       required: [true, "Last Name is required"],
     },
     profilePhoto: {
-      type: "String",
+      type: String,
     },
     email: {
-      type: "String",
+      type: String,
       required: [true, "Email is required"],
     },
     password: {
-      type: "String",
+      type: String,
       required: [true, "Password is required"],
     },
     postCount: {
@@ -72,9 +72,8 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
 //Compile the user model
 
-const User = mongoose.model("User",userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;
