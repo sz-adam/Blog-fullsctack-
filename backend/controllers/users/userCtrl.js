@@ -2,19 +2,19 @@ const User = require("../../model/User/User");
 const bcrypt = require("bcryptjs");
 const generateToken = require("../../utils/generateToken");
 const getTokenFromHeader = require("../../utils/getTokenFromHeader");
+const {appErr, AppErr} = require("../../utils/appErr");
 
 
 //Register
-const userRegisterCtrl = async (req, res) => {
+const userRegisterCtrl = async (req, res, next) => {
   const { firstname, lastname, profilePhoto, email, password } = req.body;
   try {
     //Check if email exist
     const userFound = await User.findOne({ email });
     if (userFound) {
-      return res.json({
-        message: "User already Exist",
-      });
-    }
+      return next(new AppErr("User already exist", 500))
+      };
+    
 
     // hash password
     const salt = await bcrypt.genSalt(10);
@@ -32,7 +32,7 @@ const userRegisterCtrl = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.json(error.message);
+   next(appErr(error.message));
   }
 };
 
@@ -88,7 +88,7 @@ const usersCtrl = async (req, res) => {
 
 //profile
 const userProfileCtrl = async (req, res) => {
-  try { 
+  try {
     const user = await User.findById(req.userAuth);
     res.json({
       status: "success",
