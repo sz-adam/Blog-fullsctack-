@@ -9,8 +9,11 @@ require("./config/dbConnect");
 const app = express();
 
 // middlewares
-//routes
+app.use(express.json()); ///pass incomung payload
 
+
+
+//routes
 // user route
 app.use("/api/v1/users/", userRouter);
 // posts route

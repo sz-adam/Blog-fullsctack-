@@ -1,9 +1,29 @@
+const User = require("../../model/User/User");
+
 //Register
 const userRegisterCtrl = async (req, res) => {
+  const {  firstname, lastname, profilePhoto, email, password } = req.body;
   try {
+    //Check if email exist
+    const userFound = await User.findOne({ email });
+    if (userFound) {
+      return res.json({
+        message: "User already Exist",
+      });
+    }
+
+    // hash password
+
+    //create user
+    const user = await User.create({
+       firstname,
+      lastname,
+      email,
+      password,
+    });
     res.json({
       status: "success",
-      data: "user registration",
+      data: user,
     });
   } catch (error) {
     res.json(error.message);
@@ -11,7 +31,23 @@ const userRegisterCtrl = async (req, res) => {
 };
 //login
 const userLoginCtrl = async (req, res) => {
+  const {email, password} = req.body;
   try {
+    //CHeck if email exist
+    const userFound =await User.findOne({email})
+    if(!userFound){
+      return res.json({
+        message:"Wrong login credentials"
+      })
+    }
+    //Validaty of the password
+    const isPasswordMatched =await User.findOne({password})
+    if(!isPasswordMatched){
+      return res.json({
+        message:"Wrong login credentials"
+      })
+    }
+    
     res.json({
       status: "success",
       data: "user login",
