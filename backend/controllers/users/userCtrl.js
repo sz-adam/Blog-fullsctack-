@@ -1,5 +1,8 @@
 const User = require("../../model/User/User");
 const bcrypt = require("bcryptjs");
+const generateToken = require("../../utils/generateToken");
+const getTokenFromHeader = require("../../utils/getTokenFromHeader");
+
 
 //Register
 const userRegisterCtrl = async (req, res) => {
@@ -58,7 +61,13 @@ const userLoginCtrl = async (req, res) => {
 
     res.json({
       status: "success",
-      data:userFound,
+      data: {
+        firstname: userFound.firstname,
+        lastname: userFound.lastname,
+        email: userFound.email,
+        isAdmin: userFound.isAdmin,
+        token: generateToken(userFound._id),
+      },
     });
   } catch (error) {
     res.json(error.message);
@@ -79,10 +88,14 @@ const usersCtrl = async (req, res) => {
 
 //profile
 const userProfileCtrl = async (req, res) => {
+  const { id } = req.params;
   try {
+    const token = getTokenFromHeader(req)
+    console.log(token);
+    const user = await User.findById(id);
     res.json({
       status: "success",
-      data: "profile Route",
+      data: user,
     });
   } catch (error) {
     res.json(error.message);
