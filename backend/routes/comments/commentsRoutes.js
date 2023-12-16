@@ -4,7 +4,6 @@ const {
   singlecommentsCtrl,
   deleteCommentCtrl,
   updateCommentCtrl,
-  singlecommentsCtrl,
 } = require("../../controllers/comments/commentCtrl");
 
 const commentRouter = express.Router();
