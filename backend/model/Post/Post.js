@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 //create schema
 
-const postSheme = new mongoose.Schema(
+const postSchema = new mongoose.Schema(
   {
     title: {
       type: "string",
@@ -53,6 +53,6 @@ const postSheme = new mongoose.Schema(
 
 //Compile the post  model
 
-const Post = mongoose.model("Post,postShema");
+const Post = mongoose.model("Post", postSchema);
 
 module.exports = Post;
