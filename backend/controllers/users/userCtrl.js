@@ -87,20 +87,55 @@ const whoViewedMyProfileCtrl = async (req, res, next) => {
       const isUserAlreadyViewed = user.viewers.find(
         (viewer) => viewer.toString() === userWhoViewed._id.toJSON()
       );
-      if(isUserAlreadyViewed) {
-          return next(appErr("You already viewed this profile"));
-      }
-      else{
+      if (isUserAlreadyViewed) {
+        return next(appErr("You already viewed this profile"));
+      } else {
         //5. Push the userWhoViewed to the user's viewers array
         user.viewers.push(userWhoViewed._id);
         //6. Save the user
-        await user.save()
+        await user.save();
         res.json({
           status: "success",
           data: "You have successfully viewed this profile",
         });
       }
-    } 
+    }
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+
+//following profile
+const followingCtrl = async (req, res,next) => {
+  try {
+    //1. Find the user to follow
+    const userToFollow = await User.findById(req.params.id);
+    //2. Find the user who is following
+    const userWhoFollowed =await User.findById(req.userAuth);
+
+    //3.Check if user and userWhoFollowed are found
+
+    if(userToFollow &&userWhoFollowed){
+      //4.Check if userWhoFollowed is alredy in the user's followers array
+      const isUserAlreadyFollowed =userToFollow.following.find(follower =>follower.toString()=== userWhoFollowed._id.toString())
+      if(isUserAlreadyFollowed){
+        return next(appErr('You already followed this user'))
+      } else {
+        //5. Push userWhoFolloed not the user's followers array
+        userToFollow.followers.push(userWhoFollowed._id);
+        //6. push userToFollow to the userWhoFollowed's following array
+        userWhoFollowed.following.push(userToFollow._id);
+  
+        //save
+        await userWhoFollowed.save();
+        await userToFollow.save();
+        res.json({
+          status: "success",
+          data: "You have succesfully this user",
+        });
+      }
+     
+    };
    
   } catch (error) {
     res.json(error.message);
@@ -163,4 +198,5 @@ module.exports = {
   deleteUserCtrl,
   updateUserCtrl,
   whoViewedMyProfileCtrl,
+  followingCtrl,
 };
