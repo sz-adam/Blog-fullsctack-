@@ -14,6 +14,7 @@ const {
   adminBlockUserCtrl
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
+const isAdmin = require("../../middlewares/isAdmin");
 
 
 const userRouter = express.Router();
@@ -52,7 +53,7 @@ userRouter.get("/block/:id",isLogin , blockUsersCtrl);
 userRouter.get("/unblock/:id",isLogin , unBlockUsersCtrl);
 
 //get /api/v1/users/admin-block/:id
-userRouter.get("/admin-block/:id",isLogin , adminBlockUserCtrl);
+userRouter.put("/admin-block/:id", isLogin, isAdmin, adminBlockUserCtrl);
 
 
 module.exports = userRouter;
