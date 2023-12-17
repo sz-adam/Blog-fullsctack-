@@ -12,8 +12,11 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Last Name is required"],
     },
+
+    //image url and then fix it when connecting the frontend
     profilePhoto: {
       type: String,
+      default: '/default-profile-photo.jpg',
     },
     email: {
       type: String,
