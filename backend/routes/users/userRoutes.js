@@ -8,7 +8,8 @@ const {
   updateUserCtrl,
   whoViewedMyProfileCtrl,
   followingCtrl,
-  unfollowCtrl
+  unfollowCtrl,
+  blockUsersCtrl
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 
@@ -41,5 +42,9 @@ userRouter.get("/following/:id",isLogin , followingCtrl);
 
 //get /api/v1/users/unfollow/:id
 userRouter.get("/unfollowing/:id",isLogin , unfollowCtrl);
+
+//get /api/v1/users/block/:id
+userRouter.get("/block/:id",isLogin , blockUsersCtrl);
+
 
 module.exports = userRouter;
