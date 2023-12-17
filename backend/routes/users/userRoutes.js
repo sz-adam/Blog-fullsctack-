@@ -9,7 +9,8 @@ const {
   whoViewedMyProfileCtrl,
   followingCtrl,
   unfollowCtrl,
-  blockUsersCtrl
+  blockUsersCtrl,
+  unBlockUsersCtrl
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 
@@ -45,6 +46,9 @@ userRouter.get("/unfollowing/:id",isLogin , unfollowCtrl);
 
 //get /api/v1/users/block/:id
 userRouter.get("/block/:id",isLogin , blockUsersCtrl);
+
+//get /api/v1/users/unblock/:id
+userRouter.get("/unblock/:id",isLogin , unBlockUsersCtrl);
 
 
 module.exports = userRouter;

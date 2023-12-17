@@ -221,6 +221,38 @@ const blockUsersCtrl = async (req, res,next) => {
   }
 };
 
+//unblock
+const unBlockUsersCtrl = async (req, res,next) => {
+  try {
+    //1. find the user to be unblocked
+    const userToBeUnBlocked = await User.findById(req.params.id);
+    //2. find the user who is unblocking
+    const userWhoUnBlocked = await User.findById(req.userAuth);
+    //3. check if userToBeUnBlocked and userWhoUnblocked are found
+    if (userToBeUnBlocked && userWhoUnBlocked) {
+      //4. Check if userToBeUnBlocked is already in the arrays's of userWhoUnBlocked
+      const isUserAlreadyBlocked = userWhoUnBlocked.blocked.find(
+        blocked => blocked.toString() === userToBeUnBlocked._id.toString()
+      );
+      if (!isUserAlreadyBlocked) {
+        return next(appErr("You have not blocked this user"));
+      }
+      //Remove the userToBeUnblocked from the main user
+      userWhoUnBlocked.blocked = userWhoUnBlocked.blocked.filter(
+        blocked => blocked.toString() !== userToBeUnBlocked._id.toString()
+      );
+      //Save
+      await userWhoUnBlocked.save();
+      res.json({
+        status: "success",
+        data: "You have successfully unblocked this user",
+      });
+    }
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+
 //profile
 const userProfileCtrl = async (req, res) => {
   try {
@@ -267,5 +299,6 @@ module.exports = {
   whoViewedMyProfileCtrl,
   followingCtrl,
   unfollowCtrl,
-  blockUsersCtrl
+  blockUsersCtrl,
+  unBlockUsersCtrl
 };
