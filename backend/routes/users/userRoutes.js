@@ -10,7 +10,8 @@ const {
   followingCtrl,
   unfollowCtrl,
   blockUsersCtrl,
-  unBlockUsersCtrl
+  unBlockUsersCtrl,
+  adminBlockUserCtrl
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 
@@ -49,6 +50,9 @@ userRouter.get("/block/:id",isLogin , blockUsersCtrl);
 
 //get /api/v1/users/unblock/:id
 userRouter.get("/unblock/:id",isLogin , unBlockUsersCtrl);
+
+//get /api/v1/users/admin-block/:id
+userRouter.get("/admin-block/:id",isLogin , adminBlockUserCtrl);
 
 
 module.exports = userRouter;
