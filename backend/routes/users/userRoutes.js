@@ -6,6 +6,7 @@ const {
   userProfileCtrl,
   deleteUserCtrl,
   updateUserCtrl,
+  whoViewedMyProfileCtrl,
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 
@@ -29,5 +30,8 @@ userRouter.delete("/:id", deleteUserCtrl);
 
 //PUT /api/v1/users/:id
 userRouter.put("/:id", updateUserCtrl);
+
+//get /api/v1/users/profile-viewers/:id
+userRouter.get("/profile-viewers/:id",isLogin , whoViewedMyProfileCtrl);
 
 module.exports = userRouter;

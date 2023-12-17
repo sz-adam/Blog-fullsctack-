@@ -2,8 +2,7 @@ const User = require("../../model/User/User");
 const bcrypt = require("bcryptjs");
 const generateToken = require("../../utils/generateToken");
 const getTokenFromHeader = require("../../utils/getTokenFromHeader");
-const {appErr, AppErr} = require("../../utils/appErr");
-
+const { appErr, AppErr } = require("../../utils/appErr");
 
 //Register
 const userRegisterCtrl = async (req, res, next) => {
@@ -12,9 +11,8 @@ const userRegisterCtrl = async (req, res, next) => {
     //Check if email exist
     const userFound = await User.findOne({ email });
     if (userFound) {
-      return next(new AppErr("User already exist", 500))
-      };
-    
+      return next(new AppErr("User already exist", 500));
+    }
 
     // hash password
     const salt = await bcrypt.genSalt(10);
@@ -25,6 +23,7 @@ const userRegisterCtrl = async (req, res, next) => {
       firstname,
       lastname,
       email,
+      profilePhoto,
       password: hashedPassword,
     });
     res.json({
@@ -32,7 +31,7 @@ const userRegisterCtrl = async (req, res, next) => {
       data: user,
     });
   } catch (error) {
-   next(appErr(error.message));
+    next(appErr(error.message));
   }
 };
 
@@ -69,6 +68,40 @@ const userLoginCtrl = async (req, res) => {
         token: generateToken(userFound._id),
       },
     });
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+
+//who view my profile
+const whoViewedMyProfileCtrl = async (req, res, next) => {
+  try {
+    //1.Find the original
+    const user = await User.findById(req.params.id);
+    //2. Find the user who views the original user
+    const userWhoViewed = await User.findById(req.userAuth);
+
+    //3.CHeck is original and who viewd are found
+    if (user && userWhoViewed) {
+      //4.Check if userWhoViewed is already in the users viewes array
+      const isUserAlreadyViewed = user.viewers.find(
+        (viewer) => viewer.toString() === userWhoViewed._id.toJSON()
+      );
+      if(isUserAlreadyViewed) {
+          return next(appErr("You already viewed this profile"));
+      }
+      else{
+        //5. Push the userWhoViewed to the user's viewers array
+        user.viewers.push(userWhoViewed._id);
+        //6. Save the user
+        await user.save()
+        res.json({
+          status: "success",
+          data: "You have successfully viewed this profile",
+        });
+      }
+    } 
+   
   } catch (error) {
     res.json(error.message);
   }
@@ -129,4 +162,5 @@ module.exports = {
   userProfileCtrl,
   deleteUserCtrl,
   updateUserCtrl,
+  whoViewedMyProfileCtrl,
 };
