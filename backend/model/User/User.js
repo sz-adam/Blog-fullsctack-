@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Post = require("../Post/Post");
 
 //create schema
 
@@ -87,6 +88,22 @@ const userSchema = new mongoose.Schema(
     toJSON:{virtuals:true},
   }
 );
+
+//Hooks
+//pre-before record is saved 
+userSchema.pre("findOne",async function(next) {
+  //get the user id 
+  const userId = this._conditions._id;
+  //find the post created by the user 
+  const postFound =await Post.find({user:userId})
+  console.log(postFound)
+  next()
+})
+
+//post -after saving
+userSchema.post("save", function(next) {
+  
+})
 
 //Get fullname 
 userSchema.virtual("fullname").get(function(){
