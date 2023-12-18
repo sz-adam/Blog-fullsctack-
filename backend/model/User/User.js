@@ -89,7 +89,32 @@ const userSchema = new mongoose.Schema(
 //Get fullname 
 userSchema.virtual("fullname").get(function(){
   return `${this.firstname} ${this.lastname}`
-})
+});
+
+//Get posts count
+userSchema.virtual("postCounts").get(function(){
+  return this.posts.length;
+});
+
+//Get followers
+userSchema.virtual("followersCount").get(function(){
+  return this.followers.length;
+});
+
+//Get following
+userSchema.virtual("followingCount").get(function(){
+  return this.following.length;
+});
+//Get viewers count
+userSchema.virtual("viewersCount").get(function(){
+  return this.viewers.length;
+});
+
+//Get blocked count
+userSchema.virtual("blockedCount").get(function(){
+  return this.blocked.length;
+});
+
 //Compile the user model
 
 const User = mongoose.model("User", userSchema);
