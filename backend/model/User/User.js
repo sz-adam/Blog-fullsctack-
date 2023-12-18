@@ -95,8 +95,11 @@ userSchema.pre("findOne",async function(next) {
   //get the user id 
   const userId = this._conditions._id;
   //find the post created by the user 
-  const postFound =await Post.find({user:userId})
-  console.log(postFound)
+  const posts =await Post.find({user:userId});
+  //get the last post created by the user 
+  const lastPost = posts[posts.length -1]
+  console.log(lastPost)
+
   next()
 })
 
