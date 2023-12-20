@@ -184,7 +184,7 @@ const unfollowCtrl = async (req, res, next) => {
 //all
 const usersCtrl = async (req, res) => {
   try {
-    const users =await User.find()
+    const users = await User.find();
     res.json({
       status: "success",
       data: users,
@@ -324,8 +324,43 @@ const deleteUserCtrl = async (req, res) => {
     res.json(error.message);
   }
 };
+//update
+const updateUserCtrl = async (req, res, next) => {
+  const { email, lastname, firstname } = req.body;
+  try {
+    //check if email is not taken
+    if (email) {
+      const emailTaken = await User.findOne({ email });
+      if (emailTaken) {
+        return next(appErr("Email is taken", 400));
+      }
+    }
 
-const updateUserCtrl = async (req, res) => {
+    //update user
+    const user = await User.findByIdAndUpdate(
+      req.userAuth,
+      {
+        lastname,
+        firstname,
+        email,
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+    //send response
+    res.json({
+      status: "success",
+      data: user,
+    });
+  } catch (error) {
+    res.json(error.message);
+  }
+};
+
+//update password
+const updateUserpasswordCtrl = async (req, res) => {
   try {
     res.json({
       status: "success",
@@ -349,5 +384,6 @@ module.exports = {
   blockUsersCtrl,
   unBlockUsersCtrl,
   adminBlockUserCtrl,
-  adminUnblockUserCtrl
+  adminUnblockUserCtrl,
+  updateUserpasswordCtrl,
 };

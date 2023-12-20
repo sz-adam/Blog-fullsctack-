@@ -36,22 +36,22 @@ userRouter.get("/profile/", isLogin, userProfileCtrl);
 userRouter.delete("/:id", deleteUserCtrl);
 
 //PUT /api/v1/users/:id
-userRouter.put("/:id", updateUserCtrl);
+userRouter.put("/", isLogin, updateUserCtrl);
 
 //get /api/v1/users/profile-viewers/:id
-userRouter.get("/profile-viewers/:id",isLogin , whoViewedMyProfileCtrl);
+userRouter.get("/profile-viewers/:id", isLogin, whoViewedMyProfileCtrl);
 
 //get /api/v1/users/following/:id
-userRouter.get("/following/:id",isLogin , followingCtrl);
+userRouter.get("/following/:id", isLogin, followingCtrl);
 
 //get /api/v1/users/unfollow/:id
-userRouter.get("/unfollowing/:id",isLogin , unfollowCtrl);
+userRouter.get("/unfollowing/:id", isLogin, unfollowCtrl);
 
 //get /api/v1/users/block/:id
-userRouter.get("/block/:id",isLogin , blockUsersCtrl);
+userRouter.get("/block/:id", isLogin, blockUsersCtrl);
 
 //get /api/v1/users/unblock/:id
-userRouter.get("/unblock/:id",isLogin , unBlockUsersCtrl);
+userRouter.get("/unblock/:id", isLogin, unBlockUsersCtrl);
 
 //put /api/v1/users/admin-block/:id
 userRouter.put("/admin-block/:id", isLogin, isAdmin, adminBlockUserCtrl);
