@@ -360,14 +360,28 @@ const updateUserCtrl = async (req, res, next) => {
 };
 
 //update password
-const updateUserpasswordCtrl = async (req, res) => {
+const updateUserpasswordCtrl = async (req, res, next) => {
+  const { password } = req.body;
   try {
-    res.json({
-      status: "success",
-      data: "update user Route",
-    });
+    //Check if user is updating the password
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+      //update user
+      await User.findByIdAndUpdate(
+        req.userAuth,
+        { password: hashedPassword },
+        { new: true, runValidators: true }
+      );
+      res.json({
+        status: "success",
+        data: "Password has been changed successfully",
+      });
+    } else {
+      return next(appErr("Please provide password field"));
+    }
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
