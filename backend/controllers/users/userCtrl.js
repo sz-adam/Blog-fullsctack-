@@ -3,6 +3,11 @@ const bcrypt = require("bcryptjs");
 const generateToken = require("../../utils/generateToken");
 const getTokenFromHeader = require("../../utils/getTokenFromHeader");
 const { appErr, AppErr } = require("../../utils/appErr");
+const Post = require("../../model/Post/Post");
+const Category = require("../../model/Category/Category");
+const Comment = require("../../model/Comment/Comment");
+
+
 
 //Register
 const userRegisterCtrl = async (req, res, next) => {
@@ -314,16 +319,28 @@ const userProfileCtrl = async (req, res) => {
 };
 
 //deleteUser
-const deleteUserCtrl = async (req, res) => {
+const deleteUserCtrl = async (req, res, next) => {
   try {
-    res.json({
+    //1. Find the user to be deleted
+    const userTodelete = await User.findById(req.userAuth);
+    //2. find all posts to be deleted
+    await Post.deleteMany({ user: req.userAuth });
+    //3. Delete all comments of the user
+    await Comment.deleteMany({ user: req.userAuth });
+    //4. Delete all category of the user
+    await Category.deleteMany({ user: req.userAuth });
+    //5. delete
+    await userTodelete.deleteOne();
+    //send response
+    return res.json({
       status: "success",
-      data: "delete user Route",
+      data: "Your account has been deleted successfully",
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
+
 //update
 const updateUserCtrl = async (req, res, next) => {
   const { email, lastname, firstname } = req.body;
