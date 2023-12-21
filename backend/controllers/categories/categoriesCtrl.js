@@ -39,19 +39,20 @@ const singleCategoryCtrl = async (req, res, next) => {
   }
 };
 
-const deleteCategoryCtrl = async (req, res) => {
+const deleteCategoryCtrl = async (req, res, next) => {
   try {
+    await Category.findByIdAndDelete(req.params.id);
     res.json({
       status: "success",
-      data: "delete categories Route",
+      data: "Deleted successfully",
     });
   } catch (error) {
-    res.json(error.message);
+    return next(appErr(error.message));
   }
 };
 
-const updateCategoryCtrl = async (req, res,next) => {
-  const {title} = req.body;
+const updateCategoryCtrl = async (req, res, next) => {
+  const { title } = req.body;
   try {
     const category = await Category.findByIdAndUpdate(
       req.params.id,
@@ -65,8 +66,7 @@ const updateCategoryCtrl = async (req, res,next) => {
   } catch (error) {
     return next(appErr(error.message));
   }
-  }
-
+};
 
 module.exports = {
   Category,
