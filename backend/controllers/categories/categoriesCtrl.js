@@ -14,12 +14,25 @@ const createCategoryCtrl = async (req, res,next ) => {
   }
 };
 //all
-const allCategoryCtrl = async (req, res) => {
+const allCategoryCtrl = async (req, res,next ) => {
   try {
     const categories =await Category.find();
     res.json({
       status: "success",
       data: categories,
+    });
+  } catch (error) {
+    return next(appErr(error.message));
+  }
+};
+
+//single
+const singleCategoryCtrl = async (req, res,next) => {
+  try {
+    const category =await Category.findById(req.params.id);
+    res.json({
+      status: "success",
+      data: category,
     });
   } catch (error) {
     return next(appErr(error.message));
@@ -52,6 +65,7 @@ module.exports = {
   Category,
   createCategoryCtrl,
   allCategoryCtrl,
+  singleCategoryCtrl,
   deleteCategoryCtrl,
   updateCategoryCtrl,
 };

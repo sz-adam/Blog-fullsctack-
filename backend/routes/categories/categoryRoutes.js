@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createCategoryCtrl,
   allCategoryCtrl,
+  singleCategoryCtrl,
   deleteCategoryCtrl,
   updateCategoryCtrl,
 } = require("../../controllers/categories/categoriesCtrl");
@@ -14,6 +15,9 @@ categoryRouter.post("/", isLogin, createCategoryCtrl);
 
 //GET /api/v1/categories
 categoryRouter.get("/", allCategoryCtrl);
+
+//GET/api/v1/categories/:id
+categoryRouter.get("/:id", singleCategoryCtrl);
 
 //Delete /api/v1/category/:id
 categoryRouter.delete("/:id", deleteCategoryCtrl);
