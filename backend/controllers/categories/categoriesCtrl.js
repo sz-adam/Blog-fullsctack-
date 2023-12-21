@@ -1,24 +1,28 @@
-const express = require("express");
+const Category = require("../../model/Category/Category");
+const { appErr } = require("../../utils/appErr");
 
-const createCategoryCtrl = async (req, res) => {
+const createCategoryCtrl = async (req, res,next ) => {
+  const {title} = req.body;
   try {
+    const category =await Category.create({title, user: req.userAuth})
     res.json({
       status: "success",
-      data: "category registration",
+      data: category,
     });
   } catch (error) {
-    res.json(error.message);
+    return next(appErr(error.message));
   }
 };
-
-const singleCategoryCtrl = async (req, res) => {
+//all
+const allCategoryCtrl = async (req, res) => {
   try {
+    const categories =await Category.find();
     res.json({
       status: "success",
-      data: "category Route",
+      data: categories,
     });
   } catch (error) {
-    res.json(error.message);
+    return next(appErr(error.message));
   }
 };
 
@@ -45,8 +49,9 @@ const updateCategoryCtrl = async (req, res) => {
 };
 
 module.exports = {
+  Category,
   createCategoryCtrl,
-  singleCategoryCtrl,
+  allCategoryCtrl,
   deleteCategoryCtrl,
   updateCategoryCtrl,
 };
