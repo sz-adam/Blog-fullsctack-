@@ -7,11 +7,9 @@ const Post = require("../../model/Post/Post");
 const Category = require("../../model/Category/Category");
 const Comment = require("../../model/Comment/Comment");
 
-
-
 //Register
 const userRegisterCtrl = async (req, res, next) => {
-  const { firstname, lastname, profilePhoto, email, password } = req.body;
+  const { firstname, lastname, email, password } = req.body;
   try {
     //Check if email exist
     const userFound = await User.findOne({ email });
@@ -27,8 +25,7 @@ const userRegisterCtrl = async (req, res, next) => {
     const user = await User.create({
       firstname,
       lastname,
-      email,
-      profilePhoto,
+      email,    
       password: hashedPassword,
     });
     res.json({
@@ -41,15 +38,13 @@ const userRegisterCtrl = async (req, res, next) => {
 };
 
 //login
-const userLoginCtrl = async (req, res) => {
+const userLoginCtrl = async (req, res, next) => {
   const { email, password } = req.body;
   try {
     //CHeck if email exist
     const userFound = await User.findOne({ email });
     if (!userFound) {
-      return res.json({
-        message: "invalid login credentials",
-      });
+      return next(appErr("Invalid login credentials"));
     }
     //verify password
     const isPasswordMatxhed = await bcrypt.compare(
@@ -58,9 +53,7 @@ const userLoginCtrl = async (req, res) => {
     );
 
     if (!isPasswordMatxhed) {
-      return res.json({
-        message: "invalid login credentials",
-      });
+      return next(appErr("Invalid login credentials"));
     }
 
     res.json({
@@ -74,7 +67,7 @@ const userLoginCtrl = async (req, res) => {
       },
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -106,7 +99,7 @@ const whoViewedMyProfileCtrl = async (req, res, next) => {
       }
     }
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -141,7 +134,7 @@ const followingCtrl = async (req, res, next) => {
       }
     }
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -187,7 +180,7 @@ const unfollowCtrl = async (req, res, next) => {
 };
 
 //all
-const usersCtrl = async (req, res) => {
+const usersCtrl = async (req, res, next) => {
   try {
     const users = await User.find();
     res.json({
@@ -195,7 +188,7 @@ const usersCtrl = async (req, res) => {
       data: users,
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -225,7 +218,7 @@ const blockUsersCtrl = async (req, res, next) => {
       });
     }
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -257,7 +250,7 @@ const unBlockUsersCtrl = async (req, res, next) => {
       });
     }
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -314,7 +307,7 @@ const userProfileCtrl = async (req, res) => {
       data: user,
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
@@ -372,7 +365,7 @@ const updateUserCtrl = async (req, res, next) => {
       data: user,
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 
