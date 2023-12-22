@@ -15,22 +15,16 @@ const postRouter = express.Router();
 // posts route
 //POST /api/v1/posts
 postRouter.post("/", isLogin, createpostCtrl);
-
 //GET /api/v1/posts
 postRouter.get("/", isLogin, allpostCtrl);
-
 //GET /api/v1/posts/likes
-postRouter.get("/likes/:id",isLogin, toggleLikesPostCtrl);
+postRouter.get("/likes/:id", isLogin, toggleLikesPostCtrl);
 //GET /api/v1/posts/dislikes
-postRouter.get("/dislikes/:id",isLogin, toggleDisLikesPostCtrl);
+postRouter.get("/dislikes/:id", isLogin, toggleDisLikesPostCtrl);
 //GET /api/v1/posts
 postRouter.get("/:id", isLogin, singlepostsCtrl);
-
-
-
 //Delete /api/v1/posts/:id
-postRouter.delete("/:id", deletepostCtrl);
-
+postRouter.delete("/:id", isLogin, deletepostCtrl);
 //PUT /api/v1/posts/:id
 postRouter.put("/:id", updatepostCtrl);
 
