@@ -4,7 +4,7 @@ const { appErr } = require("../../utils/appErr");
 
 //create
 const createpostCtrl = async (req, res, next) => {
-  const { title, description, category,photo } = req.body;
+  const { title, description, category, photo } = req.body;
   try {
     //Find the user
     const author = await User.findById(req.userAuth);
@@ -143,7 +143,7 @@ const singlepostsCtrl = async (req, res, next) => {
   }
 };
 
-const deletepostCtrl = async (req, res ,next) => {
+const deletepostCtrl = async (req, res, next) => {
   try {
     //check if the post belongs to the user
 
@@ -162,9 +162,8 @@ const deletepostCtrl = async (req, res ,next) => {
   }
 };
 
-
-const updatepostCtrl = async (req, res) => {
-  const { title, description, category,photo } = req.body;
+const updatepostCtrl = async (req, res, next) => {
+  const { title, description, category, photo } = req.body;
   try {
     //find the post
     const post = await Post.findById(req.params.id);
@@ -179,7 +178,7 @@ const updatepostCtrl = async (req, res) => {
         title,
         description,
         category,
-        photo
+        photo,
       },
       {
         new: true,
