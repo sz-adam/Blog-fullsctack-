@@ -24,7 +24,7 @@ postRouter.get("/likes/:id",isLogin, toggleLikesPostCtrl);
 //GET /api/v1/posts/dislikes
 postRouter.get("/dislikes/:id",isLogin, toggleDisLikesPostCtrl);
 //GET /api/v1/posts
-postRouter.get("/:id", singlepostsCtrl);
+postRouter.get("/:id", isLogin, singlepostsCtrl);
 
 
 

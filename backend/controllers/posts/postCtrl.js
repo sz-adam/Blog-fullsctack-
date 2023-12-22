@@ -69,7 +69,7 @@ const toggleLikesPostCtrl = async (req, res, next) => {
     //3. If the user has already liked the post, unlike the post
     if (isLiked) {
       post.likes = post.likes.filter(
-        like => like.toString() !== req.userAuth.toString()
+        (like) => like.toString() !== req.userAuth.toString()
       );
       await post.save();
     } else {
@@ -96,7 +96,7 @@ const toggleDisLikesPostCtrl = async (req, res, next) => {
     //3. If the user has already liked the post, unlike the post
     if (isUnliked) {
       post.disLikes = post.disLikes.filter(
-        dislike => dislike.toString() !== req.userAuth.toString()
+        (dislike) => dislike.toString() !== req.userAuth.toString()
       );
       await post.save();
     } else {
@@ -113,14 +113,30 @@ const toggleDisLikesPostCtrl = async (req, res, next) => {
   }
 };
 
-
 //single
-const singlepostsCtrl = async (req, res) => {
+const singlepostsCtrl = async (req, res, next) => {
   try {
-    res.json({
-      status: "success",
-      data: "Posts Route",
-    });
+    //find the post
+    const post = await Post.findById(req.params.id);
+    //Number of view
+    //check if user viewed this post
+    const isViewed = post.numViews.includes(req.userAuth);
+    if (isViewed) {
+      res.json({
+        status: "success",
+        data: post,
+      });
+    } else {
+      //pust the user into numOfViews
+
+      post.numViews.push(req.userAuth);
+      //save
+      await post.save();
+      res.json({
+        status: "success",
+        data: post,
+      });
+    }
   } catch (error) {
     next(appErr(error.message));
   }
@@ -155,5 +171,5 @@ module.exports = {
   allpostCtrl,
   deletepostCtrl,
   updatepostCtrl,
-  toggleDisLikesPostCtrl
+  toggleDisLikesPostCtrl,
 };
