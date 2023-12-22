@@ -43,7 +43,7 @@ const postSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-     // required: [true, "Post Image is required"],
+      // required: [true, "Post Image is required"],
     },
   },
   {
@@ -70,9 +70,24 @@ postSchema.pre(/^find/, function (next) {
     const post = this;
     return post.disLikes.length;
   });
+
+  //check the most liked post in percentage
+  postSchema.virtual("likesPercentage").get(function () {
+    const post = this;
+    const total = +post.likes.length + +post.disLikes.length;
+    const percentage = (post.likes.length / total) * 100;
+    return `${percentage}%`;
+  });
+
+  //check the most disliked post in percentage
+  postSchema.virtual("disLikesPercentage").get(function () {
+    const post = this;
+    const total = +post.disLikes.length + +post.disLikes.length;
+    const percentage = (post.disLikes.length / total) * 100;
+    return `${percentage}%`;
+  });
   next();
 });
-
 
 //Compile the post  model
 
