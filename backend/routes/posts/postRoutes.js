@@ -3,6 +3,7 @@ const {
   createpostCtrl,
   singlepostsCtrl,
   toggleLikesPostCtrl,
+  toggleDisLikesPostCtrl,
   allpostCtrl,
   deletepostCtrl,
   updatepostCtrl,
@@ -20,6 +21,8 @@ postRouter.get("/", isLogin, allpostCtrl);
 
 //GET /api/v1/posts/likes
 postRouter.get("/likes/:id",isLogin, toggleLikesPostCtrl);
+//GET /api/v1/posts/dislikes
+postRouter.get("/dislikes/:id",isLogin, toggleDisLikesPostCtrl);
 //GET /api/v1/posts
 postRouter.get("/:id", singlepostsCtrl);
 
