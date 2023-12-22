@@ -164,13 +164,33 @@ const deletepostCtrl = async (req, res ,next) => {
 
 
 const updatepostCtrl = async (req, res) => {
+  const { title, description, category,photo } = req.body;
   try {
+    //find the post
+    const post = await Post.findById(req.params.id);
+    //check if the post belongs to the user
+
+    if (post.user.toString() !== req.userAuth.toString()) {
+      return next(appErr("You are not allowed to delete this post", 403));
+    }
+    await Post.findByIdAndUpdate(
+      req.params.id,
+      {
+        title,
+        description,
+        category,
+        photo
+      },
+      {
+        new: true,
+      }
+    );
     res.json({
       status: "success",
-      data: "update post Route",
+      data: post,
     });
   } catch (error) {
-    res.json(error.message);
+    next(appErr(error.message));
   }
 };
 

@@ -26,6 +26,6 @@ postRouter.get("/:id", isLogin, singlepostsCtrl);
 //Delete /api/v1/posts/:id
 postRouter.delete("/:id", isLogin, deletepostCtrl);
 //PUT /api/v1/posts/:id
-postRouter.put("/:id", updatepostCtrl);
+postRouter.put("/:id",isLogin, updatepostCtrl);
 
 module.exports = postRouter;
