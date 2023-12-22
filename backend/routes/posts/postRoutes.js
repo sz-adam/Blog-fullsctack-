@@ -2,6 +2,7 @@ const express = require("express");
 const {
   createpostCtrl,
   singlepostsCtrl,
+  toggleLikesPostCtrl,
   allpostCtrl,
   deletepostCtrl,
   updatepostCtrl,
@@ -15,10 +16,14 @@ const postRouter = express.Router();
 postRouter.post("/", isLogin, createpostCtrl);
 
 //GET /api/v1/posts
+postRouter.get("/", isLogin, allpostCtrl);
+
+//GET /api/v1/posts/likes
+postRouter.get("/likes/:id",isLogin, toggleLikesPostCtrl);
+//GET /api/v1/posts
 postRouter.get("/:id", singlepostsCtrl);
 
-//GET /api/v1/posts
-postRouter.get("/", isLogin, allpostCtrl);
+
 
 //Delete /api/v1/posts/:id
 postRouter.delete("/:id", deletepostCtrl);
