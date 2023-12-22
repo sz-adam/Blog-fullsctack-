@@ -10,14 +10,14 @@ const createpostCtrl = async (req, res, next) => {
     const author = await User.findById(req.userAuth);
     //check if the user is blocked
     if (author.isBlocked) {
-      return next(appErr("Access denied, account blocked", 403));    
+      return next(appErr("Access denied, account blocked", 403));
     }
     //Create the post
     const postCreated = await Post.create({
       title,
       description,
       user: author._id,
-      category
+      category,
     });
     //Associate user to a post -Push the post into the user posts field
     author.posts.push(postCreated);
@@ -31,6 +31,34 @@ const createpostCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+
+//all
+const allpostCtrl = async (req, res, next) => {
+  try {
+    //Find all posts
+    const posts = await Post.find({})
+      .populate("user")
+      .populate("category", "title");
+
+    //Check if the user is blocked by the post owner
+    const filteredPosts = posts.filter((post) => {
+      //get all blocked users
+      const blockedUsers = post.user.blocked;
+      const isBlocked = blockedUsers.includes(req.userAuth);
+
+      // return isBlocked ? null : post;
+      return !isBlocked;
+    });
+
+    res.json({
+      status: "success",
+      data: filteredPosts,
+    });
+  } catch (error) {
+    next(appErr(error.message));
+  }
+};
+
 //single
 const singlepostsCtrl = async (req, res) => {
   try {
@@ -40,19 +68,6 @@ const singlepostsCtrl = async (req, res) => {
     });
   } catch (error) {
     next(appErr(error.message));
-  }
-};
-
-//all
-
-const allpostCtrl = async (req, res) => {
-  try {
-    res.json({
-      status: "success",
-      data: "Posts Route",
-    });
-  } catch (error) {
-    res.json(error.message);
   }
 };
 
