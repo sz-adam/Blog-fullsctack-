@@ -43,7 +43,7 @@ const postSchema = new mongoose.Schema(
     },
     photo: {
       type: String,
-      // required: [true, "Post Image is required"],
+      required: [true, "Post Image is required"],
     },
   },
   {
