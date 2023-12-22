@@ -86,6 +86,18 @@ postSchema.pre(/^find/, function (next) {
     const percentage = (post.disLikes.length / total) * 100;
     return `${percentage}%`;
   });
+
+  //if days is less is 0 return today if days is 1 return yesterday else return days ago
+  postSchema.virtual("daysAgo").get(function () {
+    const post = this;
+    const date = new Date(post.createdAt);
+    const daysAgo = Math.floor((Date.now() - date) / 86400000);
+    return daysAgo === 0
+      ? "Today"
+      : daysAgo === 1
+      ? "Yesterday"
+      : `${daysAgo} days ago`;
+  });
   next();
 });
 
