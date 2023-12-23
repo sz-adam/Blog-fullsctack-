@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Post = require("../Post/Post");
+const Comment = require("../Comment/Comment");
 
 //create schema
 
@@ -64,6 +65,12 @@ const userSchema = new mongoose.Schema(
         ref: "Post",
       },
     ],
+    comments: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Comment",
+      },
+    ],
     blocked: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -93,7 +100,7 @@ const userSchema = new mongoose.Schema(
 //pre-before record is saved
 userSchema.pre("findOne", async function (next) {
   //populate the post
-  this.populate('posts')
+  this.populate("posts");
   //get the user id
   const userId = this._conditions._id;
   //find the post created by the user
@@ -162,11 +169,10 @@ userSchema.pre("findOne", async function (next) {
       return "Yesterday";
     }
     //check if daysAgo is greater than 1
-    if(daysAgo >1 ){
-      return `${daysAgo} days ago `
+    if (daysAgo > 1) {
+      return `${daysAgo} days ago `;
     }
   });
-
 
   //----------------------------------------------
   //Update userAward based on the number of posts

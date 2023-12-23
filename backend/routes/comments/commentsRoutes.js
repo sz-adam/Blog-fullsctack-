@@ -5,10 +5,11 @@ const {
   deleteCommentCtrl,
   updateCommentCtrl,
 } = require("../../controllers/comments/commentCtrl");
+const isLogin = require("../../middlewares/ISlogin");
 
 const commentRouter = express.Router();
 
-commentRouter.post("/", addcommentCtrl);
+commentRouter.post("/:id", isLogin, addcommentCtrl);
 
 //GET /api/v1/comments
 commentRouter.get("/:id", singlecommentsCtrl);
