@@ -12,12 +12,12 @@ const commentRouter = express.Router();
 commentRouter.post("/:id", isLogin, addcommentCtrl);
 
 //GET /api/v1/comments
-commentRouter.get("/:id", singlecommentsCtrl);
+commentRouter.get("/:id", isLogin, singlecommentsCtrl);
 
 //Delete /api/v1/comments/:id
-commentRouter.delete("/:id", deleteCommentCtrl);
+commentRouter.delete("/:id", isLogin, deleteCommentCtrl);
 
 //PUT /api/v1/comments/:id
-commentRouter.put("/:id", updateCommentCtrl);
+commentRouter.put("/:id", isLogin, updateCommentCtrl);
 
 module.exports = commentRouter;
