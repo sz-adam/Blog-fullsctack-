@@ -13,6 +13,7 @@ const app = express();
 // middlewares
 app.use(cors());
 app.use(express.json()); ///pass incomung payload
+app.use(express.static("public"))
 
 //routes
 // user route

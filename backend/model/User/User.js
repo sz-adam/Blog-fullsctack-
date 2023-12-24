@@ -18,7 +18,7 @@ const userSchema = new mongoose.Schema(
     //image url and then fix it when connecting the frontend
     profilePhoto: {
       type: String,
-      default: "/default-profile-photo.jpg",
+      default: "/noname.jpg",
     },
     email: {
       type: String,

@@ -6,6 +6,8 @@ const { appErr, AppErr } = require("../../utils/appErr");
 const Post = require("../../model/Post/Post");
 const Category = require("../../model/Category/Category");
 const Comment = require("../../model/Comment/Comment");
+require("dotenv").config();
+
 
 //Register
 const userRegisterCtrl = async (req, res, next) => {
@@ -64,6 +66,7 @@ const userLoginCtrl = async (req, res, next) => {
         email: userFound.email,
         isAdmin: userFound.isAdmin,
         token: generateToken(userFound._id),
+        profilePhoto: `${process.env.BACKEND_URL_PROFIEL_PHOTO}${userFound.profilePhoto}`,
       },
     });
   } catch (error) {
