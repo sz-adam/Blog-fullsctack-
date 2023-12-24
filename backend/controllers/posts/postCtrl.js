@@ -60,6 +60,20 @@ const allpostCtrl = async (req, res, next) => {
   }
 };
 
+//allposts no login 
+
+const allPostNoLogin = async (req, res, next) => {
+  try {
+    const posts = await Post.find();
+    res.json({
+      status: "success",
+      data: posts,
+    });
+  } catch (error) {
+    return next(appErr(error.message));
+  }
+};
+
 //toggleLike
 const toggleLikesPostCtrl = async (req, res, next) => {
   try {
@@ -201,4 +215,5 @@ module.exports = {
   deletepostCtrl,
   updatepostCtrl,
   toggleDisLikesPostCtrl,
+  allPostNoLogin,
 };

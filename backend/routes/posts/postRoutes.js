@@ -7,6 +7,7 @@ const {
   allpostCtrl,
   deletepostCtrl,
   updatepostCtrl,
+  allPostNoLogin,
 } = require("../../controllers/posts/postCtrl");
 const isLogin = require("../../middlewares/isLogin");
 
@@ -17,6 +18,7 @@ const postRouter = express.Router();
 postRouter.post("/", isLogin, createpostCtrl);
 //GET /api/v1/posts
 postRouter.get("/", isLogin, allpostCtrl);
+postRouter.get("/nologin",  allPostNoLogin);
 //GET /api/v1/posts/likes
 postRouter.get("/likes/:id", isLogin, toggleLikesPostCtrl);
 //GET /api/v1/posts/dislikes
