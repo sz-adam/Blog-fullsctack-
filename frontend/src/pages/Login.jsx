@@ -12,10 +12,7 @@ function Login() {
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
 
-  const {
-    user: { acces_token },
-    setUser,
-  } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   const handleLogin = (event) => {
     event.preventDefault();
@@ -25,7 +22,7 @@ function Login() {
       .then((res) => {
         storeInSession("user", JSON.stringify(res.data));
         setUser(res.data);
-        navigate("/");
+        navigate("/");     
       })
       .catch((err) => {
         console.error("Hiba a bejelentkezés során", err);
