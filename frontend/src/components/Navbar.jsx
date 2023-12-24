@@ -1,7 +1,19 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { UserContext } from "../context/userContext";
+import { removeFormSession } from "../common/session";
 
 function Navbar() {
+  const { user, setUser } = useContext(UserContext);
+  const navigate = useNavigate();
+  const access_token= user?.data?.token
+  
+  const handleLogout = () => {
+    removeFormSession("user");
+    setUser(null);
+    navigate('/login');
+  };
+
   return (
     <div className="navbar justify-between p-4">
       <div>
@@ -11,14 +23,20 @@ function Navbar() {
           </p>
         </Link>
       </div>
-      <div className="flex space-x-4 items-center ">
-        <Link to="/login" className="btn-dark">
-          Login
-        </Link>
-        <Link to="/register" className="btn-white">
-          Register
-        </Link>
-      </div>
+      {access_token ? (
+        <div>
+          <button className="btn-dark" onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <div className="flex space-x-4 items-center">
+          <Link to="/login" className="btn-dark">
+            Login
+          </Link>
+          <Link to="/register" className="btn-white">
+            Register
+          </Link>
+        </div>
+      )}
     </div>
   );
 }
