@@ -4,12 +4,14 @@ const postRouter = require("./routes/posts/postRoutes");
 const categoryRouter = require("./routes/categories/categoryRoutes");
 const commentRouter = require("./routes/comments/commentsRoutes");
 const globalErrorHandler = require("./middlewares/globalErrorhandler");
+const cors = require("cors");
 require("dotenv").config();
 require("./config/dbConnect");
 
 const app = express();
 
 // middlewares
+app.use(cors());
 app.use(express.json()); ///pass incomung payload
 
 //routes
