@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-function InputBox({ name, type, placeholder, icon: Icon }) {
+function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
@@ -13,6 +13,9 @@ function InputBox({ name, type, placeholder, icon: Icon }) {
           type == "password" ? (passwordVisible ? "text" : "password") : type
         }
         placeholder={placeholder}
+        defaultValue={value}
+        onChange={onChange}
+        required={required || false}
         className=" w-[100%] rounded-md p-4 bg-grey pl-12 border border-grey focus:bg-transparent placeholder:text-black"
       />
 
@@ -25,7 +28,9 @@ function InputBox({ name, type, placeholder, icon: Icon }) {
       {type === "password" && (
         <div
           className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
-          onClick={() => setPasswordVisible((currentEyeValue) => !currentEyeValue)}
+          onClick={() =>
+            setPasswordVisible((currentEyeValue) => !currentEyeValue)
+          }
         >
           {passwordVisible ? (
             <FaEye className="text-gray-500" />
