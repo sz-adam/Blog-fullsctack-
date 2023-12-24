@@ -13,9 +13,9 @@ function App() {
   
   useEffect(() => {
     const userInSession = lookInSession("user");
-    userInSession
-      ? setUser(JSON.parse(userInSession))
-      : setUser({ acces_token: null });
+    if (userInSession) {
+      setUser(JSON.parse(userInSession));
+    }
   }, []);
   return (
     <>
