@@ -10,26 +10,14 @@ function Register() {
     <div className="flex justify-center items-center w-full h-[85vh] ">
       <form className="w-[85%] max-w-[400px]">
         <h1 className="entryText log-reg-color mb-24">Registration</h1>
-        <InputBox
-          type="text"
-          placeholder="First name"
-          icon={IoManOutline}
-        />
-        <InputBox
-          type="text"
-          placeholder="Last name"
-          icon={IoManOutline}
-        />
+        <InputBox type="text" placeholder="First name" icon={IoManOutline} />
+        <InputBox type="text" placeholder="Last name" icon={IoManOutline} />
         <InputBox
           type="email"
           placeholder="Email"
           icon={MdOutlineMailOutline}
         />
-        <InputBox
-          type="password"    
-          placeholder="Password"
-          icon={IoKeyOutline}
-        />
+        <InputBox type="password" placeholder="Password" icon={IoKeyOutline} />
         <div className="flex justify-center items-center mt-10">
           <button
             className="border-2 log-reg-color text-white p-3 px-10 rounded-full font-bold"

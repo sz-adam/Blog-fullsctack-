@@ -15,11 +15,7 @@ function Login() {
           placeholder="email"
           icon={MdOutlineMailOutline}
         />
-        <InputBox        
-          type="password"
-          placeholder="password"
-          icon={IoKeyOutline}
-        />
+        <InputBox type="password" placeholder="password" icon={IoKeyOutline} />
         <div className="flex justify-center items-center mt-10">
           <button
             className="border-2 log-reg-color text-white p-3 px-10 rounded-full font-bold"
@@ -28,7 +24,6 @@ function Login() {
             Login
           </button>
         </div>
-
         <p className="mt-6 text-slate-400 text-lg text-center">
           Don't have account ?{" "}
           <Link to="/register" className="underline text-slate-400">
