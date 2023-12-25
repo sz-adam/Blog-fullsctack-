@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
 import { UserContext } from "../context/userContext";
+import PostService from "../services/PostsServices";
 
 function Home() {
   const { user, setUser } = useContext(UserContext);
@@ -12,26 +12,19 @@ function Home() {
     const fetchData = async () => {
       try {
         if (access_token) {
-          const response = await axios.get(import.meta.env.VITE_API_ALLPOSTS, {
-            headers: {
-              Authorization: `Bearer ${access_token}`,
-            },
-          });
-          setPosts(response.data.data);
+          const postsData = await PostService.getAllPosts(access_token);
+          setPosts(postsData);
         } else {
-          const response = await axios.get(
-            import.meta.env.VITE_API_NOLOGINPOSTS
-          );
-          setNoLoginPosts(response.data.data);
+          const noLoginPostsData = await PostService.getAllPosts();
+          setNoLoginPosts(noLoginPostsData);
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
-
     fetchData();
   }, [access_token]);
-  import.meta.env.VITE_API_LOGIN;
+
   return (
     <div>
       {access_token ? (
