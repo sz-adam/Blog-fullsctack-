@@ -5,7 +5,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
 import { IoManOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
-import UserService from "../services/UserSercices";
+import UserService from "../services/UserServices";
 
 function Register() {
   const [firstname, setFirstname] = useState("");
