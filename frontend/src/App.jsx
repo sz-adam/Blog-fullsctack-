@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import { UserContext } from './context/userContext';
 import { useEffect, useState } from "react";
 import { lookInSession } from "./common/session";
+import PostDetails from "./pages/PostDetails";
 
 function App() {
   const [user, setUser] = useState(UserContext)
@@ -26,6 +27,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/post/:postId" element= {<PostDetails />}/>
         </Routes>
       </Router>
       </UserContext.Provider>
