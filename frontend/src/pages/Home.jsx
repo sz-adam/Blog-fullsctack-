@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext";
 import PostService from "../services/PostsServices";
+import PostCard from "../components/PostCard";
 
 function Home() {
   const { user, setUser } = useContext(UserContext);
@@ -26,20 +27,13 @@ function Home() {
   }, [access_token]);
 
   return (
-    <div>
+    <div className=" flex flex-col justify-center items-center">
       {access_token ? (
-        posts.map((post) => (
-          <div key={post._id}>
-            <p>{post.title}</p>
-          </div>
-        ))
+        posts.map((post) => <PostCard key={post.id} post={post} />)
       ) : (
         <div className="flex space-x-4 items-center">
-          {noLoginPosts.map((post) => (
-            <div key={post._id}>
-              <p>{post.title}</p>
-            </div>
-          ))}
+          {noLoginPosts.map((post) => <PostCard key={post.id} post={post} />)
+      }
         </div>
       )}
     </div>
