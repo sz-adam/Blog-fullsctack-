@@ -5,6 +5,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
 import { IoManOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
+import AuthService from "../services/UserSercices";
 
 function Register() {
   const [firstname, setFirstname] = useState("");
@@ -18,19 +19,10 @@ function Register() {
     event.preventDefault();
 
     try {
-      const response = await axios.post(
-        import.meta.env.VITE_API_REGISTER,
-        { firstname, lastname, email, password },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-      if (response.status === 200) {
-        navigate("/login");
-      
-      }
+      await AuthService.register(firstname, lastname, email, password);
+      navigate("/");
     } catch (error) {
-      setError(error.response.data.message);
+      setError(error);
     }
   };
 
