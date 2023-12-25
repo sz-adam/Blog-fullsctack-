@@ -1,9 +1,8 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
 import InputBox from "../components/InputBox";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { storeInSession } from "../common/session";
 import UserService from "../services/UserServices";
@@ -14,7 +13,7 @@ function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const { user, setUser } = useContext(UserContext);
+  const {setUser } = useContext(UserContext);
 
   const handleLogin = async (event) => {
     event.preventDefault();

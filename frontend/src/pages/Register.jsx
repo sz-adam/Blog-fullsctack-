@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import InputBox from "../components/InputBox";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
