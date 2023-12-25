@@ -6,28 +6,27 @@ import { IoKeyOutline } from "react-icons/io5";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 import { storeInSession } from "../common/session";
+import UserService from "../services/UserServices";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
   const navigate = useNavigate();
 
   const { user, setUser } = useContext(UserContext);
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault();
 
-    axios
-      .post(import.meta.env.VITE_API_LOGIN, { email, password })
-      .then((res) => {
-        storeInSession("user", JSON.stringify(res.data));
-        setUser(res.data);
-        navigate("/");     
-      })
-      .catch((err) => {
-        console.error("Hiba a bejelentkezés során", err);
-        alert("Hiba a bejelentkezés során");
-      });
+    try {
+      const userData = await UserService.login(email, password);
+      storeInSession("user", JSON.stringify(userData));
+      setUser(userData);
+      navigate("/");
+    } catch (error) {
+      setError(error);
+    }
   };
 
   return (
@@ -49,6 +48,7 @@ function Login() {
           value={password}
           onChange={(event) => setPassword(event.target.value)}
         />
+        <div className="text-center text-red-600">{error}</div>
         <div className="flex justify-center items-center mt-10">
           <button
             className="border-2 log-reg-color text-white p-3 px-10 rounded-full font-bold"
