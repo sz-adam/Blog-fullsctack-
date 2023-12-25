@@ -8,6 +8,7 @@ function Home() {
   const [posts, setPosts] = useState([]);
   const [noLoginPosts, setNoLoginPosts] = useState([]);
   const access_token = user?.data?.token;
+  const postsToShow = access_token ? posts : noLoginPosts;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,15 +28,10 @@ function Home() {
   }, [access_token]);
 
   return (
-    <div className=" flex flex-col justify-center items-center">
-      {access_token ? (
-        posts.map((post) => <PostCard key={post.id} post={post} />)
-      ) : (
-        <div className="flex space-x-4 items-center">
-          {noLoginPosts.map((post) => <PostCard key={post.id} post={post} />)
-      }
-        </div>
-      )}
+    <div className="flex flex-col justify-center items-center">
+      {postsToShow.map((post) => (
+        <PostCard key={post.id} post={post} />
+      ))}
     </div>
   );
 }
