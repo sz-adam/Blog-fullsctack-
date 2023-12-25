@@ -5,7 +5,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
 import { IoManOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
-import AuthService from "../services/UserSercices";
+import UserService from "../services/UserSercices";
 
 function Register() {
   const [firstname, setFirstname] = useState("");
@@ -19,7 +19,7 @@ function Register() {
     event.preventDefault();
 
     try {
-      await AuthService.register(firstname, lastname, email, password);
+      await UserService.register(firstname, lastname, email, password);
       navigate("/");
     } catch (error) {
       setError(error);

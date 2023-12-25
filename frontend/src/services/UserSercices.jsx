@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const AuthService = {
+const UserService = {
   register: async function (firstname, lastname, email, password) {
     try {
       const response = await axios.post(
@@ -14,6 +14,12 @@ const AuthService = {
       throw error.response?.data.message || "Registration failed";
     }
   },
+
+
+  
+  
 };
 
-export default AuthService;
+
+
+export default UserService;
