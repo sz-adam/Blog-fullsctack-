@@ -30,7 +30,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/write" element={<WritePost />} />
-          <Route path="/update" element={<UpdatePost />} />
+          <Route path="/update/:postId" element={<UpdatePost />} />
           <Route path="/post/:postId" element= {<PostDetails />}/>
         </Routes>
       </Router>

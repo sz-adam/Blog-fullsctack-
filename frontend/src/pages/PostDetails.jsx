@@ -74,7 +74,7 @@ function PostDetails() {
                 <Link to="/" className="btn-dark">
                 Comments
                 </Link>
-                <Link to="/update" className="btn-dark">
+                <Link to={`/update/${postId}`} className="btn-dark">
                 Update
                 </Link>
               </div>
