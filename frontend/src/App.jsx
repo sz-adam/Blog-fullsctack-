@@ -7,6 +7,7 @@ import { UserContext } from './context/userContext';
 import { useEffect, useState } from "react";
 import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
+import WritePost from "./pages/WritePost";
 
 function App() {
   const [user, setUser] = useState(UserContext)
@@ -27,6 +28,7 @@ function App() {
         <Route path="/" element={<Home/>}/>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/write" element={<WritePost />} />
           <Route path="/post/:postId" element= {<PostDetails />}/>
         </Routes>
       </Router>

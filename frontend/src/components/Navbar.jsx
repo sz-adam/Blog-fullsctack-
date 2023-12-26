@@ -18,7 +18,8 @@ function Navbar() {
         </Link>
       </div>
       {access_token ? (
-        <div>
+        <div className="flex items-center">
+          <Link to="/write" className="mr-10 hover:text-slate-500"> Write </Link>
           <UserNavigationMenu />
         </div>
       ) : (
