@@ -11,6 +11,11 @@ function UpdatePost() {
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const { postId } = useParams();
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
+  const [photo, setPhoto] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -33,8 +38,8 @@ function UpdatePost() {
 
     fetchData();
   }, [access_token, postId]);
-
-  const handleUpdatePost = async (event) => {
+//categoria frissítés
+  const handleUpdatePosts = async (event) => {
     event.preventDefault();
     try {
       if (access_token) {
@@ -51,6 +56,29 @@ function UpdatePost() {
     }
   };
 
+
+  const handleUpdatePost = async (event) => {
+    event.preventDefault();
+    try {
+      if (access_token) {
+        // Elküldjük a poszt frissítési kérését a szervernek
+        await PostService.updatePost(
+          access_token,
+          postId,
+          {
+            title,
+            description,
+            photo,
+           // category,
+          }
+        );
+        console.log("Post updated successfully!");
+      }
+    } catch (error) {
+      console.error("Error updating post:", error);
+    }
+  };
+
   return (
     <div className="flex justify-center items-center text-center">
       <form className="w-2/3" onSubmit={handleUpdatePost}>
@@ -62,6 +90,26 @@ function UpdatePost() {
           placeholder="Title"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
+          required={true}
+        />
+        <InputBox
+          type="text"
+          placeholder="description"
+          value={description}
+          onChange={(event) => setDescription(event.target.value)}
+          required={true}
+        />
+        <InputBox
+          type="text"
+          placeholder="Category"
+          value={category}
+          onChange={(event) => setCategory(event.target.value)}
+        />
+        <InputBox
+          type="text"
+          placeholder="Photo"
+          value={photo}
+          onChange={(event) => setPhoto(event.target.value)}
           required={true}
         />
 

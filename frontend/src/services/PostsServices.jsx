@@ -59,11 +59,12 @@ const PostService = {
     }
   },
 
-  updatePost: async (access_token, postId) => {
+  updatePost: async (access_token, postId, updatedData) => {
     try {
       if (access_token) {
-        const response = await axios.get(
+        const response = await axios.put(
           `${import.meta.env.VITE_API_UPDATE_POSTS}/${postId}`,
+          updatedData, // Új adatokat küldjük el a szervernek
           {
             headers: {
               Authorization: `Bearer ${access_token}`,
@@ -73,7 +74,7 @@ const PostService = {
         return response.data.data;
       }
     } catch (error) {
-      console.error("Error fetching posts:", error);
+      console.error("Error updating post:", error);
       throw error;
     }
   },
