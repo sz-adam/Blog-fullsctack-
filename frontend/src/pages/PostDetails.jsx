@@ -5,6 +5,7 @@ import { UserContext } from "../context/userContext";
 import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
+import CommentsList from "../components/CommentsList";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -28,7 +29,7 @@ function PostDetails() {
           );
           setPostData(postDetails);
         } else {
-          navigate("/login");
+          navigate("/");
         }
       } catch (error) {
         console.error("Error fetching post details:", error);
@@ -77,6 +78,7 @@ function PostDetails() {
               </div>
             </div>
           </div>
+          <CommentsList comments={postData.comments}/>
         </div>
       )}
     </div>
