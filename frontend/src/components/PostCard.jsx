@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { FaComment } from "react-icons/fa"
 
 function postCard({ post }) { 
+  
   return (
     <>
       <div className="p-1 w-full md:w-1/2">
@@ -17,7 +18,7 @@ function postCard({ post }) {
           />
           <div className="p-6">
             <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-              CATEGORY: {post.category.title}
+          CATEGORY: {post?.category?.title}
             </h2>
             <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
              {post.title}
