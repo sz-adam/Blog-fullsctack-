@@ -12,12 +12,12 @@ function PostDetails() {
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const navigate = useNavigate();
-  
+
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
-  };
- 
+  }; 
+  
   useEffect(() => {
     const fetchData = async () => {
       try {

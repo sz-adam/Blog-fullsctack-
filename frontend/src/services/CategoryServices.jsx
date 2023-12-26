@@ -22,6 +22,27 @@ const CategoryService = {
       throw error;
     }
   },
+
+  updateCategoryById: async (access_token, categoryId, updatedData) => {
+    try {
+      if (access_token) {
+        const response = await axios.put(
+          import.meta.env.VITE_API_UPDATE_CATEGORIES + `/${categoryId}`,
+          updatedData,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error updating category by ID:", error);
+      throw error;
+    }
+  },
+  
 };
 
 export default CategoryService;
