@@ -19,7 +19,7 @@ const UserNavigationPanel = () => {
   };
 
   return (
-    <div className="relative">
+    <div className="relative hover:text-slate-500">
       <div
         onClick={toggleDropdown}
         className="flex justify-center items-center cursor-pointer"
@@ -29,15 +29,15 @@ const UserNavigationPanel = () => {
       </div>
       {isOpen && (
         <div className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 ">
-          <Link to={"/"} className="link pl-8 py-4 block text-black">
+          <Link to={"/"} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Profile
           </Link>
 
-          <Link to="/" className="link pl-8 py-4 block text-black">
+          <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Dashboard
           </Link>
 
-          <Link to="/" className="link pl-8 py-4 block text-black">
+          <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Settings
           </Link>
           <span className="absolute border-t border-grey w-full text-black "></span>
