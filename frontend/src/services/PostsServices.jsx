@@ -1,6 +1,25 @@
 import axios from "axios";
 
 const PostService = {
+  createPost: async (access_token, postData) => {
+    try {
+      if (access_token) {
+        const response = await axios.post(
+          import.meta.env.VITE_API_CREATE_POSTS,
+          postData,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error creating post:", error);
+      throw error;
+    }
+  },
 
   getAllPosts: async (access_token) => {
     try {
@@ -24,11 +43,14 @@ const PostService = {
   singlePosts: async (access_token, postId) => {
     try {
       if (access_token) {
-        const response = await axios.get (`${import.meta.env.VITE_API_SINGLE_POSTS}/${postId}`, {
-          headers: {
-            Authorization: `Bearer ${access_token}`,
-          },
-        });
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_SINGLE_POSTS}/${postId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
         return response.data.data;
       }
     } catch (error) {
