@@ -3,6 +3,7 @@ import { FaEye } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { Link } from "react-router-dom";
+import { FaComment } from "react-icons/fa"
 
 function postCard({ post }) { 
   return (
@@ -34,9 +35,13 @@ function postCard({ post }) {
                 <AiOutlineLike />
                 <p className="ml-1">{post.likesCount}</p>
               </span>
-              <span className="text-gray-400 inline-flex items-center leading-none  ">
+              <span className="text-gray-400 inline-flex items-center leading-none  border-r-2 border-gray-200 mr-3 py-1 pr-3">
                 <AiOutlineDislike />
                 <p className="ml-1">{post.disLikesCount}</p>
+              </span>
+              <span className="text-gray-400 inline-flex items-center leading-none  ">
+              <FaComment />
+                <p className="ml-1">{post.comments.length}</p>
               </span>
             </div>
           </div>
