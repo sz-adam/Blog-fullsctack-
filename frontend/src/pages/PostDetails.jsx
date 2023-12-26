@@ -5,7 +5,6 @@ import { UserContext } from "../context/userContext";
 import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
-import CommentsList from "../components/CommentsList";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -13,7 +12,7 @@ function PostDetails() {
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const navigate = useNavigate();
-
+  
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
@@ -77,8 +76,7 @@ function PostDetails() {
                 </Link>
               </div>
             </div>
-          </div>
-          <CommentsList comments={postData.comments}/>
+          </div>    
         </div>
       )}
     </div>
