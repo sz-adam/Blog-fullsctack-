@@ -38,8 +38,8 @@ function UpdatePost() {
 
     fetchData();
   }, [access_token, postId]);
-//categoria frissítés
-  const handleUpdatePosts = async (event) => {
+
+  const handleUpdatePost = async (event) => {
     event.preventDefault();
     try {
       if (access_token) {
@@ -50,32 +50,18 @@ function UpdatePost() {
           { title } // Send the new title
         );
         console.log("Updated category:", updatedCategory);
-      }
-    } catch (error) {
-      console.error("Error updating category:", error);
-    }
-  };
 
-
-  const handleUpdatePost = async (event) => {
-    event.preventDefault();
-    try {
-      if (access_token) {
-        // Elküldjük a poszt frissítési kérését a szervernek
-        await PostService.updatePost(
-          access_token,
-          postId,
-          {
-            title,
-            description,
-            photo,
-           // category,
-          }
-        );
+        await PostService.updatePost(access_token, postId, {
+          title,
+          description,
+          photo,
+          category: updatedCategory,
+        });
+        navigate("/");
         console.log("Post updated successfully!");
       }
     } catch (error) {
-      console.error("Error updating post:", error);
+      console.error("Error updating category or post:", error);
     }
   };
 
