@@ -6,64 +6,69 @@ import { useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../context/userContext";
 
 function UpdatePost() {
-  const [title, setTitle] = useState("");
+  const [categoryTitle, setCategoryTitle] = useState("");
   const [post, setPost] = useState("");
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const { postId } = useParams();
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
   const [photo, setPhoto] = useState("");
-
+  const [postTitle, setPostTitle] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Check if there is an access_token
-        if (access_token) {
-          // Fetch post details based on postId
-          const postDetails = await PostService.singlePosts(
-            access_token,
-            postId
-          );
-          setPost(postDetails);
-          // Set the title state with the category title of the post
-          setTitle(postDetails?.category?.title);
-        }
-      } catch (error) {
-        console.error("Error fetching post details:", error);
-      }
-    };
 
-    fetchData();
-  }, [access_token, postId]);
-
-  const handleUpdatePost = async (event) => {
-    event.preventDefault();
+useEffect(() => {
+  const fetchData = async () => {
     try {
+      // Check if there is an access_token / Ellenőrizze, hogy létezik-e access_token
       if (access_token) {
-        // Send the category update request to the server
-        const updatedCategory = await CategoryService.updateCategoryById(
+        // Fetch post details based on postId / Lekérje a bejegyzés részleteit postId alapján
+        const postDetails = await PostService.singlePosts(
           access_token,
-          post.category, // Use the identifier of the post's category
-          { title } // Send the new title
+          postId
         );
-        console.log("Updated category:", updatedCategory);
-
-        await PostService.updatePost(access_token, postId, {
-          title,
-          description,
-          photo,
-          category: updatedCategory,
-        });
-        navigate("/");
-        console.log("Post updated successfully!");
+        // Set the post state with the fetched post details / Állítsa be a post state-t a lekért bejegyzés részleteivel
+        setPost(postDetails);
+        // Set the postTitle state with the category title of the post / Állítsa be a postTitle state-t a bejegyzés kategóriájának címével
+        setPostTitle(postDetails?.category?.title);
       }
     } catch (error) {
-      console.error("Error updating category or post:", error);
+      console.error("Error fetching post details:", error);
+      // Handle error if fetching post details fails / Kezelje a hibát, ha a bejegyzés részleteinek lekérése nem sikerül
     }
   };
+
+  fetchData();
+}, [access_token, postId]);
+
+const handleUpdatePost = async (event) => {
+  event.preventDefault();
+  try {
+    // Check if there is an access_token / Ellenőrizze, hogy létezik-e access_token
+    if (access_token) {
+      // Update the category on the server / Frissítse a kategóriát a szerveren
+      const updatedCategory = await CategoryService.updateCategoryById(
+        access_token,
+        post.category, // Use the identifier of the post's category / Használja a bejegyzés kategóriájának azonosítóját
+        { title: categoryTitle } // Send the new title / Küldje el az új címet
+      );
+      // Prepare the updated post data / Készítse elő a frissített bejegyzés adatait
+      const updatedPostData = {
+        title: postTitle,
+        description,
+        photo,
+        category: updatedCategory,
+      };
+      // Send the updated post data to the server for updating the post / Küldje el a frissített bejegyzés adatait a szervernek a bejegyzés frissítéséhez
+      await PostService.updatePost(access_token, postId, updatedPostData);
+      // Navigate to the home page after a successful update / Navigáljon a kezdőoldalra sikeres frissítés után
+      navigate("/");
+    }
+  } catch (error) {
+    console.error("Error updating category or post:", error);
+    // Handle error if updating category or post fails / Kezelje a hibát, ha a kategória vagy a bejegyzés frissítése nem sikerül
+  }
+};
 
   return (
     <div className="flex justify-center items-center text-center">
@@ -74,8 +79,8 @@ function UpdatePost() {
         <InputBox
           type="text"
           placeholder="Title"
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          value={postTitle}
+          onChange={(event) => setPostTitle(event.target.value)}
           required={true}
         />
         <InputBox
@@ -88,8 +93,8 @@ function UpdatePost() {
         <InputBox
           type="text"
           placeholder="Category"
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
+          value={categoryTitle}
+          onChange={(event) => setCategoryTitle(event.target.value)}
         />
         <InputBox
           type="text"
@@ -98,7 +103,6 @@ function UpdatePost() {
           onChange={(event) => setPhoto(event.target.value)}
           required={true}
         />
-
         <button type="submit" className="btn-dark">
           Update
         </button>
