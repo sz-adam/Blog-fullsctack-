@@ -78,6 +78,24 @@ const PostService = {
       throw error;
     }
   },
+  deletePost: async (access_token, postId) => {
+    try {
+      if (access_token) {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_API_DELETE_POSTS}/${postId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error deleting post:", error.response.data);
+      throw error;
+    }
+  },
 };
 
 export default PostService;
