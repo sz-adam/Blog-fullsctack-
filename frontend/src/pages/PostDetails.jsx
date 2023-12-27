@@ -6,6 +6,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import DeleteModal from "../components/DeleteModal";
+import CreateComment from "../components/CreateComment";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -14,6 +15,7 @@ function PostDetails() {
   const access_token = user?.data?.token;
   const navigate = useNavigate();
   const [deleteModal, setDeleteModal] = useState(false);
+  console.log(postData)
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -88,14 +90,15 @@ function PostDetails() {
                  */}
 
                 <button
-                  className="bg-pink-500 text-white active:bg-pink-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  className="btn-dark"
                   type="button"
                   onClick={() => setDeleteModal(true)}
                 >
-                  Open regular modalDelete
+                 Delete
                 </button>
                 {deleteModal && <DeleteModal  setDeleteModal={setDeleteModal} postId={postId}/> }
               </div>
+              <CreateComment postId={postId}/>
             </div>
           </div>
         </div>
