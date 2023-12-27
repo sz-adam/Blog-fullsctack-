@@ -19,7 +19,7 @@ function WritePost() {
     try {
       // creating a category
       const categoryData = await CategoryService.createCategory(access_token, {
-        title: title,
+        title:category
       });
 
       // category contains the data
