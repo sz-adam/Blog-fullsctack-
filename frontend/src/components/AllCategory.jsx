@@ -3,7 +3,6 @@ import CategoryService from "../services/CategoryServices";
 
 function AllCategory() {
   const [allCategory, setAllCategory] = useState([]);
-  console.log(allCategory);
   useEffect(() => {
     const fetchData = async () => {
       try {
