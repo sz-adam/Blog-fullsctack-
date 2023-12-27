@@ -73,18 +73,27 @@ const CategoryService = {
             },
           }
         );
-  
-       
-          return response.data.data;
-      
+
+        return response.data.data;
       }
     } catch (error) {
-      console.error("Error deleting category:", error.response?.data || error.message);
+      console.error(
+        "Error deleting category:",
+        error.response?.data || error.message
+      );
       throw error;
     }
   },
 
-  
+  allCategory: async () => {
+    try {
+      const response = await axios.get(import.meta.env.VITE_API_ALL_CATEGORIES);
+      return response.data.data;
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      throw error;
+    }
+  },
 };
 
 export default CategoryService;
