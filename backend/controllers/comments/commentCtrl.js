@@ -33,6 +33,21 @@ const addcommentCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+//post comments
+const getCommentsCtrl = async (req, res, next) => {
+  try {
+    // Find comments for the specified post
+    const comments = await Comment.find({ post: req.params.id }).populate('user');
+    
+    res.json({
+      status: "success",
+      data: comments,
+    });
+  } catch (error) {
+    next(appErr(error.message));
+  }
+};
+
 
 
 const deleteCommentCtrl = async (req, res, next) => {
@@ -49,7 +64,7 @@ const deleteCommentCtrl = async (req, res, next) => {
       data: "Comment has been deleted successfully",
     });
   } catch (error) {
-   next(appErr(error.message));
+    next(appErr(error.message));
   }
 };
 
@@ -78,7 +93,7 @@ const updateCommentCtrl = async (req, res, next) => {
 
 module.exports = {
   addcommentCtrl,
-
+  getCommentsCtrl,
   deleteCommentCtrl,
   updateCommentCtrl,
 };
