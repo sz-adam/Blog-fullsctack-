@@ -2,16 +2,15 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/userContext";
 import PostService from "../services/PostsServices";
 import PostCard from "../components/PostCard";
-import CategoryService from "../services/CategoryServices";
+import AllCategory from "../components/allCategory";
 
 function Home() {
   const { user, setUser } = useContext(UserContext);
   const [posts, setPosts] = useState([]);
-  const [allCategory, setAllCategory] = useState([]);
   const [noLoginPosts, setNoLoginPosts] = useState([]);
   const access_token = user?.data?.token;
   const postsToShow = access_token ? posts : noLoginPosts;
-  console.log(allCategory);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -29,20 +28,9 @@ function Home() {
     fetchData();
   }, [access_token]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const allCategories = await CategoryService.allCategory();
-        setAllCategory(allCategories);
-      } catch (error) {
-        console.error("Error fetching categories:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
   return (
     <div className="flex flex-col justify-center items-center">
+      <AllCategory />
       {postsToShow.map((post) => (
         <PostCard key={post.id} post={post} />
       ))}
