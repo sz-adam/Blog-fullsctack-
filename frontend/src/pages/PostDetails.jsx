@@ -7,6 +7,7 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import DeleteModal from "../components/DeleteModal";
 import CreateComment from "../components/CreateComment";
+import PostAllComment from "../components/PostAllComment";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -99,6 +100,7 @@ function PostDetails() {
                 {deleteModal && <DeleteModal  setDeleteModal={setDeleteModal} postId={postId}/> }
               </div>
               <CreateComment postId={postId}/>
+              <PostAllComment postId={postId}/>
             </div>
           </div>
         </div>

@@ -21,6 +21,26 @@ const CommentServices = {
       throw error;
     }
   },
+  
+
+  allpostComment: async (access_token, postId) => {
+    try {
+      if (access_token) {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_POST_COMMENT}/${postId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      throw error;
+    }
+  },
 
   updateCategoryById: async (access_token, categoryId, updatedData) => {
     try {
