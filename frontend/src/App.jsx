@@ -3,18 +3,16 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
-import { UserContext } from './context/userContext';
+import { UserContext } from "./context/userContext";
 import { useEffect, useState } from "react";
 import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
 import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
-import DeletePost from "./pages/DeletePost";
 
 function App() {
-  const [user, setUser] = useState(UserContext)
+  const [user, setUser] = useState(UserContext);
 
-  
   useEffect(() => {
     const userInSession = lookInSession("user");
     if (userInSession) {
@@ -23,19 +21,18 @@ function App() {
   }, []);
   return (
     <>
-    <UserContext.Provider value={{ user, setUser }} >
-      <Router>
-        <Navbar />
-        <Routes>
-        <Route path="/" element={<Home/>}/>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/write" element={<WritePost />} />
-          <Route path="/update/:postId" element={<UpdatePost />} />
-          <Route path="/delete/:postId" element={<DeletePost />} />
-          <Route path="/post/:postId" element= {<PostDetails />}/>
-        </Routes>
-      </Router>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/write" element={<WritePost />} />
+            <Route path="/update/:postId" element={<UpdatePost />} />
+            <Route path="/post/:postId" element={<PostDetails />} />
+          </Routes>
+        </Router>
       </UserContext.Provider>
     </>
   );
