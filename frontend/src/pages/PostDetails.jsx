@@ -77,6 +77,9 @@ function PostDetails() {
                 <Link to={`/update/${postId}`} className="btn-dark">
                 Update
                 </Link>
+                <Link to={`/delete/${postId}`} className="btn-dark">
+               Delete
+                </Link>
               </div>
             </div>
           </div>    

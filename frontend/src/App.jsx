@@ -9,6 +9,7 @@ import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
 import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
+import DeletePost from "./pages/DeletePost";
 
 function App() {
   const [user, setUser] = useState(UserContext)
@@ -31,6 +32,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/write" element={<WritePost />} />
           <Route path="/update/:postId" element={<UpdatePost />} />
+          <Route path="/delete/:postId" element={<DeletePost />} />
           <Route path="/post/:postId" element= {<PostDetails />}/>
         </Routes>
       </Router>
