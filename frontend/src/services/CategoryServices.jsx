@@ -42,6 +42,48 @@ const CategoryService = {
       throw error;
     }
   },
+
+  singleCategory: async (access_token, categoryId) => {
+    try {
+      if (access_token) {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_SINGLE_CATEGORIES}/${categoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      throw error;
+    }
+  },
+
+  deleteCategory: async (access_token, categoryId) => {
+    try {
+      if (access_token) {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_API_DELETE_CATEGORIES}/${categoryId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+  
+       
+          return response.data.data;
+      
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error.response?.data || error.message);
+      throw error;
+    }
+  },
+
   
 };
 
