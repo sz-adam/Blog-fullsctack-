@@ -42,12 +42,12 @@ const CommentServices = {
     }
   },
 
-  updateCategoryById: async (access_token, categoryId, updatedData) => {
+  updateComments: async (access_token, editedCommentId, updatedData) => {
     try {
       if (access_token) {
         const response = await axios.put(
-          import.meta.env.VITE_API_UPDATE_CATEGORIES + `/${categoryId}`,
-          updatedData,
+          `${import.meta.env.VITE_API_UPDATE_COMMENT}/${editedCommentId}`,
+          updatedData, 
           {
             headers: {
               Authorization: `Bearer ${access_token}`,
@@ -57,10 +57,10 @@ const CommentServices = {
         return response.data.data;
       }
     } catch (error) {
-      console.error("Error updating category by ID:", error);
+      console.error("Error updating comment by ID:", error);
       throw error;
     }
-  },
+},
 
   singleCategory: async (access_token, categoryId) => {
     try {
