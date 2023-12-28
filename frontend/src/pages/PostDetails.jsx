@@ -29,7 +29,7 @@ function PostDetails() {
         setComments(allComments);
       }
     } catch (error) {
-      console.error("Hiba a kommentek lekérése során:", error);
+      console.error( error);
     }
   };
 
@@ -79,7 +79,7 @@ function PostDetails() {
             ) : null}
           </div>
         </div>
-        <PostAllComment postId={postId} comments={comments} />
+        <PostAllComment postId={postId} comments={comments} updateComments={updateComments}/>
       </div>
     </div>
   );

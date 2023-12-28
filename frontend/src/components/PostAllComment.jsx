@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import { AiTwotoneDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
-
+import CommentServices from "../services/CommentServices";
+import { UserContext } from "../context/userContext";
 import InputBox from "./InputBox";
 
 function PostAllComment({ comments, updateComments }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
-
+  const { user } = useContext(UserContext);
+  const access_token = user?.data?.token;
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -17,7 +19,17 @@ function PostAllComment({ comments, updateComments }) {
   };
 
   const handleCommentUpdate = async () => {
-
+    try {
+      if (editedComment && editedCommentId) {
+        await CommentServices.updateComments(access_token, editedCommentId, {
+          description: editedComment,
+        });
+        updateComments();
+        closeEditing();
+      }
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
   };
 
   const openEditing = (commentId, commentDescription) => {
@@ -50,11 +62,10 @@ function PostAllComment({ comments, updateComments }) {
           <div className="flex flex-col justify-end ml-2">
             <div className="flex mb-1">
               {isEditing && editedCommentId === comment._id ? (
-                <div>
-                   <button onClick={handleCommentUpdate}>Save</button>
-                <button onClick={closeEditing}>Cancel</button>
+                <div >
+                  <button onClick={handleCommentUpdate}>Save</button>
+                  <button onClick={closeEditing}>Cancel</button>
                 </div>
-               
               ) : (
                 <FaRegEdit
                   className="icon text-gray-600"
