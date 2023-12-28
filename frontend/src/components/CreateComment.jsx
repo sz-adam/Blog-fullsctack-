@@ -31,7 +31,7 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
   };
 
   return (
-    <div>
+    <div >
       <form onSubmit={handleCreateComment}>
         <InputBox
           type="text"
@@ -39,13 +39,14 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         />
-        <button type="submit" className="btn-dark">
+        <button type="submit" className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg">
           Sending
-        </button>       
-      </form>
-      <button className="btn-white" onClick={() => setShowCreateComment(false)}>
+        </button>    
+        <button type="button" className="editText focus:ring focus:ring-red-500 bg-red-400 text-white text-lg" onClick={() => setShowCreateComment(false)}>
           Cancel
-        </button>
+        </button>   
+      </form>
+    
     </div>
   );
 }
