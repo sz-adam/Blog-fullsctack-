@@ -24,4 +24,7 @@
   .btn-white {
     @apply border-2 px-5 py-1 rounded-full text-lg  hover:bg-slate-100 font-semibold;
   }
+  .icon {
+    @apply text-2xl mr-5 hover:text-gray-500;
+  }
 }
