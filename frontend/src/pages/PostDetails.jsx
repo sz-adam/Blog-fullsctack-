@@ -6,9 +6,8 @@ import { useNavigate, Link } from "react-router-dom";
 import CreateComment from "../components/CreateComment";
 import PostAllComment from "../components/PostAllComment";
 import Card from "../components/Card";
-import { AiOutlineLike } from "react-icons/ai";
-import { AiOutlineDislike } from "react-icons/ai";
 import { FaRegComment } from "react-icons/fa";
+import Interaction from "../components/Interaction";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -41,35 +40,11 @@ function PostDetails() {
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col w-11/12 justify-center items-center ">
         <Card postData={postData} postId={postId} />
-        {/**
-        <div className="mt-10">
-          <Link to="/" className="btn-dark">
-            Back
-          </Link>
-          <Link to="/" className="btn-dark">
-            Like
-          </Link>
-          <Link to="/" className="btn-dark">
-            Dislike
-          </Link>        
-         
-            Delete
-          </button>
-        
-        </div>
-      
- */}
 
         <div className="flex flex-col items-center justify-center text-center space-x-4 mb-4 w-full">
           <div >
-            <span className="text-gray-400 inline-flex items-center leading-none  border-gray-200 pr-5 text-xl">
-              <AiOutlineLike className="mr-1" />
-              <p>{postData?.likesCount}</p>
-            </span>
-            <span className="text-gray-400 inline-flex items-center leading-none  border-gray-200 pr-5 text-xl">
-              <AiOutlineDislike className="mr-1" />
-              <p>{postData?.disLikesCount}</p>
-            </span>
+            <Interaction postData={postData} />
+          
             <span
               className="text-gray-400 inline-flex items-center leading-none text-xl cursor-pointer"
               onClick={() => setShowCreateComment(true)}
