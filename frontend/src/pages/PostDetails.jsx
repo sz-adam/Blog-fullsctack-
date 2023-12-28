@@ -2,12 +2,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import { UserContext } from "../context/userContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import CreateComment from "../components/CreateComment";
 import PostAllComment from "../components/PostAllComment";
 import Card from "../components/Card";
 import { FaRegComment } from "react-icons/fa";
 import Interaction from "../components/Interaction";
+import CommentServices from "../services/CommentServices";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -15,8 +16,22 @@ function PostDetails() {
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const navigate = useNavigate();
-  const [commentList, setCommentList] = useState([]);
   const [showCreateComment, setShowCreateComment] = useState(false);
+  const [comments, setComments] = useState([]);
+
+  const updateComments = async () => {
+    try {
+      if (access_token && postId) {
+        const allComments = await CommentServices.allpostComment(
+          access_token,
+          postId
+        );
+        setComments(allComments);
+      }
+    } catch (error) {
+      console.error("Hiba a kommentek lekérése során:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,19 +42,16 @@ function PostDetails() {
             postId
           );
           setPostData(postDetails);
+          updateComments();
         } else {
           navigate("/");
         }
       } catch (error) {
-        console.error("Error fetching post details:", error);
+        console.error("Hiba a bejegyzés részleteinek lekérése során:", error);
       }
     };
     fetchData(access_token, postId);
   }, [access_token, postId]);
-
-  const handleCommentCreated = (newComment) => {
-    setCommentList([...commentList, newComment]);
-  };
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -61,14 +73,13 @@ function PostDetails() {
             {showCreateComment ? (
               <CreateComment
                 postId={postId}
-                onCommentCreated={handleCommentCreated}
                 setShowCreateComment={setShowCreateComment}
+                updateComments={updateComments}
               />
             ) : null}
           </div>
         </div>
-        {/* Pass commentList to PostAllComment */}
-        <PostAllComment postId={postId} commentList={commentList} />
+        <PostAllComment postId={postId} comments={comments} />
       </div>
     </div>
   );

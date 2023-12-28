@@ -3,25 +3,32 @@ import InputBox from "./InputBox";
 import CommentServices from "../services/CommentServices";
 import { UserContext } from "../context/userContext";
 
-function CreateComment({ postId, onCommentCreated, setShowCreateComment }) {
+function CreateComment({ postId, setShowCreateComment, updateComments }) {
   const [comment, setComment] = useState("");
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const access_token = user?.data?.token;
 
   const handleCreateComment = async (event) => {
     event.preventDefault();
     try {
+      // Check if there is an access_token and postId
       if (access_token && postId) {
-        const newComment = await CommentServices.createComment(access_token, {
-          postId,
-          description: comment,
-        });
-
-        // After creating the comment, call the onCommentCreated function
-        onCommentCreated(newComment);
+        // Create a new comment using the CommentServices
+        const createCommentResponse = await CommentServices.createComment(
+          access_token,
+          {
+            postId,
+            description: comment, // Pass the comment text
+          }
+        );
         setShowCreateComment(false);
+        updateComments()
+        // Log the response from creating the comment
+        console.log("Comment created:", createCommentResponse);
+        // You can update the user or perform any other actions based on the response
       }
     } catch (error) {
+      // Log and handle errors if any occur during the comment creation
       console.error("Error creating comment:", error);
     }
   };

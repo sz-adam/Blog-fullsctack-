@@ -3,10 +3,9 @@ import { FaEye } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { FaComment } from "react-icons/fa"
+import { FaComment } from "react-icons/fa";
 
-function postCard({ post }) { 
-  
+function postCard({ post }) {
   return (
     <>
       <div className="p-1 w-full md:w-1/2">
@@ -18,14 +17,14 @@ function postCard({ post }) {
           />
           <div className="p-6">
             <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-          CATEGORY: {post?.category?.title}
+              CATEGORY: {post?.category?.title}
             </h2>
             <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-             {post.title}
+              {post.title}
             </h1>
 
             <div className="flex items-center flex-wrap">
-              <Link to={`/post/${post.id}`}  className="btn-dark px-10">
+              <Link to={`/post/${post.id}`} className="btn-dark px-10">
                 View
               </Link>
               <span className="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none  pr-3 border-r-2 border-gray-200">
@@ -41,7 +40,7 @@ function postCard({ post }) {
                 <p className="ml-1">{post.disLikesCount}</p>
               </span>
               <span className="text-gray-400 inline-flex items-center leading-none  ">
-              <FaComment />
+                <FaComment />
                 <p className="ml-1">{post.comments.length}</p>
               </span>
             </div>
