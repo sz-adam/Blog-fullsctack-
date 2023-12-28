@@ -62,9 +62,9 @@ function PostAllComment({ comments, updateComments }) {
           <div className="flex flex-col justify-end ml-2">
             <div className="flex mb-1">
               {isEditing && editedCommentId === comment._id ? (
-                <div >
-                  <button onClick={handleCommentUpdate}>Save</button>
-                  <button onClick={closeEditing}>Cancel</button>
+                <div className="flex flex-col mr-5">
+                  <button onClick={handleCommentUpdate} className="hover:text-gray-500 border-b-2">Save</button>
+                  <button onClick={closeEditing} className="hover:text-gray-500">Cancel</button>
                 </div>
               ) : (
                 <FaRegEdit
