@@ -1,10 +1,9 @@
 import React, { useContext, useState } from "react";
-
-import { AiTwotoneDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import CommentServices from "../services/CommentServices";
 import { UserContext } from "../context/userContext";
 import EditComment from "./EditComment";
+import DeleteComment from "./DeleteComment";
 
 function PostAllComment({ comments, updateComments }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -17,7 +16,6 @@ function PostAllComment({ comments, updateComments }) {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
-
   const handleCommentUpdate = async () => {
     try {
       if (editedComment && editedCommentId) {
@@ -66,7 +64,10 @@ function PostAllComment({ comments, updateComments }) {
                 className="icon text-gray-600"
                 onClick={() => openEditing(comment._id, comment.description)}
               />
-              <AiTwotoneDelete className="icon text-red-600 cursor-pointer" />
+              <DeleteComment
+                updateComments={updateComments}
+                comment={comment}
+              />
             </div>
             <div>
               <p className="font-bold text-gray-500 text-xs">
