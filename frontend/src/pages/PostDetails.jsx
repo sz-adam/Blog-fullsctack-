@@ -16,7 +16,6 @@ function PostDetails() {
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const navigate = useNavigate();
-  const [deleteModal, setDeleteModal] = useState(false);
   const [showCreateComment, setShowCreateComment] = useState(false);
 
   useEffect(() => {
@@ -58,28 +57,31 @@ function PostDetails() {
           </button>
         
         </div>
-          <CreateComment postId={postId} />
+      
  */}
 
-        <div className="flex items-center justify-center text-center space-x-4 mb-4 ">
-          <span className="text-gray-400 inline-flex items-center leading-none border-r-2 border-gray-200 pr-3 text-xl">
-            <AiOutlineLike className="mr-1" />
-            <p>{postData?.likesCount}</p>
-          </span>
-          <span className="text-gray-400 inline-flex items-center leading-none  text-xl border-r-2 border-gray-200 pr-3">
-            <AiOutlineDislike className="mr-1" />
-            <p>{postData?.disLikesCount}</p>
-          </span>
-          <span
-            className="text-gray-400 inline-flex items-center leading-none  text-xl cursor-pointer"
-            onClick={() => setShowCreateComment(true)}
-          >
-            <FaRegComment className="mr-1" />
-            <p>Comment</p>
-          </span>
-          {showCreateComment ? <CreateComment postId={postId} /> : null}
+        <div className="flex flex-col items-center justify-center text-center space-x-4 mb-4 w-full">
+          <div >
+            <span className="text-gray-400 inline-flex items-center leading-none  border-gray-200 pr-5 text-xl">
+              <AiOutlineLike className="mr-1" />
+              <p>{postData?.likesCount}</p>
+            </span>
+            <span className="text-gray-400 inline-flex items-center leading-none  border-gray-200 pr-5 text-xl">
+              <AiOutlineDislike className="mr-1" />
+              <p>{postData?.disLikesCount}</p>
+            </span>
+            <span
+              className="text-gray-400 inline-flex items-center leading-none text-xl cursor-pointer"
+              onClick={() => setShowCreateComment(true)}
+            >
+              <FaRegComment className="mr-1" />
+              <p>Comment</p>
+            </span>
+          </div>
+          <div className="mt-5">
+            {showCreateComment ? <CreateComment postId={postId} /> : null}
+          </div>
         </div>
-
         <PostAllComment postId={postId} />
       </div>
     </div>

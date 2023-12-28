@@ -12,7 +12,6 @@ function Card({ postData, postId }) {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
 
-  console.log(postData)
   return (
     <div>
       <div className="flex justify-around mb-4 mt-2 md:mb-6 items-center">
