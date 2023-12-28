@@ -4,7 +4,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import CommentServices from "../services/CommentServices";
 import { UserContext } from "../context/userContext";
-import InputBox from "./InputBox";
+import EditComment from "./EditComment";
 
 function PostAllComment({ comments, updateComments }) {
   const [isEditing, setIsEditing] = useState(false);
@@ -50,10 +50,11 @@ function PostAllComment({ comments, updateComments }) {
         <div key={comment._id} className="mb-2 p-2 bg-gray-100 flex ">
           <div className="flex-grow">
             {isEditing && editedCommentId === comment._id ? (
-              <InputBox
-                type="text"
-                value={editedComment}
-                onChange={(e) => setEditedComment(e.target.value)}
+              <EditComment
+                editedComment={editedComment}
+                setEditedComment={setEditedComment}
+                handleCommentUpdate={handleCommentUpdate}
+                closeEditing={closeEditing}
               />
             ) : (
               <p>{comment.description}</p>
@@ -61,17 +62,10 @@ function PostAllComment({ comments, updateComments }) {
           </div>
           <div className="flex flex-col justify-end ml-2">
             <div className="flex mb-1">
-              {isEditing && editedCommentId === comment._id ? (
-                <div className="flex flex-col mr-5">
-                  <button onClick={handleCommentUpdate} className="hover:text-gray-500 border-b-2">Save</button>
-                  <button onClick={closeEditing} className="hover:text-gray-500">Cancel</button>
-                </div>
-              ) : (
-                <FaRegEdit
-                  className="icon text-gray-600"
-                  onClick={() => openEditing(comment._id, comment.description)}
-                />
-              )}
+              <FaRegEdit
+                className="icon text-gray-600"
+                onClick={() => openEditing(comment._id, comment.description)}
+              />
               <AiTwotoneDelete className="icon text-red-600 cursor-pointer" />
             </div>
             <div>

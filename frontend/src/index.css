@@ -27,4 +27,8 @@
   .icon {
     @apply text-2xl mr-5 hover:text-gray-500;
   }
+
+  .editText{
+    @apply p-1 px-4 mr-4 border-2 rounded-full font-bold
+  }
 }
