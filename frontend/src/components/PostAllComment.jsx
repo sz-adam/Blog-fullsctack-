@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import CommentServices from "../services/CommentServices";
 import { UserContext } from "../context/userContext";
 
-function PostAllComment({ postId }) {
+function PostAllComment({ postId, commentList }) {
   const [comments, setComments] = useState([]);
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
@@ -26,7 +26,7 @@ function PostAllComment({ postId }) {
   return (
     <div>
       <ul>
-        {comments.map((comment) => (
+      {commentList.map((comment) => (
           <li key={comment._id}>{comment.description}</li>
         ))}
       </ul>

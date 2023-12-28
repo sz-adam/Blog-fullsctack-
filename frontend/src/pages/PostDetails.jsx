@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import { UserContext } from "../context/userContext";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import CreateComment from "../components/CreateComment";
 import PostAllComment from "../components/PostAllComment";
 import Card from "../components/Card";
@@ -15,6 +15,7 @@ function PostDetails() {
   const { user } = useContext(UserContext);
   const access_token = user?.data?.token;
   const navigate = useNavigate();
+  const [commentList, setCommentList] = useState([]);
   const [showCreateComment, setShowCreateComment] = useState(false);
 
   useEffect(() => {
@@ -36,15 +37,18 @@ function PostDetails() {
     fetchData(access_token, postId);
   }, [access_token, postId]);
 
+  const handleCommentCreated = (newComment) => {
+    setCommentList([...commentList, newComment]);
+  };
+
   return (
     <div className="flex flex-col justify-center items-center">
       <div className="flex flex-col w-11/12 justify-center items-center ">
         <Card postData={postData} postId={postId} />
 
         <div className="flex flex-col items-center justify-center text-center space-x-4 mb-4 w-full">
-          <div >
+          <div>
             <Interaction postData={postData} />
-          
             <span
               className="text-gray-400 inline-flex items-center leading-none text-xl cursor-pointer"
               onClick={() => setShowCreateComment(true)}
@@ -54,10 +58,17 @@ function PostDetails() {
             </span>
           </div>
           <div className="mt-5">
-            {showCreateComment ? <CreateComment postId={postId} /> : null}
+            {showCreateComment ? (
+              <CreateComment
+                postId={postId}
+                onCommentCreated={handleCommentCreated}
+                setShowCreateComment={setShowCreateComment}
+              />
+            ) : null}
           </div>
         </div>
-        <PostAllComment postId={postId} />
+        {/* Pass commentList to PostAllComment */}
+        <PostAllComment postId={postId} commentList={commentList} />
       </div>
     </div>
   );
