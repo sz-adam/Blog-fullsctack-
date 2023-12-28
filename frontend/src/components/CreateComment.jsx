@@ -18,14 +18,11 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
           access_token,
           {
             postId,
-            description: comment, // Pass the comment text
+            description: comment,
           }
         );
         setShowCreateComment(false);
-        updateComments()
-        // Log the response from creating the comment
-        console.log("Comment created:", createCommentResponse);
-        // You can update the user or perform any other actions based on the response
+        updateComments()    
       }
     } catch (error) {
       // Log and handle errors if any occur during the comment creation
@@ -44,8 +41,11 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
         />
         <button type="submit" className="btn-dark">
           Sending
-        </button>
+        </button>       
       </form>
+      <button className="btn-white" onClick={() => setShowCreateComment(false)}>
+          Cancel
+        </button>
     </div>
   );
 }
