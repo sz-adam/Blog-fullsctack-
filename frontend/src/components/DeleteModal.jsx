@@ -100,14 +100,14 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
       {/* Footer */}
       <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
         <button
-          className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-4"
+          className="editText focus:ring focus:ring-red-500 bg-red-400 text-white text-lg"
           type="button"
           onClick={() => setDeleteModal(false)}
         >
           Cancel
         </button>
         <button
-          className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none"
+          className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg"
           type="button"
           onClick={handleDeletePost}
         >
