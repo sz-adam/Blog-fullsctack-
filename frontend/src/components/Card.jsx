@@ -1,16 +1,39 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { FaRegEdit } from "react-icons/fa";
 import DeleteModal from "./DeleteModal";
+import { getAccessToken } from "../common/utils";
+import CategoryService from "../services/CategoryServices";
 
 function Card({ postData, postId }) {
   const [deleteModal, setDeleteModal] = useState(false);
+  const [category, setCategory] = useState("");
+  const access_token = getAccessToken();
+  const categoryId = postData?.category;
+
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token && categoryId) {
+          const postsData = await CategoryService.singleCategory(
+            access_token,
+            categoryId
+          );
+          setCategory(postsData);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchData();
+  }, [access_token, categoryId]);
 
   return (
     <div>
@@ -53,7 +76,7 @@ function Card({ postData, postId }) {
 
           <h1 className="text-3xl font-bold mb-2">{postData?.title}</h1>
           <h2 className="font-medium text-gray-400 mb-1 py-10">
-            CATEGORY: {postData?.title}
+            CATEGORY: {category?.title}
           </h2>
           <p className="text-gray-600 mb-4 text-justify">
             {postData?.description}
