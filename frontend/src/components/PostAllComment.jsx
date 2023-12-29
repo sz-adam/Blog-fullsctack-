@@ -3,14 +3,18 @@ import { FaRegEdit } from "react-icons/fa";
 import CommentServices from "../services/CommentServices";
 import EditComment from "./EditComment";
 import DeleteComment from "./DeleteComment";
+import { getAccessToken } from "../common/utils";
+import { UserContext } from "../context/userContext";
 import { AuthUserContext } from "../context/AuthUserContext";
 
 function PostAllComment({ comments, updateComments }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
+  const access_token = getAccessToken();
+
+  const { user, setUser } = useContext(UserContext);
   const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -60,14 +64,20 @@ function PostAllComment({ comments, updateComments }) {
           </div>
           <div className="flex flex-col justify-end ml-2">
             <div className="flex mb-1">
-              <FaRegEdit
-                className="icon text-gray-600"
-                onClick={() => openEditing(comment._id, comment.description)}
-              />
-              <DeleteComment
-                updateComments={updateComments}
-                comment={comment}
-              />
+              {comment?.user === user?.id && (
+                <>
+                  <FaRegEdit
+                    className="icon text-gray-600"
+                    onClick={() =>
+                      openEditing(comment._id, comment.description)
+                    }
+                  />
+                  <DeleteComment
+                    updateComments={updateComments}
+                    comment={comment}
+                  />
+                </>
+              )}
             </div>
             <div>
               <p className="font-bold text-gray-500 text-xs">
