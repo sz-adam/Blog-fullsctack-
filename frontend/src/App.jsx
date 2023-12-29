@@ -13,8 +13,7 @@ import { UserContext } from "./context/userContext";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
-  const {user, setUser} =useState(UserContext);
-  console.log(user)
+  const [user, setUser] = useState(UserContext);
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -25,18 +24,18 @@ function App() {
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
-        <UserContext.Provider value={{user, setUser}} >
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/write" element={<WritePost />} />
-            <Route path="/update/:postId" element={<UpdatePost />} />
-            <Route path="/post/:postId" element={<PostDetails />} />
-          </Routes>
-        </Router>
+        <UserContext.Provider value={{ user, setUser }}>
+          <Router>
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/write" element={<WritePost />} />
+              <Route path="/update/:postId" element={<UpdatePost />} />
+              <Route path="/post/:postId" element={<PostDetails />} />
+            </Routes>
+          </Router>
         </UserContext.Provider>
       </AuthUserContext.Provider>
     </>
