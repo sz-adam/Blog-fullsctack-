@@ -3,8 +3,8 @@ import PostService from "../services/PostsServices";
 import PostCard from "../components/PostCard";
 import AllCategory from "../components/allCategory";
 import { getAccessToken } from "../common/utils";
-import UserService from "../services/UserServices";
 import { UserContext } from "../context/userContext";
+import UserService from "../services/UserServices";
 
 function Home() {
   const [posts, setPosts] = useState([]);
@@ -17,11 +17,8 @@ function Home() {
     const fetchData = async () => {
       try {
         if (access_token) {
-          const postsData = await PostService.getAllPosts(access_token);
-          setPosts(postsData);
-        } else {
-          const noLoginPostsData = await PostService.getAllPosts();
-          setNoLoginPosts(noLoginPostsData);
+          const userData = await UserService.userProfile(access_token);
+          setUser(userData);
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -34,8 +31,11 @@ function Home() {
     const fetchData = async () => {
       try {
         if (access_token) {
-          const userData = await UserService.userProfile(access_token);
-          setUser(userData);
+          const postsData = await PostService.getAllPosts(access_token);
+          setPosts(postsData);
+        } else {
+          const noLoginPostsData = await PostService.getAllPosts();
+          setNoLoginPosts(noLoginPostsData);
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
