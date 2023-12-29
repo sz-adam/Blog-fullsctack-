@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { AiTwotoneDelete } from "react-icons/ai";
@@ -6,12 +6,14 @@ import { FaRegEdit } from "react-icons/fa";
 import DeleteModal from "./DeleteModal";
 import { getAccessToken } from "../common/utils";
 import CategoryService from "../services/CategoryServices";
+import { UserContext } from "../context/userContext";
 
 function Card({ postData, postId }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [category, setCategory] = useState("");
   const access_token = getAccessToken();
   const categoryId = postData?.category;
+  const {user } =useContext(UserContext)
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -59,8 +61,9 @@ function Card({ postData, postId }) {
             className="object-cover rounded-lg"
           />
         </div>
-        {/**description */}
+        {/**description */}       
         <div className="md:w-full lg:w-2/3 mx-auto md:ml-10">
+        {user?._id ===postData?.user && (
           <div className="flex justify-end  ">
             <Link to={`/update/${postId}`}>
               <FaRegEdit className="icon text-gray-600" />
@@ -70,6 +73,7 @@ function Card({ postData, postId }) {
               onClick={() => setDeleteModal(true)}
             />
           </div>
+          )}
           {deleteModal && (
             <DeleteModal setDeleteModal={setDeleteModal} postId={postId} />
           )}
