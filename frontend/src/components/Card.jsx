@@ -7,19 +7,21 @@ import DeleteModal from "./DeleteModal";
 import { getAccessToken } from "../common/utils";
 import CategoryService from "../services/CategoryServices";
 import { UserContext } from "../context/userContext";
+import UserService from "../services/UserServices";
 
 function Card({ postData, postId }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [category, setCategory] = useState("");
+  const [allUsers, setAllUsers] = useState();
   const access_token = getAccessToken();
   const categoryId = postData?.category;
-  const {user } =useContext(UserContext)
-
+  const { user } = useContext(UserContext);
+  console.log(allUsers);
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
-
+  //category
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +39,23 @@ function Card({ postData, postId }) {
     fetchData();
   }, [access_token, categoryId]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token) {
+          const allUser = await UserService.allUser(access_token);
+          setAllUsers(allUser);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchData();
+  }, [access_token]);
+  const filteredUsers =
+    allUsers?.filter((user) => postData?.user === user.id) || [];
+  console.log(filteredUsers);
+
   return (
     <div>
       <div className="flex justify-around mb-4 mt-2 md:mb-6 items-center">
@@ -46,8 +65,13 @@ function Card({ postData, postId }) {
           </Link>
         </p>
         <p className="text-gray-500">
-          <span className="font-bold">Create:</span>{" "}
+          <span className="font-bold">Create:</span>
           {formatDate(postData?.createdAt)}
+        </p>
+        <p className="text-gray-500">
+          {filteredUsers.map((filteredUser) => (
+            <span className="font-bold">Create: {filteredUser?.fullname} {filteredUser.email}</span>
+          ))}
         </p>
       </div>
 
@@ -61,18 +85,18 @@ function Card({ postData, postId }) {
             className="object-cover rounded-lg"
           />
         </div>
-        {/**description */}       
+        {/**description */}
         <div className="md:w-full lg:w-2/3 mx-auto md:ml-10">
-        {user?._id ===postData?.user && (
-          <div className="flex justify-end  ">
-            <Link to={`/update/${postId}`}>
-              <FaRegEdit className="icon text-gray-600" />
-            </Link>
-            <AiTwotoneDelete
-              className="icon text-red-600 cursor-pointer"
-              onClick={() => setDeleteModal(true)}
-            />
-          </div>
+          {user?._id === postData?.user && (
+            <div className="flex justify-end  ">
+              <Link to={`/update/${postId}`}>
+                <FaRegEdit className="icon text-gray-600" />
+              </Link>
+              <AiTwotoneDelete
+                className="icon text-red-600 cursor-pointer"
+                onClick={() => setDeleteModal(true)}
+              />
+            </div>
           )}
           {deleteModal && (
             <DeleteModal setDeleteModal={setDeleteModal} postId={postId} />
