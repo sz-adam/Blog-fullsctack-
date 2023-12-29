@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserContext } from "../context/userContext";
 import PostService from "../services/PostsServices";
 import PostCard from "../components/PostCard";
 import AllCategory from "../components/allCategory";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function Home() {
-  const { user, setUser } = useContext(UserContext);
+
   const [posts, setPosts] = useState([]);
   const [noLoginPosts, setNoLoginPosts] = useState([]);
-  const access_token = user?.data?.token;
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const access_token = authUser?.data?.token;
   const postsToShow = access_token ? posts : noLoginPosts;
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
-import { UserContext } from "./context/userContext";
+import { AuthUserContext } from "./context/AuthUserContext";
 import { useEffect, useState } from "react";
 import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
@@ -11,17 +11,17 @@ import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
 
 function App() {
-  const [user, setUser] = useState(UserContext);
+  const [authUser, setAuthUser] = useState(AuthUserContext);
 
   useEffect(() => {
     const userInSession = lookInSession("user");
     if (userInSession) {
-      setUser(JSON.parse(userInSession));
+      setAuthUser(JSON.parse(userInSession));
     }
   }, []);
   return (
     <>
-      <UserContext.Provider value={{ user, setUser }}>
+      <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
         <Router>
           <Navbar />
           <Routes>
@@ -33,7 +33,7 @@ function App() {
             <Route path="/post/:postId" element={<PostDetails />} />
           </Routes>
         </Router>
-      </UserContext.Provider>
+      </AuthUserContext.Provider>
     </>
   );
 }

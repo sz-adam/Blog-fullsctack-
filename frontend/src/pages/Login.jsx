@@ -3,9 +3,9 @@ import InputBox from "../components/InputBox";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/userContext";
 import { storeInSession } from "../common/session";
 import UserService from "../services/UserServices";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -13,7 +13,8 @@ function Login() {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  const {setUser } = useContext(UserContext);
+  const {  setAuthUser } = useContext(AuthUserContext);
+
 
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -21,7 +22,7 @@ function Login() {
     try {
       const userData = await UserService.login(email, password);
       storeInSession("user", JSON.stringify(userData));
-      setUser(userData);
+      setAuthUser(userData);
       navigate("/");
     } catch (error) {
       setError(error);

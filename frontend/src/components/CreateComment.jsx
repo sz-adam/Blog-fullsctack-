@@ -1,12 +1,12 @@
 import React, { useContext, useState } from "react";
 import InputBox from "./InputBox";
 import CommentServices from "../services/CommentServices";
-import { UserContext } from "../context/userContext";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function CreateComment({ postId, setShowCreateComment, updateComments }) {
   const [comment, setComment] = useState("");
-  const { user, setUser } = useContext(UserContext);
-  const access_token = user?.data?.token;
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const access_token = authUser?.data?.token;
 
   const handleCreateComment = async (event) => {
     event.preventDefault();

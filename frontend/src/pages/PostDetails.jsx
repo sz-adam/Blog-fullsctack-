@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostService from "../services/PostsServices";
-import { UserContext } from "../context/userContext";
 import { useNavigate, Link } from "react-router-dom";
 import CreateComment from "../components/CreateComment";
 import PostAllComment from "../components/PostAllComment";
@@ -9,12 +8,13 @@ import Card from "../components/Card";
 import { FaRegComment } from "react-icons/fa";
 import Interaction from "../components/Interaction";
 import CommentServices from "../services/CommentServices";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function PostDetails() {
   const { postId } = useParams();
   const [postData, setPostData] = useState(null);
-  const { user } = useContext(UserContext);
-  const access_token = user?.data?.token;
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const access_token = authUser?.data?.token;
   const navigate = useNavigate();
   const [showCreateComment, setShowCreateComment] = useState(false);
   const [comments, setComments] = useState([]);

@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
 import { FaRegEdit } from "react-icons/fa";
 import CommentServices from "../services/CommentServices";
-import { UserContext } from "../context/userContext";
 import EditComment from "./EditComment";
 import DeleteComment from "./DeleteComment";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function PostAllComment({ comments, updateComments }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
-  const { user } = useContext(UserContext);
-  const access_token = user?.data?.token;
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const access_token = authUser?.data?.token;
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };

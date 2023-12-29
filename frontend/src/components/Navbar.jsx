@@ -1,12 +1,11 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../context/userContext";
 import UserNavigationMenu from "./UserNavigationMenu";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function Navbar() {
-  const { user, setUser } = useContext(UserContext);
-
-  const access_token = user?.data?.token;
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const access_token = authUser?.data?.token;
 
   return (
     <div className="navbar justify-between p-4">

@@ -3,13 +3,14 @@ import InputBox from "../components/InputBox";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
 import { useNavigate, useParams } from "react-router-dom";
-import { UserContext } from "../context/userContext";
+
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function UpdatePost() {
   const [categoryTitle, setCategoryTitle] = useState("");
   const [post, setPost] = useState("");
-  const { user } = useContext(UserContext);
-  const access_token = user?.data?.token;
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const access_token = authUser?.data?.token;
   const { postId } = useParams();
   const [description, setDescription] = useState("");
   const [photo, setPhoto] = useState("");

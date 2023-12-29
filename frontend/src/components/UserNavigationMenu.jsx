@@ -1,10 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
-import { UserContext } from "../context/userContext";
 import { removeFormSession } from "../common/session";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 const UserNavigationPanel = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { authUser,setAuthUser } = useContext(AuthUserContext);
+
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -14,7 +15,7 @@ const UserNavigationPanel = () => {
 
   const handleLogout = () => {
     removeFormSession("user");
-    setUser(null);
+    setAuthUser(null);
     navigate("/");
   };
 
@@ -24,19 +25,18 @@ const UserNavigationPanel = () => {
         onClick={toggleDropdown}
         className="flex justify-center items-center cursor-pointer"
       >
-        <img src={user?.data?.profilePhoto} className="w-10" />
-        <p className="px-2">{user?.data?.firstname}</p>
+        <img src={authUser?.data?.profilePhoto} className="w-10" />
+        <p className="px-2">{authUser?.data?.firstname}</p>
       </div>
       {isOpen && (
         <div className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 ">
           <Link to={"/"} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Profile
           </Link>
-
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Dashboard
           </Link>
-
+Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate ex fugiat ratione perferendis quasi debitis vero vitae suscipit hic, commodi tempora pariatur praesentium delectus sint harum. Nam sint accusantium incidunt soluta rem at cum cumque eveniet expedita officia omnis aperiam sit error eius, ullam exercitationem sunt quaerat, ad molestiae! Nobis.
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Settings
           </Link>
@@ -47,7 +47,7 @@ const UserNavigationPanel = () => {
           >
             <h1 className="font-bold text-xl my-1 text-black">Sign Out</h1>
             <p className="text-dark-grey text-black">
-              @{user?.data?.firstname}
+              @{authUser?.data?.firstname}
             </p>
           </div>
         </div>
