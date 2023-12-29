@@ -13,8 +13,8 @@ function PostAllComment({ comments, updateComments }) {
   const [editedCommentId, setEditedCommentId] = useState(null);
   const access_token = getAccessToken();
 
-  const { user, setUser } = useContext(UserContext);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
+  const { user} = useContext(UserContext);
+
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
