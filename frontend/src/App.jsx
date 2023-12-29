@@ -9,9 +9,12 @@ import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
 import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
+import { UserContext } from "./context/userContext";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
+  const {user, setUser} =useState(UserContext);
+  console.log(user)
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -22,6 +25,7 @@ function App() {
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
+        <UserContext.Provider value={{user, setUser}} >
         <Router>
           <Navbar />
           <Routes>
@@ -33,6 +37,7 @@ function App() {
             <Route path="/post/:postId" element={<PostDetails />} />
           </Routes>
         </Router>
+        </UserContext.Provider>
       </AuthUserContext.Provider>
     </>
   );
