@@ -36,7 +36,6 @@ const UserNavigationPanel = () => {
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Dashboard
           </Link>
-Lorem ipsum dolor sit, amet consectetur adipisicing elit. Cupiditate ex fugiat ratione perferendis quasi debitis vero vitae suscipit hic, commodi tempora pariatur praesentium delectus sint harum. Nam sint accusantium incidunt soluta rem at cum cumque eveniet expedita officia omnis aperiam sit error eius, ullam exercitationem sunt quaerat, ad molestiae! Nobis.
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Settings
           </Link>
