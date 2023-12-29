@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import { useNavigate, Link } from "react-router-dom";
@@ -8,13 +8,12 @@ import Card from "../components/Card";
 import { FaRegComment } from "react-icons/fa";
 import Interaction from "../components/Interaction";
 import CommentServices from "../services/CommentServices";
-import { AuthUserContext } from "../context/AuthUserContext";
+import { getAccessToken } from "../common/utils";
 
 function PostDetails() {
   const { postId } = useParams();
   const [postData, setPostData] = useState(null);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
+  const access_token = getAccessToken();
   const navigate = useNavigate();
   const [showCreateComment, setShowCreateComment] = useState(false);
   const [comments, setComments] = useState([]);

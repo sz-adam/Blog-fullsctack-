@@ -1,17 +1,18 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import InputBox from "../components/InputBox";
 import PostService from "../services/PostsServices";
-import { AuthUserContext } from "../context/AuthUserContext";
 import CategoryService from "../services/CategoryServices";
 import { useNavigate } from "react-router-dom";
+import { getAccessToken } from "../common/utils";
+
+
 
 function WritePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [photo, setPhoto] = useState("");
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
+  const access_token = getAccessToken();
   const navigate = useNavigate();
 
   const handlePostCreate = async (event) => {

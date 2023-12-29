@@ -18,9 +18,7 @@ function AllCategory() {
     <div>
       <ul>
         {allCategory.map((category) => (
-          <li key={category._id}>
-            {category.title}
-          </li>
+          <li key={category._id}>{category.title}</li>
         ))}
       </ul>
     </div>

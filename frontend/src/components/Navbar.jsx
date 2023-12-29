@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import UserNavigationMenu from "./UserNavigationMenu";
-import { AuthUserContext } from "../context/AuthUserContext";
+import { getAccessToken } from "../common/utils";
+
 
 function Navbar() {
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
-
+  const access_token = getAccessToken();
   return (
     <div className="navbar justify-between p-4">
       <div>
@@ -18,7 +17,10 @@ function Navbar() {
       </div>
       {access_token ? (
         <div className="flex items-center">
-          <Link to="/write" className="mr-10 hover:text-slate-500"> Write </Link>
+          <Link to="/write" className="mr-10 hover:text-slate-500">
+            {" "}
+            Write{" "}
+          </Link>
           <UserNavigationMenu />
         </div>
       ) : (

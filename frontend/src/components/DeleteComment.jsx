@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
+import React from "react";
 import CommentServices from "../services/CommentServices";
-
 import { AiTwotoneDelete } from "react-icons/ai";
-import { AuthUserContext } from "../context/AuthUserContext";
+import { getAccessToken } from "../common/utils";
 
 function DeleteComment({ updateComments, comment }) {
-  const { authUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
+  const access_token = getAccessToken();
 
   const handleDeleteComment = async (commentId) => {
     try {

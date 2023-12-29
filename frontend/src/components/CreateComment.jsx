@@ -1,12 +1,11 @@
 import React, { useContext, useState } from "react";
 import InputBox from "./InputBox";
 import CommentServices from "../services/CommentServices";
-import { AuthUserContext } from "../context/AuthUserContext";
+import { getAccessToken } from "../common/utils";
 
 function CreateComment({ postId, setShowCreateComment, updateComments }) {
   const [comment, setComment] = useState("");
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
+  const access_token = getAccessToken();
 
   const handleCreateComment = async (event) => {
     event.preventDefault();
@@ -14,7 +13,7 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
       // Check if there is an access_token and postId
       if (access_token && postId) {
         // Create a new comment using the CommentServices
-        const createCommentResponse = await CommentServices.createComment(
+       await CommentServices.createComment(
           access_token,
           {
             postId,

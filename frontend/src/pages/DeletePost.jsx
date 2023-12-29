@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
-import { AuthUserContext } from "../context/AuthUserContext";
+import { getAccessToken } from "../common/utils";
 
 function DeletePost() {
   const [post, setPost] = useState(null);
   const [category, setCategory] = useState(null);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const access_token = authUser?.data?.token;
+  const access_token = getAccessToken();
   const { postId } = useParams();
   const navigate = useNavigate();
   const categoryId = post?.category;
