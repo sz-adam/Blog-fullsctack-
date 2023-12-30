@@ -16,7 +16,6 @@ function Card({ postData, postId }) {
   const access_token = getAccessToken();
   const categoryId = postData?.category;
   const { user } = useContext(UserContext);
-  console.log(allUsers);
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);

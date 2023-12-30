@@ -3,7 +3,7 @@ import PostService from "../services/PostsServices";
 import PostCard from "../components/PostCard";
 import AllCategory from "../components/allCategory";
 import { getAccessToken } from "../common/utils";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import UserService from "../services/UserServices";
 
 function Home() {
