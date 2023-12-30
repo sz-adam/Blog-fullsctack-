@@ -23,7 +23,7 @@ function UserProfile() {
             </div>
             
             <div>
-              <p className="font-bold text-gray-700 text-xl">{user?.comments.length}</p>
+              <p className="font-bold text-gray-700 text-xl">{user?.comments?.length}</p>
               <p className="text-gray-400">Comments</p>
             </div>
           </div>
