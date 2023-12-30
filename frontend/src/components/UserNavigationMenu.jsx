@@ -2,9 +2,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { useState, useContext } from "react";
 import { removeFormSession } from "../common/session";
 import { AuthUserContext } from "../context/AuthUserContext";
+import { UserContext } from "../context/UserContext";
 
 const UserNavigationPanel = () => {
   const { authUser,setAuthUser } = useContext(AuthUserContext);
+  const { user,setUser } = useContext(UserContext);
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
@@ -29,8 +31,8 @@ const UserNavigationPanel = () => {
         <p className="px-2">{authUser?.data?.firstname}</p>
       </div>
       {isOpen && (
-        <div className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 ">
-          <Link to={"/"} className="link pl-8 py-4 block text-black hover:text-slate-500">
+        <div className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 " onClick={() => setIsOpen(false)}>
+          <Link to={`/profile/${user?.id}`} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Profile
           </Link>
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">

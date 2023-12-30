@@ -9,7 +9,8 @@ import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
 import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
-import { UserContext } from "./context/userContext";
+import { UserContext } from "./context/UserContext";
+import UserProfile from "./pages/UserProfile";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
@@ -34,6 +35,7 @@ function App() {
               <Route path="/write" element={<WritePost />} />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
+              <Route path="/profile/:userId" element={<UserProfile />} />
             </Routes>
           </Router>
         </UserContext.Provider>
