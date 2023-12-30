@@ -6,7 +6,7 @@ import { FaRegEdit } from "react-icons/fa";
 import DeleteModal from "./DeleteModal";
 import { getAccessToken } from "../common/utils";
 import CategoryService from "../services/CategoryServices";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import UserService from "../services/UserServices";
 
 function Card({ postData, postId }) {
@@ -53,8 +53,7 @@ function Card({ postData, postId }) {
     fetchData();
   }, [access_token]);
   const filteredUsers =
-    allUsers?.filter((user) => postData?.user === user.id) || [];
-  console.log(filteredUsers);
+    allUsers?.filter((user) => postData?.user === user.id) || [];  
 
   return (
     <div>
@@ -70,7 +69,8 @@ function Card({ postData, postId }) {
         </p>
         <p className="text-gray-500">
           {filteredUsers.map((filteredUser) => (
-            <span className="font-bold">Create: {filteredUser?.fullname} {filteredUser.email}</span>
+            
+            <span className="font-bold" key={filteredUser.id}>Create: {filteredUser?.fullname} {filteredUser.email}</span>
           ))}
         </p>
       </div>
