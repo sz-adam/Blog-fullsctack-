@@ -15,12 +15,13 @@ function AllCategory() {
     fetchData();
   }, []);
   return (
-    <div>
-      <ul>
-        {allCategory.map((category) => (
-          <li key={category._id}>{category.title}</li>
-        ))}
-      </ul>
+    <div className="flex-col my-2">
+      <p className="text-center">Categories</p>
+      {allCategory.map((category) => (
+        <div key={category._id} className="border p-2 px-12 m-2 rounded-full text-center font-bold bg-yellow-500">
+          {category.title}
+        </div>
+      ))}
     </div>
   );
 }
