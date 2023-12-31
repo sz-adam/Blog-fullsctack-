@@ -4,17 +4,15 @@ import CommentServices from "../services/CommentServices";
 import EditComment from "./EditComment";
 import DeleteComment from "./DeleteComment";
 import { getAccessToken } from "../common/utils";
-import { UserContext } from "../context/userContext";
+import { UserContext } from "../context/UserContext";
 import { AuthUserContext } from "../context/AuthUserContext";
 
-function PostAllComment({ comments, updateComments }) {
+function PostAllComment({ allComments, setAllComments }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const access_token = getAccessToken();
-
-  const { user} = useContext(UserContext);
-
+  const { user } = useContext(UserContext);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -26,7 +24,14 @@ function PostAllComment({ comments, updateComments }) {
         await CommentServices.updateComments(access_token, editedCommentId, {
           description: editedComment,
         });
-        updateComments();
+
+        setAllComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment._id === editedCommentId
+              ? { ...comment, description: editedComment }
+              : comment
+          )
+        );
         closeEditing();
       }
     } catch (error) {
@@ -48,7 +53,7 @@ function PostAllComment({ comments, updateComments }) {
 
   return (
     <div className="w-full md:w-1/2 p-4">
-      {comments.map((comment) => (
+      {allComments.map((comment) => (
         <div key={comment._id} className="mb-2 p-2 bg-gray-100 flex ">
           <div className="flex-grow">
             {isEditing && editedCommentId === comment._id ? (
@@ -57,6 +62,7 @@ function PostAllComment({ comments, updateComments }) {
                 setEditedComment={setEditedComment}
                 handleCommentUpdate={handleCommentUpdate}
                 closeEditing={closeEditing}
+                editedCommentId={editedCommentId}
               />
             ) : (
               <p>{comment.description}</p>
@@ -72,10 +78,7 @@ function PostAllComment({ comments, updateComments }) {
                       openEditing(comment._id, comment.description)
                     }
                   />
-                  <DeleteComment
-                    updateComments={updateComments}
-                    comment={comment}
-                  />
+                  <DeleteComment comment={comment} />
                 </>
               )}
             </div>

@@ -7,6 +7,7 @@ function EditComment({
   handleCommentUpdate,
   closeEditing,
 }) {
+    
   return (
     <>
       <InputBox

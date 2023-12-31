@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import InputBox from "./InputBox";
-import CommentServices from "../services/CommentServices";
 import { getAccessToken } from "../common/utils";
+import CommentServices from "../services/CommentServices";
+import { useNavigate } from "react-router-dom";
 
-function CreateComment({ postId, setShowCreateComment, updateComments }) {
-  const [comment, setComment] = useState("");
+function CreateComment({ setShowCreateComment, postId, setAllComments }) {
   const access_token = getAccessToken();
+  const [createComments, setCreateComments] = useState("");
 
   const handleCreateComment = async (event) => {
     event.preventDefault();
@@ -13,15 +14,13 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
       // Check if there is an access_token and postId
       if (access_token && postId) {
         // Create a new comment using the CommentServices
-       await CommentServices.createComment(
-          access_token,
-          {
-            postId,
-            description: comment,
-          }
-        );
+        const newComment = await CommentServices.createComment(access_token, {
+          postId,
+          description: createComments,
+        });
+        setCreateComments(newComment);
+        setAllComments((prevComments) => [...prevComments, newComment]);
         setShowCreateComment(false);
-        updateComments()    
       }
     } catch (error) {
       // Log and handle errors if any occur during the comment creation
@@ -30,22 +29,28 @@ function CreateComment({ postId, setShowCreateComment, updateComments }) {
   };
 
   return (
-    <div >
+    <div>
       <form onSubmit={handleCreateComment}>
         <InputBox
           type="text"
           placeholder="comment"
-          value={comment}
-          onChange={(event) => setComment(event.target.value)}
+          value={createComments}
+          onChange={(event) => setCreateComments(event.target.value)}
         />
-        <button type="submit" className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg">
+        <button
+          type="submit"
+          className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg"
+        >
           Sending
-        </button>    
-        <button type="button" className="editText focus:ring focus:ring-red-500 bg-red-400 text-white text-lg" onClick={() => setShowCreateComment(false)}>
+        </button>
+        <button
+          type="button"
+          className="editText focus:ring focus:ring-red-500 bg-red-400 text-white text-lg"
+          onClick={() => setShowCreateComment(false)}
+        >
           Cancel
-        </button>   
+        </button>
       </form>
-    
     </div>
   );
 }

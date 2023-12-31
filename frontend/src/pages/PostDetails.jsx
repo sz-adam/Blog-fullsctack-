@@ -1,55 +1,48 @@
-import React, {  useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostService from "../services/PostsServices";
-import { useNavigate, Link } from "react-router-dom";
-import CreateComment from "../components/CreateComment";
-import PostAllComment from "../components/PostAllComment";
 import Card from "../components/Card";
 import { FaRegComment } from "react-icons/fa";
 import Interaction from "../components/Interaction";
 import CommentServices from "../services/CommentServices";
 import { getAccessToken } from "../common/utils";
+import CreateComment from "../components/CreateComment";
+import PostAllComment from "../components/PostAllComment";
 
 function PostDetails() {
   const { postId } = useParams();
   const [postData, setPostData] = useState(null);
+  const [allComments, setAllComments] = useState([]);
   const access_token = getAccessToken();
-  const navigate = useNavigate();
   const [showCreateComment, setShowCreateComment] = useState(false);
-  const [comments, setComments] = useState([]);
-
-  const updateComments = async () => {
-    try {
-      if (access_token && postId) {
-        const allComments = await CommentServices.allpostComment(
-          access_token,
-          postId
-        );
-        setComments(allComments);
-      }
-    } catch (error) {
-      console.error( error);
-    }
-  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (access_token) {
+          // Fetch post details
           const postDetails = await PostService.singlePosts(
             access_token,
             postId
           );
           setPostData(postDetails);
-          updateComments();
+
+          // Fetch all comments for the post
+          const comments = await CommentServices.allpostComment(
+            access_token,
+            postId
+          );
+          setAllComments(comments);
         } else {
-          navigate("/");
+          // Handle case when there is no access_token
+          // or redirect to login page, etc.
         }
       } catch (error) {
-        console.error("Hiba a bejegyzés részleteinek lekérése során:", error);
+        console.error("Error fetching post details or comments:", error);
       }
     };
-    fetchData(access_token, postId);
+
+    fetchData();
   }, [access_token, postId]);
 
   return (
@@ -73,12 +66,16 @@ function PostDetails() {
               <CreateComment
                 postId={postId}
                 setShowCreateComment={setShowCreateComment}
-                updateComments={updateComments}
+                setAllComments={setAllComments}
               />
             ) : null}
           </div>
         </div>
-        <PostAllComment postId={postId} comments={comments} updateComments={updateComments}/>
+        <PostAllComment
+          postId={postId}
+          allComments={allComments}
+          setAllComments={setAllComments}
+        />
       </div>
     </div>
   );
