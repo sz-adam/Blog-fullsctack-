@@ -7,11 +7,10 @@ import { UserContext } from "../context/UserContext";
 import UserService from "../services/UserServices";
 
 function Home() {
-  const [posts, setPosts] = useState([]);
-  const [noLoginPosts, setNoLoginPosts] = useState([]);
+  const [posts, setPosts] = useState([]); 
   const access_token = getAccessToken();
-  const postsToShow = access_token ? posts : noLoginPosts;
-  const { user, setUser } = useContext(UserContext);
+    const { user, setUser } = useContext(UserContext);
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,13 +29,13 @@ function Home() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        let fetchedPosts;
         if (access_token) {
-          const postsData = await PostService.getAllPosts(access_token);
-          setPosts(postsData);
+          fetchedPosts = await PostService.getAllPosts(access_token);
         } else {
-          const noLoginPostsData = await PostService.getAllPosts();
-          setNoLoginPosts(noLoginPostsData);
+          fetchedPosts = await PostService.getAllPosts();
         }
+        setPosts(fetchedPosts);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
@@ -46,16 +45,18 @@ function Home() {
 
   return (
     <div className="flex flex-col md:flex-row">
-    <div className="flex flex-col justify-end items-center w-full">
-      {postsToShow.map((post) => (
-        <PostCard key={post.id} post={post} />
-      ))}
+      <div className="flex flex-col justify-end items-center w-full">
+        {posts.map((post) => (
+          <PostCard key={post.id} post={post} />
+        ))}
+      </div>
+      <div className="w-64 flex justify-center">
+        <AllCategory />
+      </div>
     </div>
-    <div className="w-64 flex justify-center">
-      <AllCategory />
-    </div>
-  </div>
   );
 }
+
+
 
 export default Home;
