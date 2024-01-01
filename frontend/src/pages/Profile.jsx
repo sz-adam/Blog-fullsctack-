@@ -23,8 +23,8 @@ function Profile() {
           <FaArrowLeft className="mr-1 " />
         </Link>
       </div>
-      <div className="p-16 flex justify-center items-center">
-        <div className="p-8 bg-white mt-5">
+      <div className="p-4 md:p-10 flex justify-center items-center">
+        <div className="pt-8 bg-white mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
               <div>
@@ -56,15 +56,15 @@ function Profile() {
                 />
               </div>
             </div>
-            <div className="space-x-2 md:space-x-8  flex justify-between mt-32 md:mt-0 md:justify-center ">
-              <button className="text-white py-2 px-4 uppercase rounded bg-blue-400 hover:bg-blue-500 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+            <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
+              <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
                 Follow
               </button>
 
-              <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+              <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
                 Setting
               </button>
-              <button className="text-white py-2 px-4 uppercase rounded bg-gray-700 hover:bg-gray-800 shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5">
+              <button className="profilButton bg-gray-700 hover:bg-gray-800">
                 Block
               </button>
             </div>

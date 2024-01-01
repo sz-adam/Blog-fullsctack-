@@ -31,4 +31,7 @@
   .editText{
     @apply p-1 px-4 mr-4 border-2 rounded-full font-bold
   }
+  .profilButton{
+    @apply text-white py-2 px-4 lg:uppercase rounded shadow hover:shadow-lg font-medium transition transform hover:-translate-y-0.5
+  }
 }
