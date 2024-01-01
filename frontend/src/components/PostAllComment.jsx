@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import CommentServices from "../services/CommentServices";
 import { getAccessToken } from "../common/utils";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import EditComment from "./EditComment";
+import { UserContext } from "../context/UserContext";
 
 function PostAllComment({ comment, post }) {
+  const { user } = useContext(UserContext);
   const access_token = getAccessToken();
   const commentId = comment?._id;
   console.log(comment);
@@ -72,6 +74,7 @@ function PostAllComment({ comment, post }) {
           </div>
         )}
         <div className="flex justify-center items-center space-x-4">
+        {user?._id === post?.user && (
           <div className="flex items-center justify-center space-x-2">
             <BiEdit
               onClick={() => openEditing(commentId, c.description)}
@@ -83,6 +86,7 @@ function PostAllComment({ comment, post }) {
             />
             <p> {formatDate(comment?.createdAt)}</p>
           </div>
+        )}
         </div>
       </div>
     </div>

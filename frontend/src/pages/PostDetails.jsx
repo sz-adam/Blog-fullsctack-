@@ -24,7 +24,8 @@ function PostDetails() {
   const [category, setCategory] = useState("");
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
-  console.log(post);
+  console.log(user?._id);
+  console.log(post?.id);
 
   ///single post
   const fetchPost = async () => {
@@ -33,7 +34,6 @@ function PostDetails() {
         // Fetch post details
         const postDetails = await PostService.singlePosts(access_token, postId);
         setPost(postDetails);
-        
       }
     } catch (error) {
       console.error("Error fetching post details or posts:", error);
@@ -41,7 +41,7 @@ function PostDetails() {
   };
   //all posts
   const fetchCommentsPost = async () => {
-    setLoader(true)
+    setLoader(true);
     try {
       if (access_token && postId) {
         // Fetch post details
@@ -49,8 +49,8 @@ function PostDetails() {
           access_token,
           postId
         );
-        setComments(comments);      
-        setLoader(false) 
+        setComments(comments);
+        setLoader(false);
       }
     } catch (error) {
       setLoader(true);
@@ -83,7 +83,7 @@ function PostDetails() {
     }
   };
 
-//single category
+  //single category
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -101,66 +101,70 @@ function PostDetails() {
     fetchData();
   }, [access_token, categoryId]);
 
-
   return (
     <div>
-       {loader ? (
-       <div className="h-[80vh] flex justify-center items-center w-full"><Loader/></div>
+      {loader ? (
+        <div className="h-[80vh] flex justify-center items-center w-full">
+          <Loader />
+        </div>
       ) : (
-      <div className="px-8 md:px-[200px] mt-8 mb-8">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold text-black md:text-3xl">
-            {post?.title}
-          </h1>
-
-          <div className="flex items-center justify-center space-x-2">
-            <Link to={`/update/${postId}`}>
-              <BiEdit className="cursor-pointer text-xl icon" />
-            </Link>
-            <p className="cursor-pointer" onClick={() => setDeleteModal(true)}>
-              <MdDelete className="cursor-pointer text-xl icon" />
-            </p>
-            {deleteModal && (
-              <DeleteModal setDeleteModal={setDeleteModal} postId={postId} />
-            )}
+        <div className="px-8 md:px-[200px] mt-8 mb-8">
+          <div className="flex justify-between items-center">
+            <h1 className="text-2xl font-bold text-black md:text-3xl">
+              {post?.title}
+            </h1>
+            {user?._id === post?.user && (
+            <div className="flex items-center justify-center space-x-2">
+              <Link to={`/update/${postId}`}>
+                <BiEdit className="cursor-pointer text-xl icon" />
+              </Link>
+              <p
+                className="cursor-pointer"
+                onClick={() => setDeleteModal(true)}
+              >
+                <MdDelete className="cursor-pointer text-xl icon" />
+              </p>
+              {deleteModal && (
+                <DeleteModal setDeleteModal={setDeleteModal} postId={postId} />
+              )}
+            </div>
+             )}
           </div>
-        </div>
-        <div className="flex items-center justify-between mt-2 md:mt-4">
-          <p>@username</p>
-          <div className="flex space-x-2">
-            <p></p>
-            <p></p>
+          <div className="flex items-center justify-between mt-2 md:mt-4">
+            <p className="text-gray-500">@{user?.fullname}</p>
+            <div className="flex space-x-2">
+              <p></p>
+              <p></p>
+            </div>
           </div>
-        </div>
-        <img
-          src={post?.photo}
-          className="w-full md:w-1/2 mx-auto mt-8"
-          alt=""
-        />
-        <p className="mx-auto mt-8">{post?.description}</p>
-        <div className="flex items-center mt-8 space-x-4 font-semibold">
-          <p>Categories:</p>
-          <div className="flex justify-center items-center space-x-2">
-            {category?.title}
+          <img
+            src={post?.photo}
+            className="w-full md:w-1/2 mx-auto mt-8"
+            alt=""
+          />
+          <p className="mx-auto mt-8">{post?.description}</p>
+          <div className="flex items-center mt-8 space-x-4 font-semibold">
+            <p>Categories:</p>
+            <div className="flex justify-center items-center space-x-2">
+              {category?.title}
+            </div>
           </div>
-        </div>
-        <div className="flex flex-col justify-center items-center mt-4">
-          <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
-          {/* write a comment */}
-          <div className="mt-4 w-full md:w-1/2 ">
-            <CreateComment
-              fetchCreateComment={fetchCreateComment}
-              comment={comment}
-              setComment={setComment}
-            />
+          <div className="flex flex-col justify-center items-center mt-4">
+            <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
+            {/* write a comment */}
+            <div className="mt-4 w-full md:w-1/2 ">
+              <CreateComment
+                fetchCreateComment={fetchCreateComment}
+                comment={comment}
+                setComment={setComment}
+              />
+            </div>
           </div>
-          
-        </div>
-        {comments?.map((comment) => (
+          {comments?.map((comment) => (
             <PostAllComment key={comment._id} comment={comment} post={post} />
           ))}
-      </div>
-       )}
+        </div>
+      )}
     </div>
   );
 }
