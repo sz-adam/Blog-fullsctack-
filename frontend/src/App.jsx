@@ -11,6 +11,7 @@ import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
 import { UserContext } from "./context/UserContext";
 import UserProfile from "./pages/UserProfile";
+import Profile from "./pages/Profile";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
@@ -35,7 +36,8 @@ function App() {
               <Route path="/write" element={<WritePost />} />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
-              <Route path="/profile/:userId" element={<UserProfile />} />
+              <Route path="/profile/:userId" element={<Profile />} />
+              <Route path="/userprofile/:userId" element={<UserProfile />} />
             </Routes>
           </Router>
         </UserContext.Provider>

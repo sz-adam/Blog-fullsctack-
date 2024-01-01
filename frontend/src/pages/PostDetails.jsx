@@ -56,10 +56,11 @@ function PostDetails() {
     };
     fetchData();
   }, [access_token]);
+
   const filteredUsers =
     searchUser?.filter((user) => post?.user === user.id) || [];
 
-  console.log(filteredUsers);
+
 
   //all comments
   const fetchCommentsPost = async () => {
@@ -148,7 +149,7 @@ function PostDetails() {
 
             {user?._id === post?.user && (
               <div className="flex items-center justify-center space-x-2">
-                <Link to={`/update/${postId}`}>
+                <Link to="/userProfile">
                   <BiEdit className="cursor-pointer text-xl icon" />
                 </Link>
                 <p
@@ -170,13 +171,16 @@ function PostDetails() {
             <p className="text-gray-500">
               Create: {formatDate(post?.createdAt)}{" "}
             </p>
-            <Link to={`/userprofile/${user.id}`}>
-              {filteredUsers.map((filteredUser) => (
-                <p className="text-gray-500" key={filteredUser.id}>
-                  @{filteredUser?.fullname}{" "}
-                </p>
-              ))}
-            </Link>
+           
+             {filteredUsers.map((filteredUser) => (
+              <Link
+                to={`/profile/${filteredUser.id}`}
+                key={filteredUser.id}
+                state={{ user: filteredUser }}
+              >
+                <p className="text-gray-500">@{filteredUser?.fullname}</p>
+              </Link>
+            ))}
           </div>
           <img
             src={post?.photo}
