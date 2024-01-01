@@ -12,6 +12,9 @@ import { MdDelete } from "react-icons/md";
 import CategoryService from "../services/CategoryServices";
 import DeleteModal from "../components/DeleteModal";
 import CreateComment from "../components/CreateComment";
+import UserService from "../services/UserServices";
+import { AuthUserContext } from "../context/AuthUserContext";
+import { FaArrowLeft } from "react-icons/fa";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -21,11 +24,11 @@ function PostDetails() {
   const [comment, setComment] = useState("");
   const [loader, setLoader] = useState(false);
   const { user, setUser } = useContext(UserContext);
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
   const [category, setCategory] = useState("");
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
-  console.log(user?._id);
-  console.log(post?.id);
+  const [searchUser, setSearchUser] = useState();
 
   ///single post
   const fetchPost = async () => {
@@ -39,7 +42,26 @@ function PostDetails() {
       console.error("Error fetching post details or posts:", error);
     }
   };
-  //all posts
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token) {
+          const allUser = await UserService.allUser(access_token);
+          setSearchUser(allUser);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchData();
+  }, [access_token]);
+  const filteredUsers =
+    searchUser?.filter((user) => post?.user === user.id) || [];
+
+  console.log(filteredUsers);
+
+  //all comments
   const fetchCommentsPost = async () => {
     setLoader(true);
     try {
@@ -87,7 +109,7 @@ function PostDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (access_token && categoryId) {
+        if (access_token && categoryId && user?._id === post?.user) {
           const postsData = await CategoryService.singleCategory(
             access_token,
             categoryId
@@ -101,6 +123,11 @@ function PostDetails() {
     fetchData();
   }, [access_token, categoryId]);
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
   return (
     <div>
       {loader ? (
@@ -109,33 +136,47 @@ function PostDetails() {
         </div>
       ) : (
         <div className="px-8 md:px-[200px] mt-8 mb-8">
+          <p className="text-gray-500 mb-5">
+            <Link to="/" className="flex items-center">
+              <FaArrowLeft className="mr-1 " /> Back
+            </Link>
+          </p>
           <div className="flex justify-between items-center">
             <h1 className="text-2xl font-bold text-black md:text-3xl">
               {post?.title}
             </h1>
+
             {user?._id === post?.user && (
-            <div className="flex items-center justify-center space-x-2">
-              <Link to={`/update/${postId}`}>
-                <BiEdit className="cursor-pointer text-xl icon" />
-              </Link>
-              <p
-                className="cursor-pointer"
-                onClick={() => setDeleteModal(true)}
-              >
-                <MdDelete className="cursor-pointer text-xl icon" />
-              </p>
-              {deleteModal && (
-                <DeleteModal setDeleteModal={setDeleteModal} postId={postId} />
-              )}
-            </div>
-             )}
+              <div className="flex items-center justify-center space-x-2">
+                <Link to={`/update/${postId}`}>
+                  <BiEdit className="cursor-pointer text-xl icon" />
+                </Link>
+                <p
+                  className="cursor-pointer"
+                  onClick={() => setDeleteModal(true)}
+                >
+                  <MdDelete className="cursor-pointer text-xl icon" />
+                </p>
+                {deleteModal && (
+                  <DeleteModal
+                    setDeleteModal={setDeleteModal}
+                    postId={postId}
+                  />
+                )}
+              </div>
+            )}
           </div>
-          <div className="flex items-center justify-between mt-2 md:mt-4">
-            <p className="text-gray-500">@{user?.fullname}</p>
-            <div className="flex space-x-2">
-              <p></p>
-              <p></p>
-            </div>
+          <div className="flex flex-col  mt-2 md:mt-4">
+            <p className="text-gray-500">
+              Create: {formatDate(post?.createdAt)}{" "}
+            </p>
+            <Link to={`/userprofile/${user.id}`}>
+              {filteredUsers.map((filteredUser) => (
+                <p className="text-gray-500" key={filteredUser.id}>
+                  @{filteredUser?.fullname}{" "}
+                </p>
+              ))}
+            </Link>
           </div>
           <img
             src={post?.photo}
