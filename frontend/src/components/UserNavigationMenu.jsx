@@ -32,7 +32,7 @@ const UserNavigationPanel = () => {
       </div>
       {isOpen && (
         <div className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 " onClick={() => setIsOpen(false)}>
-          <Link to={`/profile/${user?.id}`} className="link pl-8 py-4 block text-black hover:text-slate-500">
+          <Link to={`/userProfile/${user?.id}`} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Profile
           </Link>
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
