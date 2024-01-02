@@ -7,24 +7,9 @@ import { UserContext } from "../context/UserContext";
 import UserService from "../services/UserServices";
 
 function Home() {
-  const [posts, setPosts] = useState([]); 
+  const [posts, setPosts] = useState([]);
   const access_token = getAccessToken();
-    const { user, setUser } = useContext(UserContext);
-
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (access_token) {
-          const userData = await UserService.userProfile(access_token);
-          setUser(userData);
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchData();
-  }, [access_token]);
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -56,7 +41,5 @@ function Home() {
     </div>
   );
 }
-
-
 
 export default Home;

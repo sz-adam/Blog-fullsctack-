@@ -60,8 +60,6 @@ function PostDetails() {
   const filteredUsers =
     searchUser?.filter((user) => post?.user === user.id) || [];
 
-
-
   //all comments
   const fetchCommentsPost = async () => {
     setLoader(true);
@@ -97,7 +95,7 @@ function PostDetails() {
           postId,
           description: comment,
         });
-        setComment(newComment);
+        setComments((prevComments) => [...prevComments, newComment]);
         // window.location.reload(true)
       }
     } catch (error) {
@@ -171,8 +169,8 @@ function PostDetails() {
             <p className="text-gray-500">
               Create: {formatDate(post?.createdAt)}{" "}
             </p>
-           
-             {filteredUsers.map((filteredUser) => (
+
+            {filteredUsers.map((filteredUser) => (
               <Link
                 to={`/profile/${filteredUser.id}`}
                 key={filteredUser.id}
@@ -206,7 +204,12 @@ function PostDetails() {
             </div>
           </div>
           {comments?.map((comment) => (
-            <PostAllComment key={comment._id} comment={comment} post={post} />
+            <PostAllComment
+              key={comment._id}
+              comment={comment}
+              post={post}
+              fetchCommentsPost={fetchCommentsPost}
+            />
           ))}
         </div>
       )}

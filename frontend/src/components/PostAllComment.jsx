@@ -1,20 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import CommentServices from "../services/CommentServices";
 import { getAccessToken } from "../common/utils";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { BiEdit } from "react-icons/bi";
 import EditComment from "./EditComment";
 import { UserContext } from "../context/UserContext";
+import UserService from "../services/UserServices";
+import { Link } from "react-router-dom";
 
-function PostAllComment({ comment, post }) {
+function PostAllComment({ comment, post, fetchCommentsPost }) {
   const { user } = useContext(UserContext);
   const access_token = getAccessToken();
   const commentId = comment?._id;
-  console.log(comment);
-
   const [isEditing, setIsEditing] = useState(false);
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
+  const [commentSearchUserName, setCommentSearchUserName] = useState();
+  console.log(commentSearchUserName);
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -27,13 +29,29 @@ function PostAllComment({ comment, post }) {
         await CommentServices.updateComments(access_token, editedCommentId, {
           description: editedComment,
         });
-        updateComments();
+        fetchCommentsPost();
         closeEditing();
       }
     } catch (error) {
       console.error("Error updating comment:", error);
     }
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token) {
+          const allUser = await UserService.allUser(access_token);
+          const filteredUsers =
+            allUser?.filter((user) => comment?.user === user.id) || [];
+          setCommentSearchUserName(filteredUsers[0] || {});
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchData();
+  }, [access_token]);
 
   const openEditing = (commentId, commentDescription) => {
     setIsEditing(true);
@@ -51,8 +69,8 @@ function PostAllComment({ comment, post }) {
     try {
       if (access_token) {
         await CommentServices.deleteComment(access_token, commentId);
-        console.log("Comment deleted successfully", commentId);
       }
+      fetchCommentsPost();
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -69,24 +87,37 @@ function PostAllComment({ comment, post }) {
             closeEditing={closeEditing}
           />
         ) : (
-          <div>
-            <p className="px-4 mt-2 text-center">{comment.description}</p>
+          <div className="text-center">
+            <p className="px-4  ">{comment.description}</p>
           </div>
         )}
         <div className="flex justify-center items-center space-x-4">
-        {user?._id === post?.user && (
-          <div className="flex items-center justify-center space-x-2">
-            <BiEdit
-              onClick={() => openEditing(commentId, c.description)}
-              className=" cursor-pointer text-xl icon"
-            />
-            <AiTwotoneDelete
-              className="cursor-pointer text-xl icon"
-              onClick={() => deleteComment(commentId)}
-            />
-            <p> {formatDate(comment?.createdAt)}</p>
+          {user?._id === comment?.user ? (
+            <div className="flex items-center justify-center space-x-2">
+              <BiEdit
+                onClick={() => openEditing(commentId, comment.description)}
+                className=" cursor-pointer text-xl icon"
+              />
+              <AiTwotoneDelete
+                className="cursor-pointer text-xl icon"
+                onClick={() => deleteComment(commentId)}
+              />
+            </div>
+          ) : (
+            ""
+          )}
+
+          <div>
+            <p className="text-sm"> {formatDate(comment?.createdAt)}</p>
+            <Link
+              to={`/profile/${commentSearchUserName?.id}`}
+              state={{ user: commentSearchUserName }}
+            >
+              <p className="text-gray-500 text-sm">
+                @{commentSearchUserName?.fullname}
+              </p>
+            </Link>
           </div>
-        )}
         </div>
       </div>
     </div>
