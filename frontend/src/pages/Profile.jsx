@@ -57,16 +57,20 @@ function Profile() {
               </div>
             </div>
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
-              <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
-                Follow
-              </button>
+              {user.id !== filteredUser?.id && (
+                <>
+                  <button className="profilButton bg-gray-700 hover:bg-gray-800">
+                    Block
+                  </button>
+                  <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
+                    Setting
+                  </button>
 
-              <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
-                Setting
-              </button>
-              <button className="profilButton bg-gray-700 hover:bg-gray-800">
-                Block
-              </button>
+                  <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
+                    Follow
+                  </button>
+                </>
+              )}
             </div>
           </div>
           <div className="mt-20 text-center border-b pb-12">
