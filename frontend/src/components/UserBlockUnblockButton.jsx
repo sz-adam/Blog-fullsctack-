@@ -1,33 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 
 function UserBlockUnblockButton() {
-  const [profileBlock, setProfileBlock] = useState(false);
+  const storedProfileBlock = localStorage.getItem("profileBlock");
+  const [profileBlock, setProfileBlock] = useState(
+    storedProfileBlock === "true"
+  );
+
+  useEffect(() => {
+    localStorage.setItem("profileBlock", profileBlock);
+  }, [profileBlock]);
 
   const handleClick = () => {
     setProfileBlock((prevProfileBlock) => !prevProfileBlock);
 
     if (profileBlock) {
-        handleUnBlocked();
+      handleUnBlocked();
     } else {
       handleBlocked();
     }
   };
 
   const handleBlocked = () => {
-    console.log('Profil blokkolva!');
+    console.log("Profil blokkolva!");
   };
 
   const handleUnBlocked = () => {
-    console.log('Profil feloldva!');
+    console.log("Profil feloldva!");
   };
 
-  return (
-    <div className='flex items-center justify-center'>
-      <button onClick={handleClick}>
-        {profileBlock ? 'Un Blocked' : 'Blocked'}
-      </button>
-    </div>
-  );
+  return <p onClick={handleClick}>{profileBlock ? "Un Blocked" : "Blocked"}</p>;
 }
 
 export default UserBlockUnblockButton;
