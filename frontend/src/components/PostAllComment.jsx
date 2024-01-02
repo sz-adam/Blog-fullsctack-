@@ -16,8 +16,6 @@ function PostAllComment({ comment, post, fetchCommentsPost }) {
   const [editedComment, setEditedComment] = useState("");
   const [editedCommentId, setEditedCommentId] = useState(null);
   const [commentSearchUserName, setCommentSearchUserName] = useState();
-  console.log(commentSearchUserName);
-
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
