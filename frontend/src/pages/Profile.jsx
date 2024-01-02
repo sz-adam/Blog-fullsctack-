@@ -8,6 +8,7 @@ import ProfilePostCard from "../components/ProfilePostCard";
 import PostService from "../services/PostsServices";
 import { getAccessToken } from "../common/utils";
 import UserBlockUnblockButton from "../components/UserBlockUnblockButton";
+import UserFollowUnFollowButton from "../components/UserFollowUnFollowButton";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -79,15 +80,15 @@ function Profile() {
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
               {user?.id !== filteredUser?.id && (
                 <>
-                  <div className="profilButton bg-gray-700 hover:bg-gray-800 flex">
+                  <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
                     <UserBlockUnblockButton />
-                  </div>
+                  </button>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
                     Setting
                   </button>
 
                   <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
-                    Follow
+                    <UserFollowUnFollowButton />
                   </button>
                 </>
               )}
