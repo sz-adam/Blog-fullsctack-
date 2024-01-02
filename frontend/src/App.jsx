@@ -9,13 +9,15 @@ import { lookInSession } from "./common/session";
 import PostDetails from "./pages/PostDetails";
 import WritePost from "./pages/WritePost";
 import UpdatePost from "./pages/UpdatePost";
-import { UserContext } from "./context/UserContext";
+import { UserContext, UserContextProvider } from "./context/UserContext";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
   const [user, setUser] = useState(UserContext);
+
+  
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -26,7 +28,7 @@ function App() {
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
-        <UserContext.Provider value={{ user, setUser }}>
+       <UserContextProvider>
           <Router>
             <Navbar />
             <Routes>
@@ -40,7 +42,7 @@ function App() {
               <Route path="/userprofile/:userId" element={<UserProfile />} />
             </Routes>
           </Router>
-        </UserContext.Provider>
+          </UserContextProvider>
       </AuthUserContext.Provider>
     </>
   );
