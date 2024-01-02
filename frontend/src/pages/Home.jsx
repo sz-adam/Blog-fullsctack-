@@ -1,15 +1,14 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState } from "react";
 import PostService from "../services/PostsServices";
 import PostCard from "../components/PostCard";
 import AllCategory from "../components/allCategory";
 import { getAccessToken } from "../common/utils";
-import { UserContext } from "../context/UserContext";
-import UserService from "../services/UserServices";
+
 
 function Home() {
   const [posts, setPosts] = useState([]);
   const access_token = getAccessToken();
-  const { user, setUser } = useContext(UserContext);
+ 
 
   useEffect(() => {
     const fetchData = async () => {

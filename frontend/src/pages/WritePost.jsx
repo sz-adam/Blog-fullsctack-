@@ -5,8 +5,6 @@ import CategoryService from "../services/CategoryServices";
 import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../common/utils";
 
-
-
 function WritePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -22,9 +20,7 @@ function WritePost() {
       const categoryData = await CategoryService.createCategory(access_token, {
         title:category
       });
-
       // category contains the data
-
       if (categoryData) {
         // create an entry
         await PostService.createPost(access_token, {

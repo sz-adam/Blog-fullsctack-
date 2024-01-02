@@ -4,12 +4,11 @@ import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { FaComment } from "react-icons/fa";
-
 import { AuthUserContext } from "../context/AuthUserContext";
 
 function postCard({ post }) {
   const { authUser } = useContext(AuthUserContext);
-  
+
   return (
     <>
       <div className="p-1 w-full md:w-1/2">

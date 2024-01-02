@@ -9,7 +9,7 @@ import PostService from "../services/PostsServices";
 import { getAccessToken } from "../common/utils";
 
 function Profile() {
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const location = useLocation();
   const { user: filteredUser } = location.state;
   const [filteredUserPost, setFilteredUserPost] = useState();

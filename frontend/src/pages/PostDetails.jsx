@@ -13,7 +13,6 @@ import CategoryService from "../services/CategoryServices";
 import DeleteModal from "../components/DeleteModal";
 import CreateComment from "../components/CreateComment";
 import UserService from "../services/UserServices";
-import { AuthUserContext } from "../context/AuthUserContext";
 import { FaArrowLeft } from "react-icons/fa";
 
 function PostDetails() {
@@ -24,7 +23,6 @@ function PostDetails() {
   const [comment, setComment] = useState("");
   const [loader, setLoader] = useState(false);
   const { user, setUser } = useContext(UserContext);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
   const [category, setCategory] = useState("");
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);

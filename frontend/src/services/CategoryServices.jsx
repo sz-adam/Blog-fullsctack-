@@ -7,7 +7,7 @@ const CategoryService = {
     try {
       if (access_token) {
         const response = await axios.post(
-          import.meta.env.VITE_API_CREATE_CATEGORIES, // Adjust the endpoint accordingly
+          import.meta.env.VITE_API_CREATE_CATEGORIES, 
           categoryData,
           {
             headers: {
