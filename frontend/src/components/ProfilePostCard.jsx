@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function ProfilePostCard({ userCard }) {
  
   return (
-    <div className="flex flex-wrap p-5">
+    <div className="p-5">
       <div className="bg-white shadow-md border border-gray-200 rounded-lg max-w-sm dark:bg-gray-800 dark:border-gray-700">
       
           <img className="rounded-t-lg h-60 w-60" src={userCard?.photo} alt="" />

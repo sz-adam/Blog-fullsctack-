@@ -43,7 +43,7 @@ function Profile() {
       <div className="p-4 md:p-10 flex justify-center items-center">
         <div className="pt-8 bg-white mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
-            <div className="grid grid-cols-3 text-center order-last md:order-first mt-20 md:mt-0">
+            <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">
               <div>
                 <p className="font-bold text-gray-700 text-xl">
                   {filteredUser?.following?.length}
@@ -100,7 +100,7 @@ function Profile() {
             <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
               Posts
             </p>
-            <div className="m-2 flex flex-wrap ">
+            <div className="m-2 md:grid md:grid-cols-4">
             {filteredUserPost?.map((userCard) =>(
               <ProfilePostCard userCard={userCard} key={userCard?._id}/>
               ))}
