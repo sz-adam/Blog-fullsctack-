@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import ProfilePostCard from "../components/ProfilePostCard";
 import PostService from "../services/PostsServices";
 import { getAccessToken } from "../common/utils";
+import UserBlockUnblockButton from "../components/UserBlockUnblockButton";
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -15,16 +16,17 @@ function Profile() {
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
   //console.log(filteredUserPost);
- 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (access_token) {
           const fetchedPosts = await PostService.getAllPosts(access_token);
-          const filteredUserPostIds = filteredUser?.posts || [];      
-          // Lekérjük a teljes poszt objektumokat az ID-k alapján
-          const filteredUsersPosts = fetchedPosts?.filter(post => filteredUserPostIds.includes(post.id)) || [];
+          const filteredUserPostIds = filteredUser?.posts || [];
+          const filteredUsersPosts =
+            fetchedPosts?.filter((post) =>
+              filteredUserPostIds.includes(post.id)
+            ) || [];
           setFilteredUserPost(filteredUsersPosts);
         }
       } catch (error) {
@@ -40,6 +42,7 @@ function Profile() {
           <FaArrowLeft className="mr-1 " />
         </Link>
       </div>
+
       <div className="p-4 md:p-10 flex justify-center items-center">
         <div className="pt-8 bg-white mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
@@ -76,9 +79,9 @@ function Profile() {
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
               {user?.id !== filteredUser?.id && (
                 <>
-                  <button className="profilButton bg-gray-700 hover:bg-gray-800">
-                    Block
-                  </button>
+                  <div className="profilButton bg-gray-700 hover:bg-gray-800 flex">
+                    <UserBlockUnblockButton />
+                  </div>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
                     Setting
                   </button>
@@ -101,8 +104,8 @@ function Profile() {
               Posts
             </p>
             <div className="m-2 md:grid md:grid-cols-4">
-            {filteredUserPost?.map((userCard) =>(
-              <ProfilePostCard userCard={userCard} key={userCard?._id}/>
+              {filteredUserPost?.map((userCard) => (
+                <ProfilePostCard userCard={userCard} key={userCard?._id} />
               ))}
             </div>
           </div>
