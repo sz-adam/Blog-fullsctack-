@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { FaEye } from "react-icons/fa";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 import { Link } from "react-router-dom";
 import { FaComment } from "react-icons/fa";
 
+import { AuthUserContext } from "../context/AuthUserContext";
+
 function postCard({ post }) {
+  const { authUser } = useContext(AuthUserContext);
+  
   return (
     <>
       <div className="p-1 w-full md:w-1/2">
@@ -24,9 +28,12 @@ function postCard({ post }) {
             </h1>
 
             <div className="flex items-center flex-wrap">
-              <Link to={`/post/${post.id}`} className="btn-dark px-10">
-                View
-              </Link>
+            {authUser?.status === "success" && (
+                <Link to={`/post/${post.id}`} className="btn-dark px-10">
+                  View
+                </Link>
+             
+              )}
               <span className="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none  pr-3 border-r-2 border-gray-200">
                 <FaEye />
                 <p className="ml-1">{post.viewsCount}</p>
