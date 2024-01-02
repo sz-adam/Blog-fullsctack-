@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { AuthUserContext } from "../context/AuthUserContext";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
+import ProfilePostCard from "../components/ProfilePostCard";
 
 function UserProfile() {
   const { userId } = useParams();
   const { user, setUser } = useContext(UserContext);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
+
+
 
   return (
     <>
@@ -73,6 +75,14 @@ function UserProfile() {
           <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
             Posts
           </p>
+
+          <div className="m-2 flex flex-wrap ">
+            {user?.posts.map((userCard) =>(
+          <ProfilePostCard userCard={userCard} key={userCard?._id}/>
+          
+          ))}
+     
+          </div>
         </div>
       </div>
     </div>

@@ -1,21 +1,38 @@
 //Post létrehozoja  profile
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { AuthUserContext } from "../context/AuthUserContext";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import ProfilePostCard from "../components/ProfilePostCard";
+import PostService from "../services/PostsServices";
+import { getAccessToken } from "../common/utils";
 
 function Profile() {
-  const { userId } = useParams();
   const { user, setUser } = useContext(UserContext);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-
   const location = useLocation();
-  const { user: filteredUser } = location.state; // Módosítás
+  const { user: filteredUser } = location.state;
+  const [filteredUserPost, setFilteredUserPost] = useState();
+  const access_token = getAccessToken();
+  //console.log(filteredUserPost);
+ 
 
-  console.log(filteredUser);
-
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token) {
+          const fetchedPosts = await PostService.getAllPosts(access_token);
+          const filteredUserPostIds = filteredUser?.posts || [];      
+          // Lekérjük a teljes poszt objektumokat az ID-k alapján
+          const filteredUsersPosts = fetchedPosts?.filter(post => filteredUserPostIds.includes(post.id)) || [];
+          setFilteredUserPost(filteredUsersPosts);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchData();
+  }, [access_token]);
   return (
     <>
       <div className="mt-5 ml-5 icon text-lg">
@@ -57,7 +74,7 @@ function Profile() {
               </div>
             </div>
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
-              {user.id !== filteredUser?.id && (
+              {user?.id !== filteredUser?.id && (
                 <>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800">
                     Block
@@ -83,6 +100,11 @@ function Profile() {
             <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
               Posts
             </p>
+            <div className="m-2 flex flex-wrap ">
+            {filteredUserPost?.map((userCard) =>(
+              <ProfilePostCard userCard={userCard} key={userCard?._id}/>
+              ))}
+            </div>
           </div>
         </div>
       </div>
