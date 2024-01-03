@@ -23,7 +23,7 @@ function UserProfile() {
                 <p className="font-bold text-gray-700 text-xl">
                   {user?.following?.length}
                 </p>
-                <p className="text-gray-400">Follow</p>
+                <p className="text-gray-400">Following</p>
               </div>
               <div>
                 <p className="font-bold text-gray-700 text-xl">

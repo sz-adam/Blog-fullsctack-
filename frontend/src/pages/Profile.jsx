@@ -16,7 +16,8 @@ function Profile() {
   const { user: filteredUser } = location.state;
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
-  //console.log(filteredUserPost);
+ // console.log(filteredUser);
+ 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,13 +51,13 @@ function Profile() {
             <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">
               <div>
                 <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.following?.length}
+                  {filteredUser?.followersCount}
                 </p>
-                <p className="text-gray-400">Follow</p>
+                <p className="text-gray-400">Follower</p>
               </div>
               <div>
                 <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.posts?.length}
+                  {filteredUser?.postCounts}
                 </p>
                 <p className="text-gray-400">Post</p>
               </div>
@@ -88,7 +89,7 @@ function Profile() {
                   </button>
 
                   <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
-                    <UserFollowUnFollowButton />
+                    <UserFollowUnFollowButton filteredUserId={filteredUser?.id} />
                   </button>
                 </>
               )}
