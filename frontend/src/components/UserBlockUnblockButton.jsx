@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
+import { getAccessToken } from "../common/utils";
+import UserService from "../services/UserServices";
 
-function UserBlockUnblockButton() {
+function UserBlockUnblockButton({filteredUserId}) {
+  const access_token = getAccessToken();
   const storedProfileBlock = localStorage.getItem("profileBlock");
   const [profileBlock, setProfileBlock] = useState(
     storedProfileBlock === "true"
@@ -20,12 +23,26 @@ function UserBlockUnblockButton() {
     }
   };
 
-  const handleBlocked = () => {
-    console.log("Profil blokkolva!");
+  const handleBlocked =async () => {
+    try {
+      if (access_token && filteredUserId) {
+        await UserService.blockUser(access_token, filteredUserId);
+        console.log("Blokkolva", filteredUserId);
+      }
+    } catch (error) {
+      console.error("Error following user:", error);
+    }
   };
 
-  const handleUnBlocked = () => {
-    console.log("Profil feloldva!");
+  const handleUnBlocked =async () => {
+    try {
+      if (access_token && filteredUserId) {
+        await UserService.unBlockUser(access_token, filteredUserId);
+        console.log("Feloldva", filteredUserId);
+      }
+    } catch (error) {
+      console.error("Error following user:", error);
+    }
   };
 
   return <p onClick={handleClick}>{profileBlock ? "Un Blocked" : "Blocked"}</p>;

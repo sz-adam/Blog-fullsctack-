@@ -100,7 +100,7 @@ const UserService = {
     try {
       if (access_token) {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_BLOCKED_USER}/${filteredUserId}`,
+          `${import.meta.env.VITE_API_BLOCKED_USER}${filteredUserId}`,
           {
             headers: {
               Authorization: `Bearer ${access_token}`,
@@ -119,7 +119,7 @@ const UserService = {
     try {
       if (access_token) {
         const response = await axios.get(
-          `${import.meta.env.VITE_API_UNBLOCKED_USER}/${filteredUserId}`,
+          `${import.meta.env.VITE_API_UNBLOCKED_USER}${filteredUserId}`,
           {
             headers: {
               Authorization: `Bearer ${access_token}`,
