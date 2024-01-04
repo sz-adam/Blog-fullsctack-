@@ -82,7 +82,7 @@ function Profile() {
               {user?.id !== filteredUser?.id && (
                 <>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
-                    <UserBlockUnblockButton />
+                    <UserBlockUnblockButton filteredUserId={filteredUser?.id}/>
                   </button>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
                     Setting
