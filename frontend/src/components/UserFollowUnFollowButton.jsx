@@ -8,7 +8,6 @@ function UserFollowUnFollowButton({ filteredUserId, setFilteredUser }) {
   const [userFollow, setUserFollow] = useState(false);
   const access_token = getAccessToken();
   const userFollowings = user ? user.following : [];
-  console.log(user)
 
   useEffect(() => {
     setUserFollow(userFollowings.includes(filteredUserId));
