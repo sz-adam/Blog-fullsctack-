@@ -14,33 +14,9 @@ import UserService from "../services/UserServices";
 function Profile() {
   const { user } = useContext(UserContext);
   const [filteredUser, setFilteredUser] = useState();
-   const {userId} =useParams()
+  const { userId } = useParams();
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
- // console.log(filteredUser);
-
-
-  {/** 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (access_token) {
-          const fetchedPosts = await PostService.getAllPosts(access_token);
-          const filteredUserPostIds = filteredUser?.posts || [];
-          const filteredUsersPosts =
-            fetchedPosts?.filter((post) =>
-              filteredUserPostIds.includes(post.id)
-            ) || [];
-          setFilteredUserPost(filteredUsersPosts);
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchData();
-  }, [access_token]);
-
-  */}
 
   useEffect(() => {
     const fetchData = async () => {
@@ -48,17 +24,35 @@ function Profile() {
         if (access_token) {
           const allUser = await UserService.allUser(access_token);
           // Keresd meg a megfelelő felhasználót a userId alapján
-          const userById = allUser.find(user => user.id === userId);        
-            setFilteredUser(userById)       
+          const userById = allUser.find((user) => user?.id === userId);
+          setFilteredUser(userById);
         }
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       }
     };
 
     fetchData();
   }, [access_token, userId]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token && filteredUser && filteredUser.posts) {
+          const fetchedPosts = await PostService.getAllPosts(access_token);
+          const filteredUserPostIds = filteredUser.posts || [];
+          const filteredUsersPosts = fetchedPosts.filter((post) =>
+            filteredUserPostIds.includes(post.id)
+          );
+          setFilteredUserPost(filteredUsersPosts);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+
+    fetchData();
+  }, [access_token, filteredUser]);
 
   return (
     <>
@@ -103,14 +97,14 @@ function Profile() {
               {user?.id !== filteredUser?.id && (
                 <>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
-                    <UserBlockUnblockButton filteredUserId={filteredUser?.id}/>
-                  </button>
-                  <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
-                    Setting
-                  </button>
-
+                    <UserBlockUnblockButton filteredUserId={filteredUser?.id} />
+                  </button>  
                   <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
-                    <UserFollowUnFollowButton filteredUserId={filteredUser?.id} filteredUser={filteredUser} setFilteredUser={setFilteredUser} />
+                    <UserFollowUnFollowButton
+                      filteredUserId={filteredUser?.id}
+                      filteredUser={filteredUser}
+                      setFilteredUser={setFilteredUser}
+                    />
                   </button>
                 </>
               )}
@@ -126,17 +120,14 @@ function Profile() {
             <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
               Posts
             </p>
-            {/**
             <div className="m-2 md:grid md:grid-cols-4">
               {filteredUserPost?.map((userCard) => (
                 <ProfilePostCard userCard={userCard} key={userCard?._id} />
               ))}
             </div>
-             */}
           </div>
         </div>
       </div>
-    
     </>
   );
 }
