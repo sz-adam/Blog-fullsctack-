@@ -14,6 +14,8 @@ import DeleteModal from "../components/DeleteModal";
 import CreateComment from "../components/CreateComment";
 import UserService from "../services/UserServices";
 import { FaArrowLeft } from "react-icons/fa";
+import PostLike from "../components/PostLike";
+import PostDislike from "../components/PostDislike";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -26,7 +28,8 @@ function PostDetails() {
   const [category, setCategory] = useState("");
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
-  const [searchUser, setSearchUser] = useState(); 
+  const [searchUser, setSearchUser] = useState();
+  console.log(post)
 
   ///single post
   const fetchPost = async () => {
@@ -94,8 +97,8 @@ function PostDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (access_token && categoryId &&  post?.user) {
-          const postsData = await CategoryService.singleCategory(            
+        if (access_token && categoryId && post?.user) {
+          const postsData = await CategoryService.singleCategory(
             access_token,
             categoryId
           );
@@ -164,10 +167,14 @@ function PostDetails() {
             alt=""
           />
           <p className="mx-auto mt-8">{post?.description}</p>
-          <div className="flex items-center mt-8 space-x-4 font-semibold">
-            <p>Categories:</p>
-            <div className="flex justify-center items-center space-x-2">
-              {category?.title}
+          <div className="flex items-center justify-between mt-8 space-x-4 font-semibold">
+            <div className="flex">
+              <p className="pr-10">Categories:</p>
+              <p>{category?.title}</p>
+            </div>
+            <div className="flex items-center justify-center">
+              <PostLike post={post} setPost={setPost} />
+              <PostDislike post={post} setPost={setPost}/>
             </div>
           </div>
           <div className="flex flex-col justify-center items-center mt-4">
