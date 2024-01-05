@@ -26,7 +26,7 @@ function PostDetails() {
   const [category, setCategory] = useState("");
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
-  const [searchUser, setSearchUser] = useState();
+  const [searchUser, setSearchUser] = useState(); 
 
   ///single post
   const fetchPost = async () => {
@@ -94,8 +94,8 @@ function PostDetails() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (access_token && categoryId && user?._id === post?.user) {
-          const postsData = await CategoryService.singleCategory(
+        if (access_token && categoryId &&  post?.user) {
+          const postsData = await CategoryService.singleCategory(            
             access_token,
             categoryId
           );
