@@ -1,7 +1,7 @@
 //Post létrehozoja  profile
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import ProfilePostCard from "../components/ProfilePostCard";
@@ -9,16 +9,18 @@ import PostService from "../services/PostsServices";
 import { getAccessToken } from "../common/utils";
 import UserBlockUnblockButton from "../components/UserBlockUnblockButton";
 import UserFollowUnFollowButton from "../components/UserFollowUnFollowButton";
+import UserService from "../services/UserServices";
 
 function Profile() {
   const { user } = useContext(UserContext);
-  const location = useLocation();
-  const { user: filteredUser } = location.state;
+  const [filteredUser, setFilteredUser] = useState();
+   const {userId} =useParams()
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
  // console.log(filteredUser);
- 
 
+
+  {/** 
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -37,6 +39,27 @@ function Profile() {
     };
     fetchData();
   }, [access_token]);
+
+  */}
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token) {
+          const allUser = await UserService.allUser(access_token);
+          // Keresd meg a megfelelő felhasználót a userId alapján
+          const userById = allUser.find(user => user.id === userId);        
+            setFilteredUser(userById)       
+        }
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchData();
+  }, [access_token, userId]);
+
+
   return (
     <>
       <div className="mt-5 ml-5 icon text-lg">
@@ -44,7 +67,6 @@ function Profile() {
           <FaArrowLeft className="mr-1 " />
         </Link>
       </div>
-
       <div className="p-4 md:p-10 flex justify-center items-center">
         <div className="pt-8 bg-white mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
@@ -61,7 +83,6 @@ function Profile() {
                 </p>
                 <p className="text-gray-400">Post</p>
               </div>
-
               <div>
                 <p className="font-bold text-gray-700 text-xl">
                   {filteredUser?.comments?.length}
@@ -89,7 +110,7 @@ function Profile() {
                   </button>
 
                   <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
-                    <UserFollowUnFollowButton filteredUserId={filteredUser?.id} />
+                    <UserFollowUnFollowButton filteredUserId={filteredUser?.id} filteredUser={filteredUser} setFilteredUser={setFilteredUser} />
                   </button>
                 </>
               )}
@@ -105,14 +126,17 @@ function Profile() {
             <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
               Posts
             </p>
+            {/**
             <div className="m-2 md:grid md:grid-cols-4">
               {filteredUserPost?.map((userCard) => (
                 <ProfilePostCard userCard={userCard} key={userCard?._id} />
               ))}
             </div>
+             */}
           </div>
         </div>
       </div>
+    
     </>
   );
 }

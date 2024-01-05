@@ -35,28 +35,16 @@ function PostDetails() {
         // Fetch post details
         const postDetails = await PostService.singlePosts(access_token, postId);
         setPost(postDetails);
+        // Fetch all users
+        const allUser = await UserService.allUser(access_token);
+        // Find the user based on post's user ID
+        const userById = allUser.find((user) => postDetails?.user === user.id);
+        setSearchUser(userById);
       }
     } catch (error) {
       console.error("Error fetching post details or posts:", error);
     }
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (access_token) {
-          const allUser = await UserService.allUser(access_token);
-          setSearchUser(allUser);
-        }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchData();
-  }, [access_token]);
-
-  const filteredUsers =
-    searchUser?.filter((user) => post?.user === user.id) || [];
 
   //all comments
   const fetchCommentsPost = async () => {
@@ -142,7 +130,6 @@ function PostDetails() {
             <h1 className="text-2xl font-bold text-black md:text-3xl">
               {post?.title}
             </h1>
-
             {user?._id === post?.user && (
               <div className="flex items-center justify-center space-x-2">
                 <Link to="/userProfile">
@@ -167,16 +154,9 @@ function PostDetails() {
             <p className="text-gray-500">
               Create: {formatDate(post?.createdAt)}{" "}
             </p>
-
-            {filteredUsers.map((filteredUser) => (
-              <Link
-                to={`/profile/${filteredUser.id}`}
-                key={filteredUser.id}
-                state={{ user: filteredUser }}
-              >
-                <p className="text-gray-500">@{filteredUser?.fullname}</p>
-              </Link>
-            ))}
+            <Link to={`/profile/${searchUser?.id}`} key={searchUser?.id}>
+              <p className="text-gray-500">@{searchUser?.fullname}</p>
+            </Link>
           </div>
           <img
             src={post?.photo}
