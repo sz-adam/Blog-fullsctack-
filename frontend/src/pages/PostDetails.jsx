@@ -29,7 +29,7 @@ function PostDetails() {
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
   const [searchUser, setSearchUser] = useState();
-  console.log(post)
+  console.log(post);
 
   ///single post
   const fetchPost = async () => {
@@ -172,10 +172,14 @@ function PostDetails() {
               <p className="pr-10">Categories:</p>
               <p>{category?.title}</p>
             </div>
-            <div className="flex items-center justify-center">
-              <PostLike post={post} setPost={setPost} />
-              <PostDislike post={post} setPost={setPost}/>
-            </div>
+            {user?._id === post?.user ? (
+              ""
+            ) : (
+              <div className="flex items-center justify-center">
+                <PostLike post={post} setPost={setPost} />
+                <PostDislike post={post} setPost={setPost} />
+              </div>
+            )}
           </div>
           <div className="flex flex-col justify-center items-center mt-4">
             <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
