@@ -1,5 +1,7 @@
 import React from "react";
 import InputBox from "./InputBox";
+import { TfiWrite } from "react-icons/tfi";
+
 
 function CreateComment({ fetchCreateComment, comment,setComment }) {
   
@@ -9,6 +11,7 @@ function CreateComment({ fetchCreateComment, comment,setComment }) {
       <form onSubmit={fetchCreateComment }>
         <InputBox
           type="text"
+          icon={TfiWrite}
           placeholder="comment"
           value={comment}
           onChange={(event) => setComment(event.target.value)}
