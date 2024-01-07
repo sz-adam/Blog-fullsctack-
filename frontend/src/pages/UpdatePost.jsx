@@ -5,6 +5,11 @@ import CategoryService from "../services/CategoryServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAccessToken } from "../common/utils";
 
+import { MdOutlineAddAPhoto } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
+import { TbFileDescription } from "react-icons/tb";
+import { MdOutlineSubtitles } from "react-icons/md";
+
 
 function UpdatePost() {
   const [categoryTitle, setCategoryTitle] = useState("");
@@ -21,7 +26,7 @@ useEffect(() => {
   const fetchData = async () => {
     try {
       // Check if there is an access_token / Ellenőrizze, hogy létezik-e access_token
-      if (access_token) {
+      if (access_token,postId) {
         // Fetch post details based on postId / Lekérje a bejegyzés részleteit postId alapján
         const postDetails = await PostService.singlePosts(
           access_token,
@@ -37,7 +42,6 @@ useEffect(() => {
       // Handle error if fetching post details fails / Kezelje a hibát, ha a bejegyzés részleteinek lekérése nem sikerül
     }
   };
-
   fetchData();
 }, [access_token, postId]);
 
@@ -79,6 +83,7 @@ const handleUpdatePost = async (event) => {
         <InputBox
           type="text"
           placeholder="Title"
+          icon={MdOutlineSubtitles}
           value={postTitle}
           onChange={(event) => setPostTitle(event.target.value)}
           required={true}
@@ -86,6 +91,7 @@ const handleUpdatePost = async (event) => {
         <InputBox
           type="text"
           placeholder="description"
+          icon={TbFileDescription}
           value={description}
           onChange={(event) => setDescription(event.target.value)}
           required={true}
@@ -93,12 +99,14 @@ const handleUpdatePost = async (event) => {
         <InputBox
           type="text"
           placeholder="Category"
+          icon={BiCategory}
           value={categoryTitle}
           onChange={(event) => setCategoryTitle(event.target.value)}
         />
         <InputBox
           type="text"
           placeholder="Photo"
+          icon={MdOutlineAddAPhoto}
           value={photo}
           onChange={(event) => setPhoto(event.target.value)}
           required={true}
