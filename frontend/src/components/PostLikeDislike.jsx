@@ -24,7 +24,7 @@ function PostLikeDislike({ post, setPost }) {
   useEffect(() => {  
     setIsLiked(isUserLikedPost);   
     setIsDisliked(isUserDislikedPost);
-  }, [post?.likes, post?.disLikes]);
+  }, [post?.likes, post?.disLikes,user]);
 
   const handleLikePost = async () => {
     try {
