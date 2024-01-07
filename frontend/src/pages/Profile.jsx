@@ -17,6 +17,29 @@ function Profile() {
   const { userId } = useParams();
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
+ 
+
+
+  
+  
+// Javítani a profil frissítésére való hibát
+
+  //useEffect(() => {
+  //  const viewUserData = async () => {
+  //    try {
+  //      if (access_token,viewUser) {
+  //        const viewUser = await UserService.profileViewrs(access_token,viewUser);
+  //        console.log(viewUser)
+  //        
+  //      }
+  //    } catch (error) {
+  //      console.error("Error fetching posts:", error);
+  //    }
+  //  };
+//
+  //  viewUserData();
+  //}, [access_token, userId,viewUser]);
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,6 +99,12 @@ function Profile() {
                   {filteredUser?.postCounts}
                 </p>
                 <p className="text-gray-400">Post</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-700 text-xl">
+                  {filteredUser?.viewers?.length}
+                </p>
+                <p className="text-gray-400">viewers</p>
               </div>
               <div>
                 <p className="font-bold text-gray-700 text-xl">
