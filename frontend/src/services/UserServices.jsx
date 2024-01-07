@@ -133,6 +133,24 @@ const UserService = {
       throw error;
     }
   },
+  profileViewrs: async (access_token, viewUser) => {
+    try {
+      if (access_token) {
+        const response = await axios.get(
+          `${import.meta.env.VITE_API_PROFILE_VIEWRS}${viewUser}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error Following User:", error);
+      throw error;
+    }
+  },
 };
 
 export default UserService;
