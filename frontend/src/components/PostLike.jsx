@@ -6,17 +6,21 @@ import PostService from "../services/PostsServices";
 import { UserContext } from "../context/UserContext";
 
 function PostLike({ post, setPost }) {
-  const [isliked, setIsLiked] = useState(false);
   const { postId } = useParams();
   const access_token = getAccessToken();
   const { user, setUser } = useContext(UserContext);
 
-  const fetchLikesPost = async () => {
+  //ellenörzi az aktuális user Id-ét a likes tömbben ha nincs benne beállítja a kéksszint
+  //ha benne van nem csinál semmit se
+  const isUserLikedPost = () => {
+    return post?.likes?.includes(user?.id);
+  };
+
+  const handleLikePost = async () => {
     try {
       if (access_token && postId) {
-        await PostService.likePost(access_token, postId);
-        const updatePost = await PostService.singlePosts(access_token, postId);
-        setPost(updatePost);
+        const likepost = await PostService.likePost(access_token, postId);
+        setPost(likepost);
       }
     } catch (error) {
       console.error("Error fetching post details or posts:", error);
@@ -26,11 +30,10 @@ function PostLike({ post, setPost }) {
   return (
     <div
       className="cursor-pointer flex justify-center items-center"
-      onClick={() => setIsLiked(!isliked)}
+      onClick={handleLikePost}
     >
       <AiFillLike
-        className={`text-3xl mr-1" ${isliked ? "text-blue-500" : ""}`}
-        onClick={fetchLikesPost}
+        className={`text-3xl mr-1 ${isUserLikedPost() ? "text-blue-500" : ""}`}
       />
       <sub>{post?.likesCount}</sub>
     </div>
