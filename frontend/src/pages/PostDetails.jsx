@@ -14,8 +14,7 @@ import DeleteModal from "../components/DeleteModal";
 import CreateComment from "../components/CreateComment";
 import UserService from "../services/UserServices";
 import { FaArrowLeft } from "react-icons/fa";
-import PostLike from "../components/PostLike";
-import PostDislike from "../components/PostDislike";
+import PostLikeDislike from "../components/PostLikeDislike";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -175,10 +174,7 @@ function PostDetails() {
             {user?._id === post?.user ? (
               ""
             ) : (
-              <div className="flex items-center justify-center">
-                <PostLike post={post} setPost={setPost} />
-                <PostDislike post={post} setPost={setPost} />
-              </div>
+              <PostLikeDislike setPost={setPost} post={post} />
             )}
           </div>
           <div className="flex flex-col justify-center items-center mt-4">
