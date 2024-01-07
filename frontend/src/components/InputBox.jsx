@@ -6,7 +6,9 @@ function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
+    <div className="flex items-center justify-center">
     <div className="relative w-[100%] mb-4">
+      
       <input
         name={name}
         type={
@@ -16,7 +18,7 @@ function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required
         defaultValue={value}
         onChange={onChange}
         required={required || false}
-        className=" w-[100%] rounded-md p-4 bg-grey pl-12 border border-grey focus:bg-transparent placeholder:text-black"
+        className=" w-[100%] pl-12 border-b border-gray-300 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer bg-inherit"
       />
 
       {Icon && (
@@ -39,6 +41,7 @@ function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required
           )}
         </div>
       )}
+    </div>
     </div>
   );
 }
