@@ -48,8 +48,8 @@ function UserProfile() {
                 />
               </div>
             </div>
-            <div className="space-x-2 md:space-x-4  flex  mt-32 md:mt-0 justify-center ">
-            <Link to={`/settings/${user?.id}`} className="profilButton bg-gray-700 hover:bg-gray-800">
+            <div className="space-x-2 md:space-x-4 flex mt-32 md:mt-0 justify-center items-center">
+            <Link to={`/settings/${user?.id}`} className="profilButton  bg-gray-700 hover:bg-gray-800 p-3">
             Setting
             </Link>
               
