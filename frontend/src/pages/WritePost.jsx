@@ -5,6 +5,11 @@ import CategoryService from "../services/CategoryServices";
 import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../common/utils";
 
+import { MdOutlineAddAPhoto } from "react-icons/md";
+import { BiCategory } from "react-icons/bi";
+import { TbFileDescription } from "react-icons/tb";
+import { MdOutlineSubtitles } from "react-icons/md";
+
 function WritePost() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -44,6 +49,7 @@ function WritePost() {
         </h1>
         <InputBox
           type="text"
+          icon={MdOutlineSubtitles}
           placeholder="Title"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
@@ -51,6 +57,7 @@ function WritePost() {
         />
         <InputBox
           type="text"
+          icon={TbFileDescription}
           placeholder="description"
           value={description}
           onChange={(event) => setDescription(event.target.value)}
@@ -58,12 +65,14 @@ function WritePost() {
         />
         <InputBox
           type="text"
+          icon={BiCategory}
           placeholder="Category"
           value={category}
           onChange={(event) => setCategory(event.target.value)}
         />
         <InputBox
           type="text"
+          icon={MdOutlineAddAPhoto}
           placeholder="Photo"
           value={photo}
           onChange={(event) => setPhoto(event.target.value)}
