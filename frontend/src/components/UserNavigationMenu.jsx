@@ -38,7 +38,7 @@ const UserNavigationPanel = () => {
           <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
             Dashboard
           </Link>
-          <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
+          <Link to={`/settings/${user?.id}`} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Settings
           </Link>
           <span className="absolute border-t border-grey w-full text-black "></span>

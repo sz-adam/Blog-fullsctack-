@@ -12,6 +12,7 @@ import UpdatePost from "./pages/UpdatePost";
 import { UserContextProvider } from "./context/UserContext";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
+import UserSettings from "./pages/UserSettings";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
@@ -37,6 +38,7 @@ function App() {
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route path="/profile/:userId" element={<Profile />} />
               <Route path="/userprofile/:userId" element={<UserProfile />} />
+              <Route path="/settings/:userId" element={<UserSettings />} />
             </Routes>
           </Router>
         </UserContextProvider>
