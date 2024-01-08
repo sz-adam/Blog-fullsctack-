@@ -151,6 +151,26 @@ const UserService = {
       throw error;
     }
   },
+
+    userUpdateProfile: async (access_token, userData) => {
+      try {
+        if (access_token) {
+          const response = await axios.put(
+            import.meta.env.VITE_API_PROFILE_SETTINGS,
+            userData,  // Adja meg az új adatokat a felhasználói profil frissítéséhez
+            {
+              headers: {
+                Authorization: `Bearer ${access_token}`,
+              },
+            }
+          );
+          return response.data.data;
+        }
+      } catch (error) {
+        console.error("Error updating profile:", error);
+        throw error;
+      }
+    },
 };
 
 export default UserService;

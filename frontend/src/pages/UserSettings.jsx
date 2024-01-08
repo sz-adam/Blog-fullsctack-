@@ -6,6 +6,8 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
 import { IoManOutline } from "react-icons/io5";
 import InputBox from "../components/InputBox";
+import UserService from "../services/UserServices";
+import { getAccessToken } from "../common/utils";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
@@ -15,10 +17,27 @@ function UserSettings() {
   const [newLastname, setNewLastname] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  console.log(user);
+  const access_token = getAccessToken();
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
+  };
+  const handleProfileUpdate = async (event) => {
+    event.preventDefault();
+    try {
+      if (access_token) {
+        const updatedProfile = await UserService.userUpdateProfile(access_token, {
+          //új adatok
+          firstname: newFirstname,
+          lastname: newLastname,
+          email: newEmail,     
+        });
+        setUser(updatedProfile);
+  
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
   };
 
   return (
@@ -73,7 +92,7 @@ function UserSettings() {
           <div>
             <h1 className="text-2xl font-semibold mb-6 text-center"> Details</h1>
             <div className="flex justify-center items-center w-full h-full md:h-[85vh]">
-              <form className="w-[85%] max-w-[400px]">
+              <form className="w-[85%] max-w-[400px]" onSubmit={handleProfileUpdate}>
                 <InputBox
                   type="text"
                   placeholder="New First name"
