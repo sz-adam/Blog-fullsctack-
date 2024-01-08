@@ -28,7 +28,7 @@ const UserNavigationPanel = () => {
         className="flex justify-center items-center cursor-pointer"
       >
         <img src={authUser?.data?.profilePhoto} className="w-10" />
-        <p className="px-2">{authUser?.data?.firstname}</p>
+        <p className="px-2">{user?.firstname}</p>
       </div>
       {isOpen && (
         <div className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 " onClick={() => setIsOpen(false)}>
@@ -48,7 +48,7 @@ const UserNavigationPanel = () => {
           >
             <h1 className="font-bold text-xl my-1 text-black">Sign Out</h1>
             <p className="text-dark-grey text-black">
-              @{authUser?.data?.firstname}
+              @{user?.fullname}
             </p>
           </div>
         </div>
