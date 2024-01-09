@@ -159,14 +159,23 @@ const singlepostsCtrl = async (req, res, next) => {
 
 const deletepostCtrl = async (req, res, next) => {
   try {
-    //check if the post belongs to the user
-
-    //find the post
-    const post = await Post.findById(req.params.id);
+    // Find the post
+    const post = await Post.findById(req.params.id);    
+    // Check if the post belongs to the user
     if (post.user.toString() !== req.userAuth.toString()) {
       return next(appErr("You are not allowed to delete this post", 403));
-    }
-    await Post.findByIdAndDelete(req.params.id);
+    }    
+     // Find the user
+    const user = await User.findById(req.userAuth);
+     // Azonosító, amit törölni szeretnénk
+    const postIdToDelete = req.params.id;
+     // azok az elemek maradjanak amiknek az id-a nem egyenlő a postIdToDelete értékével
+    user.posts = user.posts.filter(postItem => postItem._id.toString() !== postIdToDelete.toString());
+    await user.save();
+
+    // Töröld a bejegyzést a MongoDB-ből
+    await Post.findByIdAndDelete(postIdToDelete);
+
     res.json({
       status: "success",
       data: "Post deleted successfully",
@@ -175,6 +184,7 @@ const deletepostCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+
 
 const updatepostCtrl = async (req, res, next) => {
   const { title, description, category, photo } = req.body;
