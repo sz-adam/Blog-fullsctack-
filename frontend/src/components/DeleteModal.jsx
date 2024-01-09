@@ -1,13 +1,17 @@
-import React, {  useEffect, useState } from "react";
+import React, {  useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
 import { getAccessToken } from "../common/utils";
+import { UserContext } from "../context/UserContext";
+import UserService from "../services/UserServices";
 
 const DeleteModal = ({ setDeleteModal, postId }) => {
   const [post, setPost] = useState(null);
   const [category, setCategory] = useState(null);
   const access_token = getAccessToken();
+  const { user,setUser } = useContext(UserContext);
+  
 
   const navigate = useNavigate();
   const categoryId = post?.category;
@@ -66,6 +70,10 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
         // Hívjuk meg a service metódust a post törléséhez
         await PostService.deletePost(access_token, postId);
         // Sikeres törlés után átirányítjuk a felhasználót a "/posts" útvonalra
+        const updatedUser = await UserService.userProfile(access_token);
+       console.log(updatedUser)
+  
+        setUser(updatedUser);
         navigate("/");
       }
     } catch (error) {

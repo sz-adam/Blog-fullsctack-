@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import InputBox from "../components/InputBox";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
@@ -9,6 +9,8 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { TbFileDescription } from "react-icons/tb";
 import { MdOutlineSubtitles } from "react-icons/md";
+import UserService from "../services/UserServices";
+import { UserContext } from "../context/UserContext";
 
 function WritePost() {
   const [title, setTitle] = useState("");
@@ -17,6 +19,7 @@ function WritePost() {
   const [photo, setPhoto] = useState("");
   const access_token = getAccessToken();
   const navigate = useNavigate();
+  const { user, setUser } = useContext(UserContext);
 
   const handlePostCreate = async (event) => {
     event.preventDefault();
@@ -34,6 +37,8 @@ function WritePost() {
           category: categoryData,
           photo,
         });
+       const userData = await UserService.userProfile(access_token);
+        setUser(userData);
         navigate('/')
       }
     } catch (error) {
