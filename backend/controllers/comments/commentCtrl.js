@@ -37,8 +37,10 @@ const addcommentCtrl = async (req, res, next) => {
 const getCommentsCtrl = async (req, res, next) => {
   try {
     // Find comments for the specified post
-    const comments = await Comment.find({ post: req.params.id }).populate('user');
-    
+    const comments = await Comment.find({ post: req.params.id }).populate(
+      "user"
+    );
+
     res.json({
       status: "success",
       data: comments,
@@ -48,8 +50,6 @@ const getCommentsCtrl = async (req, res, next) => {
   }
 };
 
-
-
 const deleteCommentCtrl = async (req, res, next) => {
   try {
     //find the COmment
@@ -57,8 +57,16 @@ const deleteCommentCtrl = async (req, res, next) => {
     if (comment.user.toString() !== req.userAuth.toString()) {
       return next(appErr("You are not allowed to update this comment", 403));
     }
+    // keresd meg a postot a comment.post id alapján
+    const post = await Post.findById(comment.post);
+    const commentIdToDelete = req.params.id;
+    //azok maradjanak amiknek az id-a nem egyenlő a commentIdToDelete
+    post.comments = post.comments.filter(
+      (postItem) => postItem._id.toString() !== commentIdToDelete.toString()
+    );
+    await post.save();
 
-    await Comment.findByIdAndDelete(req.params.id);
+    await Comment.findByIdAndDelete(commentIdToDelete);
     res.json({
       status: "success",
       data: "Comment has been deleted successfully",
