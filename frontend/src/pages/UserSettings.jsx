@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
 import { MdOutlineMailOutline } from "react-icons/md";
@@ -8,16 +8,19 @@ import { IoManOutline } from "react-icons/io5";
 import InputBox from "../components/InputBox";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
+import { removeFormSession } from "../common/session";
+import { AuthUserContext } from "../context/AuthUserContext";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
   const { user, setUser } = useContext(UserContext);
-
+  const { authUser,setAuthUser } = useContext(AuthUserContext);
   const [newFirstname, setNewFirstname] = useState("");
   const [newLastname, setNewLastname] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const access_token = getAccessToken();
+  const navigate = useNavigate();
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -29,7 +32,7 @@ function UserSettings() {
         const updatedProfile = await UserService.userUpdateProfile(
           access_token,
           {
-            //új adatok
+            //új adatok userService --userData--
             firstname: newFirstname,
             lastname: newLastname,
             email: newEmail,
@@ -55,6 +58,23 @@ function UserSettings() {
         );
         setUser({ ...user, ...updatedPassword });
         console.log(updatedPassword);
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
+//deleteProfil
+  const handleProfileDelete = async () => {  
+    try {
+      if (access_token) {
+       await UserService.deleteUser(
+          access_token
+        );
+        removeFormSession("user");
+        setAuthUser(null);
+        navigate("/");
+       
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -203,7 +223,10 @@ function UserSettings() {
                 Are you sure you want to delete the registration?
               </h1>
 
-              <button className="bg-red-500 py-2 px-10 text-white font-semibold text-xl rounded-full hover:bg-red-800">
+              <button
+                className="bg-red-500 py-2 px-10 text-white font-semibold text-xl rounded-full hover:bg-red-800"
+                onClick={handleProfileDelete}
+              >
                 Yes
               </button>
             </div>

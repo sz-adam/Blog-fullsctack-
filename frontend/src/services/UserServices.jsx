@@ -152,45 +152,65 @@ const UserService = {
     }
   },
 
-    userUpdateProfile: async (access_token, userData) => {
-      try {
-        if (access_token) {
-          const response = await axios.put(
-            import.meta.env.VITE_API_PROFILE_SETTINGS,
-            userData,  // Adja meg az új adatokat a felhasználói profil frissítéséhez
-            {
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-              },
-            }
-          );
-          return response.data.data;
-        }
-      } catch (error) {
-        console.error("Error updating profile:", error);
-        throw error;
+  userUpdateProfile: async (access_token, userData) => {
+    try {
+      if (access_token) {
+        const response = await axios.put(
+          import.meta.env.VITE_API_PROFILE_SETTINGS,
+          userData, // új adatokat a felhasználói profil frissítéséhez
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
       }
-    },
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      throw error;
+    }
+  },
 
-    userUpdatePassword: async (access_token, userData) => {
-      try {
-        if (access_token) {
-          const response = await axios.put(
-            import.meta.env.VITE_API_PROFILE_PASSWORD_SETTINGS,
-            userData,  // Adja meg az új adatokat a felhasználói profil frissítéséhez
-            {
-              headers: {
-                Authorization: `Bearer ${access_token}`,
-              },
-            }
-          );
-          return response.data.data;
-        }
-      } catch (error) {
-        console.error("Error updating profile:", error);
-        throw error;
+  userUpdatePassword: async (access_token, userData) => {
+    try {
+      if (access_token) {
+        const response = await axios.put(
+          import.meta.env.VITE_API_PROFILE_PASSWORD_SETTINGS,
+          userData,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
       }
-    },
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      throw error;
+    }
+  },
+
+  deleteUser: async (access_token) => {
+    try {
+      if (access_token) {
+        const response = await axios.delete(
+          import.meta.env.VITE_API_DELETE_PROFILE,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error deleting profile:", error);
+        throw error;
+    }
+  },
+  
 };
 
 export default UserService;
