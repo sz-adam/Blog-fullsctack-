@@ -26,14 +26,35 @@ function UserSettings() {
     event.preventDefault();
     try {
       if (access_token) {
-        const updatedProfile = await UserService.userUpdateProfile(access_token, {
-          //új adatok
-          firstname: newFirstname,
-          lastname: newLastname,
-          email: newEmail,     
-        });
+        const updatedProfile = await UserService.userUpdateProfile(
+          access_token,
+          {
+            //új adatok
+            firstname: newFirstname,
+            lastname: newLastname,
+            email: newEmail,
+          }
+        );
         setUser(updatedProfile);
-  
+      }
+    } catch (error) {
+      console.error("Error updating profile:", error);
+    }
+  };
+
+  //password update
+  const handleProfilePasswordUpdate = async (event) => {
+    event.preventDefault();
+    try {
+      if (access_token) {
+        const updatedPassword = await UserService.userUpdatePassword(
+          access_token,
+          {
+            password: newPassword,
+          }
+        );
+        setUser({ ...user, ...updatedPassword });
+        console.log(updatedPassword);
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -90,9 +111,22 @@ function UserSettings() {
       <div className="w-full md:w-3/4 p-8">
         {activeTab === "userData" && (
           <div>
-            <h1 className="text-2xl font-semibold mb-6 text-center"> Details</h1>
-            <div className="flex justify-center items-center w-full h-full md:h-[85vh]">
-              <form className="w-[85%] max-w-[400px]" onSubmit={handleProfileUpdate}>
+            <h1 className="text-2xl font-semibold mb-6 text-center">
+              Edit Profil
+            </h1>
+            <div className="w-40 h-40 bg-indigo-100 rounded-full shadow-2xl flex mx-auto mt-10 mb-20 md:mb-0">
+              <img
+                src={user?.data?.profilePhoto}
+                alt=""
+                className="rounded-full"
+              />
+            </div>
+
+            <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
+              <form
+                className="w-[85%] max-w-[400px]"
+                onSubmit={handleProfileUpdate}
+              >
                 <InputBox
                   type="text"
                   placeholder="New First name"
@@ -132,9 +166,15 @@ function UserSettings() {
 
         {activeTab === "password" && (
           <div>
-            <h1 className="text-2xl font-semibold mb-6 text-center"> Change password</h1>
+            <h1 className="text-2xl font-semibold mb-6 text-center">
+              {" "}
+              Change password
+            </h1>
             <div className="flex justify-center items-center w-full h-full md:h-[85vh]">
-              <form className="w-[85%] max-w-[400px]">
+              <form
+                className="w-[85%] max-w-[400px]"
+                onSubmit={handleProfilePasswordUpdate}
+              >
                 <InputBox
                   type="password"
                   placeholder="New Password"
