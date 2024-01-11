@@ -1,23 +1,32 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import ProfilePostCard from "./ProfilePostCard";
+import UserFollowers from "./UserFollowers";
+import UserBlockeds from "./UserBlockeds";
 
 const UserProfileNavigation = () => {
   const [activeTab, setActiveTab] = useState("posts");
   const { user } = useContext(UserContext);
 
-  const userPosts = user?.posts || [];
+  const userPosts = user?.posts || []; //ne legyen undefined
 
   const userPostsComponents = userPosts.map((userCard) => (
-    <ProfilePostCard userCard={userCard} key={userCard._id} />
+    <div key={userCard._id}>
+      <ProfilePostCard userCard={userCard} />
+    </div>
   ));
 
   const userPorifileTabs = [
     { id: "posts", label: "Posts", component: userPostsComponents },
     {
-      id: "Followers",
+      id: "followers",
       label: "Followers",
-      component: <UserFollowersComponent />,
+      component: <UserFollowers />,
+    },
+    {
+      id: "blocked",
+      label: "Blocked user",
+      component: <UserBlockeds />,
     },
   ];
 
@@ -53,7 +62,5 @@ const UserProfileNavigation = () => {
     </div>
   );
 };
-
-const UserFollowersComponent = () => {};
 
 export default UserProfileNavigation;
