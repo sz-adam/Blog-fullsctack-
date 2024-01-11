@@ -8,7 +8,6 @@ const Category = require("../../model/Category/Category");
 const Comment = require("../../model/Comment/Comment");
 require("dotenv").config();
 
-
 //Register
 const userRegisterCtrl = async (req, res, next) => {
   const { firstname, lastname, email, password } = req.body;
@@ -27,7 +26,7 @@ const userRegisterCtrl = async (req, res, next) => {
     const user = await User.create({
       firstname,
       lastname,
-      email,    
+      email,
       password: hashedPassword,
     });
     res.json({
@@ -398,6 +397,35 @@ const updateUserpasswordCtrl = async (req, res, next) => {
   }
 };
 
+const userFollowersArrayCtrl = async (req, res, next) => {
+  try {
+    // 1. bejelentkezett felhasználót
+    const loggedInUser = await User.findById(req.userAuth);
+    // 2. Bejelentkezett felhasználó megtalálhatóe
+    if (loggedInUser) {
+      // 3. Követők id lekérése
+      const followerIds = loggedInUser.followers;
+      // 4. id alapján a felhasználók lekérése
+      const followers = await User.find({ _id: { $in: followerIds } });
+
+      // 5. követők mentése
+      res.json({
+        status: "success",
+        data: followers,
+      });
+    } else {
+      res.json({
+        status: "error",
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    next(appErr(error.message));
+  }
+};
+
+module.exports = userFollowersArrayCtrl;
+
 module.exports = {
   userRegisterCtrl,
   userLoginCtrl,
@@ -413,4 +441,5 @@ module.exports = {
   adminBlockUserCtrl,
   adminUnblockUserCtrl,
   updateUserpasswordCtrl,
+  userFollowersArrayCtrl,
 };
