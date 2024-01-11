@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
-
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import ProfilePostCard from "../components/ProfilePostCard";
+import UserProfileNavigation from "../components/UserProfileNavigation"
 
 function UserProfile() {
   const { user, setUser } = useContext(UserContext);
+  console.log(user)
 
   return (
     <>
@@ -19,9 +19,15 @@ function UserProfile() {
         <div className="pt-8 bg-white mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">
-              <div >
+              <div>
                 <p className="font-bold text-gray-700 text-xl">
-                  {user?.following?.length}
+                  {user?.followersCount}
+                </p>
+                <p className="text-gray-400">Followers</p>
+              </div>
+              <div>
+                <p className="font-bold text-gray-700 text-xl">
+                  {user?.followingCount}
                 </p>
                 <p className="text-gray-400">Following</p>
               </div>
@@ -34,9 +40,9 @@ function UserProfile() {
 
               <div>
                 <p className="font-bold text-gray-700 text-xl">
-                  {user?.comments?.length}
+                  {user?.userAward}
                 </p>
-                <p className="text-gray-400">Comments</p>
+                <p className="text-gray-400">User Award</p>
               </div>
             </div>
             <div className="relative">
@@ -48,11 +54,14 @@ function UserProfile() {
                 />
               </div>
             </div>
+
             <div className="space-x-2 md:space-x-4 flex mt-32 md:mt-0 justify-center items-center">
-            <Link to={`/settings/${user?.id}`} className="profilButton  bg-gray-700 hover:bg-gray-800 p-3">
-            Setting
-            </Link>
-              
+              <Link
+                to={`/settings/${user?.id}`}
+                className="profilButton  bg-gray-700 hover:bg-gray-800 p-3"
+              >
+                Setting
+              </Link>
             </div>
           </div>
           <div className="mt-20 text-center border-b pb-12">
@@ -61,17 +70,8 @@ function UserProfile() {
             </h1>
             <p>{user?.email}</p>
           </div>
-          <div className="mt-12 ">
-            <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
-              Posts
-            </p>
-
-            <div className="m-2 md:grid md:grid-cols-4 ">
-              {user?.posts.map((userCard) => (
-                <ProfilePostCard userCard={userCard} key={userCard?._id} />
-              ))}
-            </div>
-          </div>
+          <UserProfileNavigation />
+        
         </div>
       </div>
     </>
