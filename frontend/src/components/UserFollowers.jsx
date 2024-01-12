@@ -40,7 +40,6 @@ function UserFollowers() {
               src={followers?.profilePhoto}
               className="rounded-full w-28 h-28"
               alt="profile picture"
-              srcset=""
             />
           </div>
 
