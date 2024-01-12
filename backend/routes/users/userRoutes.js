@@ -14,7 +14,8 @@ const {
   adminBlockUserCtrl,
   adminUnblockUserCtrl,
   updateUserpasswordCtrl,
-  userFollowersArrayCtrl
+  userFollowersArrayCtrl,
+  profilePhotoUpdatectrl,
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 const isAdmin = require("../../middlewares/isAdmin");
@@ -46,6 +47,7 @@ userRouter.get("/profile-viewers/:id", isLogin, whoViewedMyProfileCtrl);
 //get /api/v1/users/following/:id
 userRouter.get("/following/:id", isLogin, followingCtrl);
 
+//get api/v1/users/followers
 userRouter.get("/followers", isLogin, userFollowersArrayCtrl);
 
 //get /api/v1/users/unfollow/:id
@@ -65,6 +67,8 @@ userRouter.put("/admin-unblock/:id", isLogin, isAdmin, adminUnblockUserCtrl);
 
 //put /api/v1/users/update-password
 userRouter.put("/update-password", isLogin, updateUserpasswordCtrl);
+
+userRouter.put("/update-photo", isLogin, profilePhotoUpdatectrl);
 
 
 module.exports = userRouter;

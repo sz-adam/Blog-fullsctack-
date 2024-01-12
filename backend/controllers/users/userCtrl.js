@@ -424,6 +424,33 @@ const userFollowersArrayCtrl = async (req, res, next) => {
   }
 };
 
+const profilePhotoUpdatectrl = async (req, res, next) => {
+  try {
+    // Felhasználó megkeresése
+    const userToUpdate = await User.findById(req.userAuth);
+    // Felhasználó ellenőrzése
+    if (!userToUpdate) {
+      return next(appErr("User not found", 403));
+    }
+    // Felhasználó tiltva van-e
+    if (userToUpdate.isBlocked) {
+      return next(appErr("Action not allowed, your account is blocked", 403));
+    }
+    // URL ellenőrzése és profilkép frissítése
+    const newProfilePhoto = req.body.profilePhoto;
+    if (!newProfilePhoto) {
+      return next(appErr("Missing profilePhotoUrl in request body", 400));
+    }
+    // Profilkép frissítése
+    userToUpdate.profilePhoto = newProfilePhoto;
+    await userToUpdate.save();
+
+    res.json({ success: true, message: "Profile photo updated successfully" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = userFollowersArrayCtrl;
 
 module.exports = {
@@ -442,4 +469,5 @@ module.exports = {
   adminUnblockUserCtrl,
   updateUserpasswordCtrl,
   userFollowersArrayCtrl,
+  profilePhotoUpdatectrl,
 };
