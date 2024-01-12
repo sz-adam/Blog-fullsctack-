@@ -10,17 +10,20 @@ import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { removeFormSession } from "../common/session";
 import { AuthUserContext } from "../context/AuthUserContext";
+import { MdMonochromePhotos } from "react-icons/md";
+import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
   const { user, setUser } = useContext(UserContext);
-  const { authUser,setAuthUser } = useContext(AuthUserContext);
+  const { authUser, setAuthUser } = useContext(AuthUserContext);
   const [newFirstname, setNewFirstname] = useState("");
   const [newLastname, setNewLastname] = useState("");
   const [newEmail, setNewEmail] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const access_token = getAccessToken();
   const navigate = useNavigate();
+  const [updateProfilePhotos, setUpdateProfilePhotos] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
@@ -64,17 +67,14 @@ function UserSettings() {
     }
   };
 
-//deleteProfil
-  const handleProfileDelete = async () => {  
+  //deleteProfil
+  const handleProfileDelete = async () => {
     try {
       if (access_token) {
-       await UserService.deleteUser(
-          access_token
-        );
+        await UserService.deleteUser(access_token);
         removeFormSession("user");
         setAuthUser(null);
         navigate("/");
-       
       }
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -134,13 +134,19 @@ function UserSettings() {
             <h1 className="text-2xl font-semibold mb-6 text-center">
               Edit Profil
             </h1>
-            <div className="w-40 h-40 bg-indigo-100 rounded-full shadow-2xl flex mx-auto mt-10 mb-20 md:mb-0">
+
+            <div className="w-40 h-40 bg-indigo-100 rounded-full shadow-2xl flex mx-auto mt-10 mb-20 md:mb-0 relative">
               <img
-                src={user?.data?.profilePhoto}
+                src={user?.profilePhoto}
                 alt=""
-                className="rounded-full"
+                className="rounded-full w-40 h-40"
               />
+              <MdMonochromePhotos className="absolute bottom-0 right-0 text-2xl cursor-pointer"
+              onClick={() =>setUpdateProfilePhotos(true)} />
             </div>
+            {updateProfilePhotos &&(
+              <UpdateProfilePhoto />
+            )}
 
             <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
               <form
