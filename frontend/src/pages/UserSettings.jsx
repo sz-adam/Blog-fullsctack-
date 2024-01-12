@@ -145,7 +145,7 @@ function UserSettings() {
               onClick={() =>setUpdateProfilePhotos(true)} />
             </div>
             {updateProfilePhotos &&(
-              <UpdateProfilePhoto />
+              <UpdateProfilePhoto setUpdateProfilePhotos={setUpdateProfilePhotos}/>
             )}
 
             <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
