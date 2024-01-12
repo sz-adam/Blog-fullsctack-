@@ -7,7 +7,6 @@ import UserProfileNavigation from "../components/UserProfileNavigation"
 function UserProfile() {
   const { user, setUser } = useContext(UserContext);
   console.log(user)
-
   return (
     <>
       <div className="mt-5 ml-5 icon text-lg">
@@ -48,9 +47,9 @@ function UserProfile() {
             <div className="relative">
               <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
                 <img
-                  src={user?.data?.profilePhoto}
+                  src={user?.profilePhoto}
                   alt=""
-                  className="rounded-full"
+                  className="rounded-full w-48 h-48"
                 />
               </div>
             </div>

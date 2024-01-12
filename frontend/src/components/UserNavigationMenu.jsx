@@ -27,7 +27,7 @@ const UserNavigationPanel = () => {
         onClick={toggleDropdown}
         className="flex justify-center items-center cursor-pointer"
       >
-        <img src={authUser?.data?.profilePhoto} className="w-10" />
+        <img src={user?.profilePhoto} className="w-10 h-10 rounded-full" />
         <p className="px-2">{user?.firstname}</p>
       </div>
       {isOpen && (
