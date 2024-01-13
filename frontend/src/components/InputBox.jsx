@@ -15,7 +15,7 @@ function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required
           type == "password" ? (passwordVisible ? "text" : "password") : type
         }
         placeholder={placeholder}
-        defaultValue={value}
+        value={value}
         onChange={onChange}
         required={required || false}
         className=" w-[100%] pl-12 border-b border-gray-300 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer bg-inherit"
