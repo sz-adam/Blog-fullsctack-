@@ -71,7 +71,6 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
         await PostService.deletePost(access_token, postId);
         // Sikeres törlés után átirányítjuk a felhasználót a "/posts" útvonalra
         const updatedUser = await UserService.userProfile(access_token);
-       console.log(updatedUser)
   
         setUser(updatedUser);
         navigate("/");
