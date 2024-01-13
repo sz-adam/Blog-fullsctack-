@@ -397,21 +397,21 @@ const updateUserpasswordCtrl = async (req, res, next) => {
   }
 };
 
-const userFollowersArrayCtrl = async (req, res, next) => {
+const userFollowingArrayCtrl = async (req, res, next) => {
   try {
     // 1. bejelentkezett felhasználót
     const loggedInUser = await User.findById(req.userAuth);
     // 2. Bejelentkezett felhasználó megtalálhatóe
     if (loggedInUser) {
       // 3. Követők id lekérése
-      const followerIds = loggedInUser.followers;
+      const followingIds = loggedInUser.following;
       // 4. id alapján a felhasználók lekérése
-      const followers = await User.find({ _id: { $in: followerIds } });
+      const following = await User.find({ _id: { $in: followingIds } });
 
       // 5. követők mentése
       res.json({
         status: "success",
-        data: followers,
+        data: following,
       });
     } else {
       res.json({
@@ -478,7 +478,7 @@ const profilePhotoUpdatectrl = async (req, res, next) => {
   }
 };
 
-module.exports = userFollowersArrayCtrl;
+
 
 module.exports = {
   userRegisterCtrl,
@@ -495,7 +495,7 @@ module.exports = {
   adminBlockUserCtrl,
   adminUnblockUserCtrl,
   updateUserpasswordCtrl,
-  userFollowersArrayCtrl,
+  userFollowingArrayCtrl,
   profilePhotoUpdatectrl,
   userBlockedArrayCtrl,
 };

@@ -14,7 +14,7 @@ const {
   adminBlockUserCtrl,
   adminUnblockUserCtrl,
   updateUserpasswordCtrl,
-  userFollowersArrayCtrl,
+  userFollowingArrayCtrl,
   profilePhotoUpdatectrl,
   userBlockedArrayCtrl,
 } = require("../../controllers/users/userCtrl");
@@ -49,7 +49,7 @@ userRouter.get("/profile-viewers/:id", isLogin, whoViewedMyProfileCtrl);
 userRouter.get("/following/:id", isLogin, followingCtrl);
 
 //get api/v1/users/followers
-userRouter.get("/followers", isLogin, userFollowersArrayCtrl);
+userRouter.get("/followers", isLogin, userFollowingArrayCtrl);
 
 //get api/v1/users/blocked
 userRouter.get("/blocked", isLogin, userBlockedArrayCtrl);
