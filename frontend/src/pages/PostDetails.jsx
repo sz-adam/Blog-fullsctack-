@@ -133,7 +133,7 @@ function PostDetails() {
             </h1>
             {user?._id === post?.user && (
               <div className="flex items-center justify-center space-x-2">
-                <Link to="/userProfile">
+               <Link to={`/update/${postId}`}>
                   <BiEdit className="cursor-pointer text-xl icon" />
                 </Link>
                 <p
