@@ -105,35 +105,50 @@ const whoViewedMyProfileCtrl = async (req, res, next) => {
   }
 };
 
-//following profile
 const followingCtrl = async (req, res, next) => {
   try {
-    //1. Find the user to follow
+    // 1. Find the user to follow
     const userToFollow = await User.findById(req.params.id);
-    //2. Find the user who is following
+    // 2. Find the user who is following
     const userWhoFollowed = await User.findById(req.userAuth);
-    //3.Check if user and userWhoFollowed are found
+    // 3. Check if user and userWhoFollowed are found
     if (userToFollow && userWhoFollowed) {
-      //4.Check if userWhoFollowed is alredy in the user's followers array
-      const isUserAlreadyFollowed = userToFollow.following.find(
+      // 4. Check if userWhoFollowed is already in the user's followers array
+      const isUserAlreadyFollowed = userToFollow.followers.find(
         (follower) => follower.toString() === userWhoFollowed._id.toString()
       );
       if (isUserAlreadyFollowed) {
-        return next(appErr("You already followed this user"));
-      } else {
-        //5. Push userWhoFolloed not the user's followers array
-        userToFollow.followers.push(userWhoFollowed._id);
-        //6. push userToFollow to the userWhoFollowed's following array
-        userWhoFollowed.following.push(userToFollow._id);
-
-        //save
+        // If userWhoFollowed is already in the followers array, remove the follow relationship
+        userToFollow.followers = userToFollow.followers.filter(
+          (follower) => follower.toString() !== userWhoFollowed._id.toString()
+        );
+        userWhoFollowed.following = userWhoFollowed.following.filter(
+          (following) => following.toString() !== userToFollow._id.toString()
+        );
+        // Save the changes
         await userWhoFollowed.save();
         await userToFollow.save();
         res.json({
           status: "success",
-          data: "You have succesfully this user",
+          data: "You have unfollowed this user",
+        });
+      } else {
+        // 5. Push userWhoFollowed to the user's followers array
+        userToFollow.followers.push(userWhoFollowed._id);
+        // 6. Push userToFollow to the userWhoFollowed's following array
+        userWhoFollowed.following.push(userToFollow._id);
+
+        // Save the changes
+        await userWhoFollowed.save();
+        await userToFollow.save();
+        res.json({
+          status: "success",
+          data: "You have successfully followed this user",
         });
       }
+    } else {
+      // Handle case when user or userWhoFollowed is not found
+      return next(appErr("User not found"));
     }
   } catch (error) {
     next(appErr(error.message));
