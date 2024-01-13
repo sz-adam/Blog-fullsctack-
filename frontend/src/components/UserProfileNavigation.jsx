@@ -1,14 +1,37 @@
 import React, { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import ProfilePostCard from "./ProfilePostCard";
-import UserFollowers from "./UserFollowers";
-import UserBlockeds from "./UserBlockeds";
+import UserService from "../services/UserServices";
+import { getAccessToken } from "../common/utils";
+import UserList from "./UserProfileList";
 
 const UserProfileNavigation = () => {
   const [activeTab, setActiveTab] = useState("posts");
   const { user } = useContext(UserContext);
+  const access_token = getAccessToken();
 
   const userPosts = user?.posts || []; //ne legyen undefined
+
+  const followUserData = async () => {
+    try {
+      if (access_token) {
+        const following = await UserService.followingsArray(access_token); 
+        return following   
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
+  const blockedUserData = async () => {
+    try {
+      if (access_token) {
+        const blockedUser = await UserService.blocksArray(access_token);
+        return blockedUser 
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
 
   const userPostsComponents = userPosts.map((userCard) => (
     <div key={userCard._id}>
@@ -19,14 +42,14 @@ const UserProfileNavigation = () => {
   const userPorifileTabs = [
     { id: "posts", label: "Posts", component: userPostsComponents },
     {
-      id: "followers",
-      label: "Followers",
-      component: <UserFollowers />,
+      id: "following",
+      label: "Following",
+      component: <UserList fetchData={followUserData} />,
     },
     {
       id: "blocked",
       label: "Blocked user",
-      component: <UserBlockeds />,
+      component: <UserList fetchData={blockedUserData} />,
     },
   ];
 
