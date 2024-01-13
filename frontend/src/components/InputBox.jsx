@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 
-function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required }) {
+function InputBox({ name, type, placeholder, icon: Icon, defaultValue,value,onChange,required }) {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   return (
@@ -16,6 +16,7 @@ function InputBox({ name, type, placeholder, icon: Icon, value,onChange,required
         }
         placeholder={placeholder}
         value={value}
+        defaultValue={defaultValue}
         onChange={onChange}
         required={required || false}
         className=" w-[100%] pl-12 border-b border-gray-300 py-1 focus:border-b-2 focus:border-blue-700 transition-colors focus:outline-none peer bg-inherit"

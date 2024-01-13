@@ -84,7 +84,8 @@ const handleUpdatePost = async (event) => {
           type="text"
           placeholder="Title"
           icon={MdOutlineSubtitles}
-          value={postTitle}
+        
+          defaultValue={postTitle}
           onChange={(event) => setPostTitle(event.target.value)}
           required={true}
         />
@@ -92,7 +93,7 @@ const handleUpdatePost = async (event) => {
           type="text"
           placeholder="description"
           icon={TbFileDescription}
-          value={description}
+          defaultValuee={description}
           onChange={(event) => setDescription(event.target.value)}
           required={true}
         />
@@ -100,14 +101,14 @@ const handleUpdatePost = async (event) => {
           type="text"
           placeholder="Category"
           icon={BiCategory}
-          value={categoryTitle}
+          defaultValue={categoryTitle}
           onChange={(event) => setCategoryTitle(event.target.value)}
         />
         <InputBox
           type="text"
           placeholder="Photo"
           icon={MdOutlineAddAPhoto}
-          value={photo}
+          defaultValue={photo}
           onChange={(event) => setPhoto(event.target.value)}
           required={true}
         />
