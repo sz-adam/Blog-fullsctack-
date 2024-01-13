@@ -49,7 +49,7 @@ userRouter.get("/profile-viewers/:id", isLogin, whoViewedMyProfileCtrl);
 userRouter.get("/following/:id", isLogin, followingCtrl);
 
 //get api/v1/users/followers
-userRouter.get("/followers", isLogin, userFollowingArrayCtrl);
+userRouter.get("/following", isLogin, userFollowingArrayCtrl);
 
 //get api/v1/users/blocked
 userRouter.get("/blocked", isLogin, userBlockedArrayCtrl);
