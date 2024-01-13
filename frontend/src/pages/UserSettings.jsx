@@ -1,40 +1,20 @@
 import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
-import UserService from "../services/UserServices";
-import { getAccessToken } from "../common/utils";
-import { removeFormSession } from "../common/session";
-import { AuthUserContext } from "../context/AuthUserContext";
 import { MdMonochromePhotos } from "react-icons/md";
 import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
 import UserProfileSettings from "../components/UserProfileSettings";
 import UserPasswordSettings from "../components/UserPasswordSettings";
+import UserDeleteAccount from "../components/UserDeleteAccount";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
-  const { user, setUser } = useContext(UserContext);
-  const { setAuthUser } = useContext(AuthUserContext);
-  const access_token = getAccessToken();
-  const navigate = useNavigate();
+  const { user } = useContext(UserContext);
   const [updateProfilePhotos, setUpdateProfilePhotos] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-  };
-
-  //deleteProfil
-  const handleProfileDelete = async () => {
-    try {
-      if (access_token) {
-        await UserService.deleteUser(access_token);
-        removeFormSession("user");
-        setAuthUser(null);
-        navigate("/");
-      }
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
   };
 
   return (
@@ -114,22 +94,7 @@ function UserSettings() {
 
         {activeTab === "password" && <UserPasswordSettings />}
 
-        {activeTab === "deleteUser" && (
-          <div className="flex justify-center items-center w-full h-full md:h-[85vh] text-center">
-            <div>
-              <h1 className="text-2xl font-semibold mb-6">
-                Are you sure you want to delete the registration?
-              </h1>
-
-              <button
-                className="bg-red-500 py-2 px-10 text-white font-semibold text-xl rounded-full hover:bg-red-800"
-                onClick={handleProfileDelete}
-              >
-                Yes
-              </button>
-            </div>
-          </div>
-        )}
+        {activeTab === "deleteUser" && <UserDeleteAccount />}
       </div>
     </div>
   );
