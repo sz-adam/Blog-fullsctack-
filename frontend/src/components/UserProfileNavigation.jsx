@@ -32,6 +32,16 @@ const UserProfileNavigation = () => {
       console.error("Error fetching posts:", error);
     }
   };
+  const followersData= async () => {
+    try {
+      if (access_token) {
+        const followerUser = await UserService.followersArray(access_token);
+        return followerUser 
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
 
   const userPostsComponents = userPosts.map((userCard) => (
     <div key={userCard._id}>
@@ -45,6 +55,11 @@ const UserProfileNavigation = () => {
       id: "following",
       label: "Following",
       component: <UserList fetchData={followUserData} />,
+    },
+    {
+      id: "follower",
+      label: "Follower",
+      component: <UserList fetchData={followersData} />,
     },
     {
       id: "blocked",
