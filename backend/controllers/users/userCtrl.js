@@ -423,6 +423,33 @@ const userFollowersArrayCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+const userBlockedArrayCtrl = async (req, res, next) => {
+  try {
+    // 1. bejelentkezett felhasználót
+    const loggedInUser = await User.findById(req.userAuth);
+    // 2. Bejelentkezett felhasználó megtalálhatóe
+    if (loggedInUser) {
+      // 3. Blokkolt id lekérése
+      const blockedIds = loggedInUser.blocked;
+      // 4. id alapján a felhasználók lekérése
+      const blocked = await User.find({ _id: { $in: blockedIds } });
+
+      // 5. Bklokkolt felhasználók mentése
+      res.json({
+        status: "success",
+        data: blocked,
+      });
+    } else {
+      res.json({
+        status: "error",
+        message: "User not found",
+      });
+    }
+  } catch (error) {
+    next(appErr(error.message));
+  }
+};
+
 
 const profilePhotoUpdatectrl = async (req, res, next) => {
   try {
@@ -470,4 +497,5 @@ module.exports = {
   updateUserpasswordCtrl,
   userFollowersArrayCtrl,
   profilePhotoUpdatectrl,
+  userBlockedArrayCtrl,
 };
