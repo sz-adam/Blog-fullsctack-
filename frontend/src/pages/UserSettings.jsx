@@ -2,8 +2,6 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
-import { IoKeyOutline } from "react-icons/io5";
-import InputBox from "../components/InputBox";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { removeFormSession } from "../common/session";
@@ -11,38 +9,18 @@ import { AuthUserContext } from "../context/AuthUserContext";
 import { MdMonochromePhotos } from "react-icons/md";
 import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
 import UserProfileSettings from "../components/UserProfileSettings";
+import UserPasswordSettings from "../components/UserPasswordSettings";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
   const { user, setUser } = useContext(UserContext);
   const { setAuthUser } = useContext(AuthUserContext);
-  const [newPassword, setNewPassword] = useState("");
   const access_token = getAccessToken();
   const navigate = useNavigate();
   const [updateProfilePhotos, setUpdateProfilePhotos] = useState(false);
 
   const handleTabClick = (tab) => {
     setActiveTab(tab);
-  };
-
-
-  //password update
-  const handleProfilePasswordUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      if (access_token) {
-        const updatedPassword = await UserService.userUpdatePassword(
-          access_token,
-          {
-            password: newPassword,
-          }
-        );
-        setUser({ ...user, ...updatedPassword });
-        console.log(updatedPassword);
-      }
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
   };
 
   //deleteProfil
@@ -119,48 +97,22 @@ function UserSettings() {
                 alt=""
                 className="rounded-full w-40 h-40"
               />
-              <MdMonochromePhotos className="absolute bottom-0 right-0 text-2xl cursor-pointer"
-              onClick={() =>setUpdateProfilePhotos(true)} />
+              <MdMonochromePhotos
+                className="absolute bottom-0 right-0 text-2xl cursor-pointer"
+                onClick={() => setUpdateProfilePhotos(true)}
+              />
             </div>
-            {updateProfilePhotos &&(
-              <UpdateProfilePhoto setUpdateProfilePhotos={setUpdateProfilePhotos}/>
+            {updateProfilePhotos && (
+              <UpdateProfilePhoto
+                setUpdateProfilePhotos={setUpdateProfilePhotos}
+              />
             )}
 
             <UserProfileSettings />
           </div>
         )}
 
-        {activeTab === "password" && (
-          <div>
-            <h1 className="text-2xl font-semibold mb-6 text-center">
-              {" "}
-              Change password
-            </h1>
-            <div className="flex justify-center items-center w-full h-full md:h-[85vh]">
-              <form
-                className="w-[85%] max-w-[400px]"
-                onSubmit={handleProfilePasswordUpdate}
-              >
-                <InputBox
-                  type="password"
-                  placeholder="New Password"
-                  icon={IoKeyOutline}
-                  value={newPassword}
-                  onChange={(event) => setNewPassword(event.target.value)}
-                  required={true}
-                />
-                <div className="flex justify-center items-center mt-10">
-                  <button
-                    className="border-2 bg-slate-500 text-white p-3 px-10 rounded-full font-bold hover:bg-slate-700"
-                    type="submit"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
+        {activeTab === "password" && <UserPasswordSettings />}
 
         {activeTab === "deleteUser" && (
           <div className="flex justify-center items-center w-full h-full md:h-[85vh] text-center">
