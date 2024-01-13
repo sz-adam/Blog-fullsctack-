@@ -212,11 +212,11 @@ const UserService = {
   },
 
 
-  followersArray: async (access_token) => {
+  followingsArray: async (access_token) => {
     try {
       if (access_token) {
         const response = await axios.get(
-          import.meta.env.VITE_API_FOLLOWERS_ARRAY,
+          import.meta.env.VITE_API_FOLLOWING_ARRAY,
           {
             headers: {
               Authorization: `Bearer ${access_token}`,
