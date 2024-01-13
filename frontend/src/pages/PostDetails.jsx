@@ -28,7 +28,6 @@ function PostDetails() {
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
   const [searchUser, setSearchUser] = useState();
-  console.log(post);
 
   ///single post
   const fetchPost = async () => {
