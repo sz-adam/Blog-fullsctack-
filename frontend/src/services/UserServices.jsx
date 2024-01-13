@@ -230,6 +230,25 @@ const UserService = {
       throw error;
     }
   },
+
+  blocksArray: async (access_token) => {
+    try {
+      if (access_token) {
+        const response = await axios.get(
+          import.meta.env.VITE_API_USER_BLOCKED_ARRAY,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error Following User:", error);
+      throw error;
+    }
+  },
   profilePhotoUpdate: async (access_token,userData) => {
     try {
       if (access_token) {
