@@ -2,9 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import { UserContext } from "../context/UserContext";
-import { MdOutlineMailOutline } from "react-icons/md";
 import { IoKeyOutline } from "react-icons/io5";
-import { IoManOutline } from "react-icons/io5";
 import InputBox from "../components/InputBox";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
@@ -12,14 +10,12 @@ import { removeFormSession } from "../common/session";
 import { AuthUserContext } from "../context/AuthUserContext";
 import { MdMonochromePhotos } from "react-icons/md";
 import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
+import UserProfileSettings from "../components/UserProfileSettings";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
   const { user, setUser } = useContext(UserContext);
-  const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const [newFirstname, setNewFirstname] = useState("");
-  const [newLastname, setNewLastname] = useState("");
-  const [newEmail, setNewEmail] = useState("");
+  const { setAuthUser } = useContext(AuthUserContext);
   const [newPassword, setNewPassword] = useState("");
   const access_token = getAccessToken();
   const navigate = useNavigate();
@@ -28,25 +24,7 @@ function UserSettings() {
   const handleTabClick = (tab) => {
     setActiveTab(tab);
   };
-  const handleProfileUpdate = async (event) => {
-    event.preventDefault();
-    try {
-      if (access_token) {
-        const updatedProfile = await UserService.userUpdateProfile(
-          access_token,
-          {
-            //új adatok userService --userData--
-            firstname: newFirstname,
-            lastname: newLastname,
-            email: newEmail,
-          }
-        );
-        setUser(updatedProfile);
-      }
-    } catch (error) {
-      console.error("Error updating profile:", error);
-    }
-  };
+
 
   //password update
   const handleProfilePasswordUpdate = async (event) => {
@@ -148,45 +126,7 @@ function UserSettings() {
               <UpdateProfilePhoto setUpdateProfilePhotos={setUpdateProfilePhotos}/>
             )}
 
-            <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
-              <form
-                className="w-[85%] max-w-[400px]"
-                onSubmit={handleProfileUpdate}
-              >
-                <InputBox
-                  type="text"
-                  placeholder="New First name"
-                  icon={IoManOutline}
-                  value={newFirstname}
-                  required={true}
-                  onChange={(event) => setNewFirstname(event.target.value)}
-                />
-                <InputBox
-                  type="text"
-                  placeholder="New Last name"
-                  icon={IoManOutline}
-                  value={newLastname}
-                  onChange={(event) => setNewLastname(event.target.value)}
-                  required={true}
-                  label="New Last name"
-                />
-                <InputBox
-                  type="email"
-                  placeholder="New Email"
-                  icon={MdOutlineMailOutline}
-                  value={newEmail}
-                  onChange={(event) => setNewEmail(event.target.value)}
-                />
-                <div className="flex justify-center items-center mt-10">
-                  <button
-                    className="border-2 bg-slate-500 text-white p-3 px-10 rounded-full font-bold hover:bg-slate-700"
-                    type="submit"
-                  >
-                    Save
-                  </button>
-                </div>
-              </form>
-            </div>
+            <UserProfileSettings />
           </div>
         )}
 
