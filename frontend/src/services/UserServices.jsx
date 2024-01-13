@@ -230,6 +230,25 @@ const UserService = {
       throw error;
     }
   },
+  profilePhotoUpdate: async (access_token,userData) => {
+    try {
+      if (access_token) {
+        const response = await axios.put(
+          import.meta.env.VITE_API_PROFILE_PHOTO_UPDATE,
+          userData,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error Following User:", error);
+      throw error;
+    }
+  },
 
   
 };
