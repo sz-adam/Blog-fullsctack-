@@ -94,7 +94,7 @@ const UserProfileNavigation = () => {
           key={tab.id}
           style={{ display: activeTab === tab.id ? "block" : "none" }}
         >
-          <div className="flex">{tab.component}</div>
+          <div className="md:flex">{tab.component}</div>
         </div>
       ))}
     </div>

@@ -149,7 +149,7 @@ function Profile() {
             <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
               Posts
             </p>
-            <div className="m-2 md:grid md:grid-cols-4">
+            <div className="m-2 flex-wrap md:flex justify-center items-center">
               {filteredUserPost?.map((userCard) => (
                 <ProfilePostCard userCard={userCard} key={userCard?._id} />
               ))}
