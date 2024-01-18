@@ -4,8 +4,6 @@ import { UserContext } from "../context/UserContext";
 
 const UserProfileList = ({ fetchData }) => {
   const [userList, setUserList] = useState();
-  const { user } = useContext(UserContext);
-  console.log(userList);
 
   useEffect(() => {
     const fetchDataAndSetUserList = async () => {
