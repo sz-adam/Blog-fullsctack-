@@ -11,8 +11,7 @@ const UserProfileNavigation = () => {
   const access_token = getAccessToken();
 
   const userPosts = user?.posts || []; //ne legyen undefined
-  console.log(userPosts);
-
+  
   const followUserData = async () => {
     try {
       if (access_token) {
