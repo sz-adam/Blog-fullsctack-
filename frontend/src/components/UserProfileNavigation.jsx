@@ -44,19 +44,21 @@ const UserProfileNavigation = () => {
   };
 
   const userPostsComponents =
-    userPosts.length > 0 ? (
-      userPosts.map((userCard) => (
+  userPosts.length > 0 ? (
+    <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+      {userPosts.map((userCard) => (
         <div key={userCard._id}>
           <ProfilePostCard userCard={userCard} />
         </div>
-      ))
-    ) : (
-      <div className="place-items-center py-10 text-center w-full">
-        <h1 className="text-2xl md:text-6xl font-extrabold text-transparent bg-clip-text log-reg-color">
+      ))}
+    </div>
+  ) : (
+    <div className="place-items-center py-10 text-center w-full">
+      <h1 className="text-2xl md:text-6xl font-extrabold text-transparent bg-clip-text log-reg-color">
         You haven't published a post yet!
-        </h1>
-      </div>
-    );
+      </h1>
+    </div>
+  );
 
   const userPorifileTabs = [
     { id: "posts", label: "Posts", component: userPostsComponents },

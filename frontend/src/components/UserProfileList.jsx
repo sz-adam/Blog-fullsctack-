@@ -26,11 +26,11 @@ const UserProfileList = ({ fetchData }) => {
           </h1>
         </div>
       ) : (
-        <div className="md:grid md:grid-cols-3 lg:grid-cols-4 gap-10 mt-10">
+        <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
           {userList?.map((user) => (
             <div
               key={user?.id}
-              className="w-64 bg-[#20354b] rounded-2xl px-8 py-6 shadow-lg m-10"
+              className="w-72 bg-[#20354b] rounded-2xl px-8 py-6 shadow-lg m-10"
             >
               <div className="flex items-center justify-between">
                 <p className="text-emerald-400 font-semibold mt-2.5">Active:</p>
