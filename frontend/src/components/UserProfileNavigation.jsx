@@ -11,12 +11,13 @@ const UserProfileNavigation = () => {
   const access_token = getAccessToken();
 
   const userPosts = user?.posts || []; //ne legyen undefined
+  console.log(userPosts);
 
   const followUserData = async () => {
     try {
       if (access_token) {
-        const following = await UserService.followingsArray(access_token); 
-        return following   
+        const following = await UserService.followingsArray(access_token);
+        return following;
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -26,28 +27,37 @@ const UserProfileNavigation = () => {
     try {
       if (access_token) {
         const blockedUser = await UserService.blocksArray(access_token);
-        return blockedUser 
+        return blockedUser;
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
-  const followersData= async () => {
+  const followersData = async () => {
     try {
       if (access_token) {
         const followerUser = await UserService.followersArray(access_token);
-        return followerUser 
+        return followerUser;
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
   };
 
-  const userPostsComponents = userPosts.map((userCard) => (
-    <div key={userCard._id}>
-      <ProfilePostCard userCard={userCard} />
-    </div>
-  ));
+  const userPostsComponents =
+    userPosts.length > 0 ? (
+      userPosts.map((userCard) => (
+        <div key={userCard._id}>
+          <ProfilePostCard userCard={userCard} />
+        </div>
+      ))
+    ) : (
+      <div className="place-items-center py-10 text-center w-full">
+        <h1 className="text-2xl md:text-6xl font-extrabold text-transparent bg-clip-text log-reg-color">
+        You haven't published a post yet!
+        </h1>
+      </div>
+    );
 
   const userPorifileTabs = [
     { id: "posts", label: "Posts", component: userPostsComponents },
@@ -82,7 +92,7 @@ const UserProfileNavigation = () => {
             style={{
               color: activeTab === tab.id ? "MediumSpringGreen" : "black",
             }}
-            className="font-semibold mx-2 text-xl"
+            className="font-semibold mx-2 text-base md:text-xl"
           >
             {tab.label}
           </button>
