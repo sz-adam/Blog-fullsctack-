@@ -18,6 +18,7 @@ const {
   profilePhotoUpdatectrl,
   userBlockedArrayCtrl,
   userFollowersgArrayCtrl,
+  userViewedArrayCtrl
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 const isAdmin = require("../../middlewares/isAdmin");
@@ -53,6 +54,9 @@ userRouter.get("/following/:id", isLogin, followingCtrl);
 userRouter.get("/following", isLogin, userFollowingArrayCtrl);
 //get api/v1/users/followers
 userRouter.get("/followers", isLogin, userFollowersgArrayCtrl);
+
+//get api/v1/users/viewers
+userRouter.get("/viewers", isLogin, userViewedArrayCtrl);
 
 //get api/v1/users/blocked
 userRouter.get("/blocked", isLogin, userBlockedArrayCtrl);
