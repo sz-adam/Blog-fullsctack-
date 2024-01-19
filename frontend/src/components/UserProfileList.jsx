@@ -17,6 +17,11 @@ const UserProfileList = ({ fetchData }) => {
     fetchDataAndSetUserList();
   }, [fetchData]);
 
+  const formatDate = (dateString) => {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("en-US", options);
+  };
+
   return (
     <>
       {userList?.length === 0 ? (
@@ -35,7 +40,7 @@ const UserProfileList = ({ fetchData }) => {
               <div className="flex items-center justify-between">
                 <p className="text-emerald-400 font-semibold mt-2.5">Active:</p>
                 <span className="text-gray-400 text-sm">
-                  {user?.lastActive}
+                  {formatDate(user?.updatedAt)}
                 </span>
               </div>
               <div className="mt-6 w-fit mx-auto">
