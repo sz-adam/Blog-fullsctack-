@@ -17,29 +17,30 @@ function Profile() {
   const { userId } = useParams();
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
- 
+  const viewUser = filteredUser?.id;
 
+  const viewUserData = async () => {
+    try {
+      if (access_token && viewUser && user?.id) {
+        if (!filteredUser.viewers.includes(user?.id)) {
+          await UserService.profileViewrs(access_token, viewUser);
+          setFilteredUser((prevFilteredUser) => ({
+            ...prevFilteredUser,
+            viewers: [...prevFilteredUser.viewers, user?.id],
+            viewersCount: prevFilteredUser.viewers.length + 1,
+          }));
+        }
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  };
 
-  
-  
-// Javítani a profil frissítésére való hibát
-
-  //useEffect(() => {
-  //  const viewUserData = async () => {
-  //    try {
-  //      if (access_token,viewUser) {
-  //        const viewUser = await UserService.profileViewrs(access_token,viewUser);
-  //        console.log(viewUser)
-  //        
-  //      }
-  //    } catch (error) {
-  //      console.error("Error fetching posts:", error);
-  //    }
-  //  };
-//
-  //  viewUserData();
-  //}, [access_token, userId,viewUser]);
-  
+  useEffect(() => {
+    if (user?.id && filteredUser) {
+      viewUserData();
+    }
+  }, [access_token, viewUser, user?.id]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -102,7 +103,7 @@ function Profile() {
               </div>
               <div>
                 <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.viewers?.length}
+                  {filteredUser?.viewersCount}
                 </p>
                 <p className="text-gray-400">viewers</p>
               </div>
@@ -127,7 +128,7 @@ function Profile() {
                 <>
                   <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
                     <UserBlockUnblockButton filteredUserId={filteredUser?.id} />
-                  </button>  
+                  </button>
                   <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
                     <UserFollowUnFollowButton
                       filteredUserId={filteredUser?.id}
