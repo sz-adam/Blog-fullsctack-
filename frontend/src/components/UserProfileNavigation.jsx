@@ -43,6 +43,17 @@ const UserProfileNavigation = () => {
     }
   };
 
+  const viewersData = async () => {
+    try{
+      if(access_token) {
+        const viewersuser = await UserService.viewersArray(access_token);
+        return viewersuser;
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+    }
+  }
+
   const userPostsComponents =
   userPosts.length > 0 ? (
     <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
@@ -77,6 +88,11 @@ const UserProfileNavigation = () => {
       label: "Blocked user",
       component: <UserList fetchData={blockedUserData} />,
     },
+    {
+      id: "viewers",
+      label: "Viewers",
+      component: <UserList fetchData={viewersData} />,
+    },
   ];
 
   const handleTabClick = (tab) => {
@@ -85,7 +101,7 @@ const UserProfileNavigation = () => {
 
   return (
     <div>
-      <div className="flex justify-center items-center mt-12">
+      <div className="grid md:flex items-center justify-center mt-12">
         {userPorifileTabs.map((tab) => (
           <button
             key={tab.id}
@@ -93,7 +109,7 @@ const UserProfileNavigation = () => {
             style={{
               color: activeTab === tab.id ? "MediumSpringGreen" : "black",
             }}
-            className="font-semibold mx-2 text-base md:text-xl"
+            className="font-semibold mx-2 text-base md:text-xl my-2 md:my-0"
           >
             {tab.label}
           </button>
