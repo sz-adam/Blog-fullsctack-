@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import UserNavigationMenu from "./UserNavigationMenu";
 import { getAccessToken } from "../common/utils";
-
+import PostSearch from "./PostSearch";
 
 function Navbar() {
   const access_token = getAccessToken();
@@ -10,13 +10,16 @@ function Navbar() {
     <div className="navbar justify-between p-4">
       <div>
         <Link to="/">
-          <p className="text-3xl font-extrabold bg-gradient-to-r text-transparent from-green-500 to-blue-500 bg-clip-text">
+          <p className="text-xl md:text-3xl font-extrabold bg-gradient-to-r text-transparent from-green-500 to-blue-500 bg-clip-text">
             MERN Blogs
           </p>
         </Link>
       </div>
       {access_token ? (
         <div className="flex items-center">
+          <div className="pr-4">
+            <PostSearch />
+          </div>
           <Link to="/write" className="mr-10 hover:text-slate-500">
             {" "}
             Write{" "}
