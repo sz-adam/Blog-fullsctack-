@@ -37,12 +37,8 @@ useEffect(() => {
           fetchedPosts = await PostService.getAllPosts(access_token);
         } else {
           fetchedPosts = await PostService.getAllPosts();
-        }
-        // Szűrés hozzáadása
-        const filteredPosts = fetchedPosts.filter((post) =>
-          post.title.toLowerCase().includes(searchPost.toLowerCase())
-        );
-        setPosts(filteredPosts);
+        }  
+        setPosts(fetchedPosts);
       } catch (error) {
         console.error('Error fetching posts:', error);
       }
@@ -51,6 +47,10 @@ useEffect(() => {
     fetchData();
   }, [access_token, searchPost]);  
 
+  const filteredPosts = posts.filter((post) =>
+  post.title.toLowerCase().includes(searchPost.toLowerCase())
+);
+
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
@@ -58,7 +58,7 @@ useEffect(() => {
           <Router>          
             <Navbar searchPost={searchPost} setSearchPost={setSearchPost} />
             <Routes>
-              <Route path="/" element={<Home posts={posts} />} />
+              <Route path="/" element={<Home posts={filteredPosts} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/write" element={<WritePost />} />
