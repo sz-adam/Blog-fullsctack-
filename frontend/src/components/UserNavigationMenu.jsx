@@ -35,9 +35,10 @@ const UserNavigationPanel = () => {
           <Link to={`/userProfile/${user?.id}`} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Profile
           </Link>
-          <Link to="/" className="link pl-8 py-4 block text-black hover:text-slate-500">
-            Dashboard
-          </Link>
+          {authUser?.data.isAdmin === true ? (
+          <Link to="/adminPage" className="link pl-8 py-4 block text-black hover:text-slate-500">
+           Admin panel
+          </Link>): ('')}
           <Link to={`/settings/${user?.id}`} className="link pl-8 py-4 block text-black hover:text-slate-500">
             Settings
           </Link>

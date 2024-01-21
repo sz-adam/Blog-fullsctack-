@@ -15,6 +15,7 @@ import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
 import { getAccessToken } from "./common/utils";
 import PostService from "./services/PostsServices";
+import AdminPages from "./pages/AdminPages";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
@@ -62,6 +63,7 @@ useEffect(() => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/write" element={<WritePost />} />
+              <Route path="/adminPage" element={<AdminPages />} />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route path="/profile/:userId" element={<Profile />} />
