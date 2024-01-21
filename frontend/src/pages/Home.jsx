@@ -1,31 +1,8 @@
-import React, { useEffect, useState } from "react";
-import PostService from "../services/PostsServices";
+import React from "react";
 import PostCard from "../components/PostCard";
 import AllCategory from "../components/allCategory";
-import { getAccessToken } from "../common/utils";
 
-
-function Home() {
-  const [posts, setPosts] = useState([]);
-  const access_token = getAccessToken();
- 
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let fetchedPosts;
-        if (access_token) {
-          fetchedPosts = await PostService.getAllPosts(access_token);
-        } else {
-          fetchedPosts = await PostService.getAllPosts();
-        }
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-    fetchData();
-  }, [access_token]);
+function Home({posts}) {
 
   return (
     <div className="flex flex-col md:flex-row">

@@ -13,9 +13,14 @@ import { UserContextProvider } from "./context/UserContext";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
+import { getAccessToken } from "./common/utils";
+import PostService from "./services/PostsServices";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
+  const [posts, setPosts] = useState([]);
+  const [searchPost, setSearchPost] = useState("");
+  const access_token = getAccessToken();
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -23,14 +28,37 @@ function App() {
       setAuthUser(JSON.parse(userInSession));
     }
   }, []);
+
+useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let fetchedPosts;
+        if (access_token) {
+          fetchedPosts = await PostService.getAllPosts(access_token);
+        } else {
+          fetchedPosts = await PostService.getAllPosts();
+        }
+        // Szűrés hozzáadása
+        const filteredPosts = fetchedPosts.filter((post) =>
+          post.title.toLowerCase().includes(searchPost.toLowerCase())
+        );
+        setPosts(filteredPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      }
+    };
+
+    fetchData();
+  }, [access_token, searchPost]);  
+
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
         <UserContextProvider>
-          <Router>
-            <Navbar />
+          <Router>          
+            <Navbar searchPost={searchPost} setSearchPost={setSearchPost} />
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Home posts={posts} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/write" element={<WritePost />} />

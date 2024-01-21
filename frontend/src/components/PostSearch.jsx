@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-function PostSearch() {
+function PostSearch({searchPost, setSearchPost}) {
   const [searchVisibility, setSearchVisibility] = useState(false);
+
   return (
     <>
       <button
@@ -20,6 +21,8 @@ function PostSearch() {
         <input
           type="text"
           placeholder="Search"
+          value={searchPost}
+          onChange={(e) => setSearchPost(e.target.value)}
           className="w-full border-2 py-2.5 border-green-400  focus:outline-none rounded-full px-3 md:pl-12"
         />
 

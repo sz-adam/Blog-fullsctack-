@@ -4,7 +4,7 @@ import UserNavigationMenu from "./UserNavigationMenu";
 import { getAccessToken } from "../common/utils";
 import PostSearch from "./PostSearch";
 
-function Navbar() {
+function Navbar({searchPost, setSearchPost}) {
   const access_token = getAccessToken();
   return (
     <div className="navbar justify-between p-4">
@@ -18,7 +18,7 @@ function Navbar() {
       {access_token ? (
         <div className="flex items-center">
           <div className="pr-4">
-            <PostSearch />
+            <PostSearch searchPost={searchPost} setSearchPost={setSearchPost}/>
           </div>
           <Link to="/write" className="mr-10 hover:text-slate-500">
             {" "}
