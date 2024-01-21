@@ -52,21 +52,30 @@ const getCommentsCtrl = async (req, res, next) => {
 
 const deleteCommentCtrl = async (req, res, next) => {
   try {
-    //find the COmment
+    // Find the comment
     const comment = await Comment.findById(req.params.id);
     if (comment.user.toString() !== req.userAuth.toString()) {
-      return next(appErr("You are not allowed to update this comment", 403));
+      return next(appErr("You are not allowed to delete this comment", 403));
     }
-    // keresd meg a postot a comment.post id alapján
+
+    // Find the post of the comment
     const post = await Post.findById(comment.post);
-    const commentIdToDelete = req.params.id;
-    //azok maradjanak amiknek az id-a nem egyenlő a commentIdToDelete
-    post.comments = post.comments.filter(
-      (postItem) => postItem._id.toString() !== commentIdToDelete.toString()
-    );
+    if (post._id.toString() !== comment.post.toString()) {
+      return next(appErr("Comment does not belong to the specified post", 400));
+    }
+
+    // Remove the comment from the post
+    post.comments = post.comments.filter(postItem => postItem._id.toString() !== comment._id.toString());
     await post.save();
 
-    await Comment.findByIdAndDelete(commentIdToDelete);
+    // Remove the comment from the user's comments
+    const user = await User.findById(req.userAuth);
+    user.comments = user.comments.filter(commentItem => commentItem._id.toString() !== comment._id.toString());
+    await user.save();
+
+    // Delete the comment from the database
+    await Comment.findByIdAndDelete(comment._id);
+
     res.json({
       status: "success",
       data: "Comment has been deleted successfully",
@@ -75,6 +84,7 @@ const deleteCommentCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
+
 
 const updateCommentCtrl = async (req, res, next) => {
   const { description } = req.body;
