@@ -64,7 +64,10 @@ const allpostCtrl = async (req, res, next) => {
 
 const allPostNoLogin = async (req, res, next) => {
   try {
-    const posts = await Post.find();
+    const posts = await Post.find({})
+      .populate("user")
+      .populate("category", "title");
+
     res.json({
       status: "success",
       data: posts,
