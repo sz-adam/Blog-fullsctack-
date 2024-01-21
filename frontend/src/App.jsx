@@ -23,6 +23,7 @@ function App() {
   const [searchPost, setSearchPost] = useState("");
   const access_token = getAccessToken();
   const isAdmin = authUser?.data?.isAdmin;
+  const token = authUser?.data?.token;
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -64,7 +65,7 @@ useEffect(() => {
               <Route path="/" element={<Home posts={filteredPosts} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/write" element={<WritePost />} />
+              <Route path="/write" element={ token?  <WritePost />: <Navigate to="/" />}  />
               <Route path="/adminPage" element={isAdmin ? <AdminPages /> : <Navigate to="/" />} />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
