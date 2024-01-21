@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -22,6 +22,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [searchPost, setSearchPost] = useState("");
   const access_token = getAccessToken();
+  const isAdmin = authUser?.data?.isAdmin;
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -52,6 +53,7 @@ useEffect(() => {
   post.title.toLowerCase().includes(searchPost.toLowerCase())
 );
 
+
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
@@ -63,7 +65,7 @@ useEffect(() => {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/write" element={<WritePost />} />
-              <Route path="/adminPage" element={<AdminPages />} />
+              <Route path="/adminPage" element={isAdmin ? <AdminPages /> : <Navigate to="/" />} />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route path="/profile/:userId" element={<Profile />} />
