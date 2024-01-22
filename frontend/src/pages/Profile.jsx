@@ -18,6 +18,8 @@ function Profile() {
   const [filteredUserPost, setFilteredUserPost] = useState();
   const access_token = getAccessToken();
   const viewUser = filteredUser?.id;
+  const userFollower = filteredUser?.followers?.includes(user?.id);
+  const userBlocked =user?.blocked?.includes(filteredUser?.id);
 
   const viewUserData = async () => {
     try {
@@ -126,16 +128,18 @@ function Profile() {
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
               {user?.id !== filteredUser?.id && (
                 <>
-                  <button className="profilButton bg-gray-700 hover:bg-gray-800 ">
-                    <UserBlockUnblockButton filteredUserId={filteredUser?.id} />
-                  </button>
-                  <button className="profilButton bg-blue-400 hover:bg-blue-500 ">
-                    <UserFollowUnFollowButton
-                      filteredUserId={filteredUser?.id}
-                      filteredUser={filteredUser}
-                      setFilteredUser={setFilteredUser}
-                    />
-                  </button>
+                      <button className={`profilButton ${userFollower ? 'bg-gray-400' : 'bg-gray-700'}`}  disabled={userFollower}>
+                        <UserBlockUnblockButton
+                          filteredUserId={filteredUser?.id}
+                        />
+                      </button>
+                    <button  className={`profilButton ${userBlocked ? 'bg-blue-300' : 'bg-blue-500'}`}  disabled={userBlocked}>
+                      <UserFollowUnFollowButton
+                        filteredUserId={filteredUser?.id}
+                        filteredUser={filteredUser}
+                        setFilteredUser={setFilteredUser}
+                      />
+                    </button>
                 </>
               )}
             </div>
