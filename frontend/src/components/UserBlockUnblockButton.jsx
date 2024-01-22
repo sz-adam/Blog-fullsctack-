@@ -1,33 +1,32 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { getAccessToken } from "../common/utils";
 import UserService from "../services/UserServices";
+import { UserContext } from "../context/UserContext";
 
-function UserBlockUnblockButton({filteredUserId}) {
+function UserBlockUnblockButton({filteredUserId , setFilteredUser}) {
   const access_token = getAccessToken();
-  const storedProfileBlock = localStorage.getItem("profileBlock");
-  const [profileBlock, setProfileBlock] = useState(
-    storedProfileBlock === "true"
-  );
+  const [profileBlock, setProfileBlock] = useState(false);
+  const { user, setUser } = useContext(UserContext);  
+  const userBlockeds= user? user.blocked : [];
+  console.log(user)
 
   useEffect(() => {
-    localStorage.setItem("profileBlock", profileBlock);
-  }, [profileBlock]);
-
-  const handleClick = () => {
-    setProfileBlock((prevProfileBlock) => !prevProfileBlock);
-
-    if (profileBlock) {
-      handleUnBlocked();
-    } else {
-      handleBlocked();
-    }
-  };
+    setProfileBlock(userBlockeds.includes(filteredUserId))
+  }, [userBlockeds, filteredUserId]); 
 
   const handleBlocked =async () => {
     try {
       if (access_token && filteredUserId) {
         await UserService.blockUser(access_token, filteredUserId);
+        const updatedAllUser = await UserService.allUser(access_token);
+        const updatedUser = updatedAllUser.find((user) => user.id === filteredUserId);
         console.log("Blokkolva", filteredUserId);
+
+        setUser((prevUser) => ({
+          ...prevUser,
+          blocked: [...prevUser.blocked, filteredUserId],
+        }));
+        setProfileBlock(updatedUser)
       }
     } catch (error) {
       console.error("Error following user:", error);
@@ -39,9 +38,27 @@ function UserBlockUnblockButton({filteredUserId}) {
       if (access_token && filteredUserId) {
         await UserService.unBlockUser(access_token, filteredUserId);
         console.log("Feloldva", filteredUserId);
+        const updatedAllUser = await UserService.allUser(access_token);
+        const updatedUser = updatedAllUser.find((user) => user.id === filteredUserId);
+
+        setUser((prevUser) => ({
+          ...prevUser,
+          blocked: prevUser.blocked.filter((id) => id !== filteredUserId),
+        }));
+        setProfileBlock(updatedUser)
       }
     } catch (error) {
       console.error("Error following user:", error);
+    }
+  };
+
+  const handleClick = () => {
+    setProfileBlock((prevProfileBlock) => !prevProfileBlock);
+
+    if (profileBlock) {
+      handleUnBlocked();
+    } else {
+      handleBlocked();
     }
   };
 
