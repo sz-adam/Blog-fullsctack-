@@ -4,7 +4,7 @@ import { getAccessToken } from "../common/utils";
 import { UserContext } from "../context/UserContext";
 
 function UserFollowUnFollowButton({ filteredUserId, setFilteredUser }) {
-  const { user, setUser } = useContext(UserContext);  
+  const { user, setUser } = useContext(UserContext);
   const [userFollow, setUserFollow] = useState(false);
   const access_token = getAccessToken();
   const userFollowings = user ? user.following : [];
@@ -18,11 +18,14 @@ function UserFollowUnFollowButton({ filteredUserId, setFilteredUser }) {
       if (access_token && filteredUserId) {
         await UserService.followUser(access_token, filteredUserId);
         const updatedAllUser = await UserService.allUser(access_token);
-        const updatedUser = updatedAllUser.find((user) => user.id === filteredUserId);
+        const updatedUser = updatedAllUser.find(
+          (user) => user.id === filteredUserId
+        );
 
         setUser((prevUser) => ({
           ...prevUser,
           following: [...prevUser.following, filteredUserId],
+          followingCount: prevUser.following.length + 1,
         }));
         setFilteredUser(updatedUser);
       }
@@ -36,11 +39,14 @@ function UserFollowUnFollowButton({ filteredUserId, setFilteredUser }) {
       if (access_token && filteredUserId) {
         await UserService.unfollowUser(access_token, filteredUserId);
         const updatedAllUser = await UserService.allUser(access_token);
-        const updatedUser = updatedAllUser.find((user) => user.id === filteredUserId);
+        const updatedUser = updatedAllUser.find(
+          (user) => user.id === filteredUserId
+        );
 
         setUser((prevUser) => ({
           ...prevUser,
           following: prevUser.following.filter((id) => id !== filteredUserId),
+          followingCount: prevUser.following.length - 1,
         }));
         setFilteredUser(updatedUser);
       }

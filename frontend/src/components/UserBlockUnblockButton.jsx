@@ -24,6 +24,7 @@ function UserBlockUnblockButton({filteredUserId , setFilteredUser}) {
         setUser((prevUser) => ({
           ...prevUser,
           blocked: [...prevUser.blocked, filteredUserId],
+          blockedCount: prevUser.blocked.length + 1
         }));
         setProfileBlock(updatedUser)
       }
@@ -43,6 +44,7 @@ function UserBlockUnblockButton({filteredUserId , setFilteredUser}) {
         setUser((prevUser) => ({
           ...prevUser,
           blocked: prevUser.blocked.filter((id) => id !== filteredUserId),
+          blockedCount: prevUser.blocked.length - 1
         }));
         setProfileBlock(updatedUser)
       }
