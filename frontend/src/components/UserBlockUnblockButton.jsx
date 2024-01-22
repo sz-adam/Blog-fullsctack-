@@ -8,7 +8,6 @@ function UserBlockUnblockButton({filteredUserId , setFilteredUser}) {
   const [profileBlock, setProfileBlock] = useState(false);
   const { user, setUser } = useContext(UserContext);  
   const userBlockeds= user? user.blocked : [];
-  console.log(user)
 
   useEffect(() => {
     setProfileBlock(userBlockeds.includes(filteredUserId))
