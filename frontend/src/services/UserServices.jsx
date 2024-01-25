@@ -207,10 +207,9 @@ const UserService = {
       }
     } catch (error) {
       console.error("Error deleting profile:", error);
-        throw error;
+      throw error;
     }
   },
-
 
   followingsArray: async (access_token) => {
     try {
@@ -285,7 +284,7 @@ const UserService = {
       throw error;
     }
   },
-  profilePhotoUpdate: async (access_token,userData) => {
+  profilePhotoUpdate: async (access_token, userData) => {
     try {
       if (access_token) {
         const response = await axios.put(
@@ -305,7 +304,49 @@ const UserService = {
     }
   },
 
-  
+  adminBlockUser: async (access_token, blockedUserId) => {
+    console.log(blockedUserId);
+
+    try {
+      if (access_token) {
+        const response = await axios.put(
+          `${import.meta.env.VITE_API_ADMIN_BLOCK}${blockedUserId}`,
+          {
+            isBlocked: true,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data;
+      }
+    } catch (error) {
+      console.error("Error AdminBlock User:", error);
+      throw error;
+    }
+  },
+
+  adminUnBlockUser: async (access_token, blockedUserId) => {
+    try {
+      if (access_token) {
+        const response = await axios.put(
+          `${import.meta.env.VITE_API_ADMIN_UNBLOCK}${blockedUserId}`,
+          { isBlocked: false },
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error AdminBlock User:", error);
+      throw error;
+    }
+  },
 };
 
 export default UserService;

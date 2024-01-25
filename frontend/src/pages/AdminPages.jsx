@@ -7,13 +7,13 @@ import { Link } from "react-router-dom";
 function AdminPages() {
   const access_token = getAccessToken();
   const [fullUser, setFullUser] = useState([]);
+  console.log(fullUser)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         if (access_token) {
           const allUser = await UserService.allUser(access_token);
-          console.log(allUser);
           setFullUser(allUser);
         }
       } catch (error) {
@@ -24,6 +24,34 @@ function AdminPages() {
     fetchData();
   }, [access_token]);
 
+
+  const handleAdminBlockUser = async (blockedUserId) => {
+    try {
+      if (access_token && blockedUserId) {
+        await UserService.adminBlockUser(access_token, blockedUserId);
+        console.log("Admin blokkolva", blockedUserId);
+       
+      }
+    } catch (error) {
+      console.error("Error adminBlocked user:", error);
+    }
+  };
+  const adminUnBlockUser =async(blockedUserId) => {
+    try{
+        if(access_token &&blockedUserId){
+          await UserService.adminUnBlockUser(access_token,blockedUserId);
+        console.log("Admin blokk feloldva", blockedUserId);
+      
+        }
+    }
+    catch(error) {
+      console.error("Error adminBlocked user:", error);
+    }
+  }
+
+
+
+
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(dateString).toLocaleDateString("en-US", options);
@@ -31,7 +59,7 @@ function AdminPages() {
   return (
     <section className="container mx-auto p-6 font-mono">
       {fullUser?.map((user) => (
-        <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg">
+        <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg" key={user?.id}>
           <div className="w-full overflow-x-auto" key={user?.id}>
             <table className="w-full">
               <thead>
@@ -43,6 +71,7 @@ function AdminPages() {
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Post</th>
                   <th className="px-4 py-3">Blocked</th>
+                  <th className="px-4 py-3">Unblock</th>
                   <th className="px-4 py-3">View</th>
                 </tr>
               </thead>
@@ -84,7 +113,8 @@ function AdminPages() {
                   <td className="px-4 py-3 text-sm border">
                     {user?.postCounts}
                   </td>
-                  <td className="px-4 py-3 text-sm border">Blocked</td>
+                  <td className="px-4 py-3 text-sm border" onClick={() => handleAdminBlockUser(user?.id)}>Blocked</td>
+                  <td className="px-4 py-3 text-sm border" onClick={() =>adminUnBlockUser(user?.id)}>Unblock</td>
                   <td className="px-4 py-3 text-sm border ">
                     <div className="flex items-center justify-center">
                       <Link to={`/profile/${user?.id}`}>
