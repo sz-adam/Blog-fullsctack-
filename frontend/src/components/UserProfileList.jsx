@@ -40,7 +40,7 @@ const UserProfileList = ({ fetchData }) => {
               <div className="flex items-center justify-between">
                 <p className="text-emerald-400 font-semibold mt-2.5">Active:</p>
                 <span className="text-gray-400 text-sm">
-                  {formatDate(user?.updatedAt)}
+                  {user?.lastLogin}
                 </span>
               </div>
               <div className="mt-6 w-fit mx-auto">

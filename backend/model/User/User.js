@@ -251,6 +251,24 @@ userSchema.virtual("viewersCount").get(function () {
 userSchema.virtual("blockedCount").get(function () {
   return this.blocked.length;
 });
+userSchema.virtual("lastLogin").get(function () {
+  const lastLogin= this?.updatedAt
+  const currentDate = new Date();
+  const diff = currentDate - lastLogin;
+  const diffInDays = diff / (1000 * 3600 * 24);
+  const daysAgo = Math.floor(diffInDays);
+  if (daysAgo <= 0) {
+    return "Today";
+  }
+  //check if daysAgo is equal to 1
+  if (daysAgo === 1) {
+    return "Yesterday";
+  }
+  //check if daysAgo is greater than 1
+  if (daysAgo > 1) {
+    return `${daysAgo} days ago `;
+  }
+});
 
 //Compile the user model
 
