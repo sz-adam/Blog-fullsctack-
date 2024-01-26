@@ -110,7 +110,7 @@ userSchema.pre("findOne", async function (next) {
   //get the number of posts
   const numberOfPosts = posts.length;
   //check if the number of posts is less than 10
-  if (numberOfPosts <= 0) {
+  if (numberOfPosts >= 0) {
     await User.findByIdAndUpdate(
       userId,
       {
