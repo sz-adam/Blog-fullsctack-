@@ -6,15 +6,18 @@ import { Link } from "react-router-dom";
 function CarouselHome({ posts }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const { authUser } = useContext(AuthUserContext);
+  const filteredPosts = posts.filter((post) => post?.likesCount > 0);
+  const sortedCarouselPosts = filteredPosts.sort((a, b) => b.likesCount - a.likesCount);
+  const slicedCarouselPosts = sortedCarouselPosts.slice(0, 3);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
-    const newIndex = isFirstSlide ? posts.length - 1 : currentIndex - 1;
+    const newIndex = isFirstSlide ? slicedCarouselPosts.length - 1 : currentIndex - 1;
     setCurrentIndex(newIndex);
   };
 
   const nextSlide = () => {
-    const isLastSlide = currentIndex === posts.length - 1;
+    const isLastSlide = currentIndex === slicedCarouselPosts.length - 1;
     const newIndex = isLastSlide ? 0 : currentIndex + 1;
     setCurrentIndex(newIndex);
   };
@@ -26,11 +29,10 @@ function CarouselHome({ posts }) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [currentIndex]);
+  }, [currentIndex,slicedCarouselPosts.length]);
 
-  const filteredPosts = posts.filter((post) => post?.likesCount > 0);
-  const sortedCarouselPosts = filteredPosts.sort((a, b) => b.likesCount - a.likesCount);
-  const slicedCarouselPosts = sortedCarouselPosts.slice(0, 3);
+
+
 
   return (
     <div className="max-w-full h-[580px] w-full m-auto pb-10 px-4 relative group">
