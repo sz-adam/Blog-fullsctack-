@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
+import { AuthUserContext } from "../context/AuthUserContext";
+import { Link } from "react-router-dom";
 
 function CarouselHome({ posts }) {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { authUser } = useContext(AuthUserContext);
 
   const prevSlide = () => {
     const isFirstSlide = currentIndex === 0;
@@ -19,15 +22,19 @@ function CarouselHome({ posts }) {
   useEffect(() => {
     const intervalId = setInterval(() => {
       nextSlide();
-    }, 5000);
+    }, 10000);
     return () => {
       clearInterval(intervalId);
     };
   }, [currentIndex]);
 
+  const filteredPosts = posts.filter((post) => post?.likesCount > 0);
+  const sortedCarouselPosts = filteredPosts.sort((a, b) => b.likesCount - a.likesCount);
+  const slicedCarouselPosts = sortedCarouselPosts.slice(0, 3);
+
   return (
     <div className="max-w-full h-[580px] w-full m-auto pb-10 px-4 relative group">
-      {posts.map((post, index) => (
+      {slicedCarouselPosts.map((post, index) => (
         <div
           key={index}
           className={`w-full h-full rounded-2xl bg-center bg-cover duration-500 relative ${
@@ -39,9 +46,19 @@ function CarouselHome({ posts }) {
             alt={`Slide ${index + 1}`}
             className="w-full h-full object-cover rounded-2xl"
           />
-          <p className="absolute bottom-0 w-full bg-white opacity-75 p-5">
-            {post?.title}
-          </p>
+          <div className="flex">
+            <p className="absolute bottom-0 w-full bg-white opacity-75 p-3 font-bold text-xl ">
+              {post?.title}
+            </p>
+            {authUser?.status === "success" && (
+              <Link
+                to={`/post/${post.id}`}
+                className="btn-dark px-10 absolute bottom-1 right-2"
+              >
+                View
+              </Link>
+            )}
+          </div>
         </div>
       ))}
       {/* Left Arrow */}
