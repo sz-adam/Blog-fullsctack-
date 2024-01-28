@@ -11,7 +11,7 @@ function postCard({ post }) {
 
   return (
     <>
-      <div className="p-1 w-full md:w-1/2">
+      <div className="p-1 w-full md:w-3/4 mx-auto my-auto">
         <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden">
           <img
             className="h-48 md:h-48 w-full object-cover object-center"
@@ -19,19 +19,34 @@ function postCard({ post }) {
             alt="blog"
           />
           <div className="p-6">
-            <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
-              CATEGORY: {post?.category?.title}
-            </h2>
+            <div className="flex justify-between items-center">
+              <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+                CATEGORY: {post?.category?.title}
+              </h2>
+
+              <div className="flex items-center">
+                <p className="tracking-widest text-xs title-font font-medium text-gray-400 mr-3">
+                  Creator:
+                </p>
+                <Link to={`/profile/${post?.user?.id}`}>
+                <img
+                  src={post?.user?.profilePhoto}
+                  alt={post?.user?.fullname}
+                  className="w-8 h-8 rounded-full "
+                />
+                 </Link>
+              </div>
+            </div>
+
             <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
               {post.title}
             </h1>
 
             <div className="flex items-center flex-wrap">
-            {authUser?.status === "success" && (
+              {authUser?.status === "success" && (
                 <Link to={`/post/${post.id}`} className="btn-dark px-10">
                   View
                 </Link>
-             
               )}
               <span className="text-gray-400 mr-3 inline-flex items-center ml-auto leading-none  pr-3 border-r-2 border-gray-200">
                 <FaEye />

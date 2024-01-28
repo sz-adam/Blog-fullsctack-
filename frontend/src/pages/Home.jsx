@@ -12,16 +12,12 @@ function Home({posts}) {
       <h1 className="text-2xl md:text-6xl text-center font-extrabold text-transparent bg-clip-text log-reg-color">
       There are no results for your search criteria
       </h1>
-    </div> ):(
-    <div className="flex flex-col md:flex-row">
-      <div className="flex flex-col justify-end items-center w-full">
+    </div> ):(   
+      <div className="grid  sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
         {posts.map((post) => (
           <PostCard key={post.id} post={post} />
         ))}
-      </div>
-     
-    </div>
-    
+    </div>    
     )}
     </>
   );
