@@ -12,9 +12,9 @@ function postCard({ post }) {
   return (
     <>
       <div className="p-1 w-full md:w-3/4 mx-auto my-auto">
-        <div className="h-full border-2 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden">
+        <div className="h-full border-4 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden">
           <img
-            className="h-48 md:h-48 w-full object-cover object-center"
+            className="h-64 md:h-64 w-full object-cover object-center"
             src={post.photo}
             alt="blog"
           />
@@ -42,7 +42,7 @@ function postCard({ post }) {
               {post.title}
             </h1>
 
-            <div className="flex items-center flex-wrap">
+            <div className="flex items-center flex-wrap py-3">
               {authUser?.status === "success" && (
                 <Link to={`/post/${post.id}`} className="btn-dark px-10">
                   View

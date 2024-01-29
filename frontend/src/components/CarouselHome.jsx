@@ -35,7 +35,7 @@ function CarouselHome({ posts }) {
 
 
   return (
-    <div className="max-w-full h-[580px] w-full m-auto pb-10 px-4 relative group">
+    <div className="max-w-full h-[580px] w-full m-auto pb-10 px-4 relative group mt-2">
       {slicedCarouselPosts.map((post, index) => (
         <div
           key={index}
