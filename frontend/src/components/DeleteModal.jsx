@@ -74,6 +74,7 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
   
         setUser(updatedUser);
         navigate("/");
+        window.location.reload(true)
       }
     } catch (error) {
       console.error("Hiba a törlés közben:", error);

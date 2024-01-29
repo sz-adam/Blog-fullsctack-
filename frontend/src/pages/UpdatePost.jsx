@@ -67,6 +67,7 @@ const handleUpdatePost = async (event) => {
       await PostService.updatePost(access_token, postId, updatedPostData);
       // Navigate to the home page after a successful update / Navigáljon a kezdőoldalra sikeres frissítés után
       navigate("/");
+      window.location.reload(true)
     }
   } catch (error) {
     console.error("Error updating category or post:", error);
