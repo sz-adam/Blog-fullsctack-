@@ -73,6 +73,7 @@ function AdminPages() {
                   <th className="px-4 py-3">Blocked</th>
                   <th className="px-4 py-3">Unblock</th>
                   <th className="px-4 py-3">View</th>
+                  <th className="px-4 py-3">Last Login</th>
                 </tr>
               </thead>
               <tbody className="bg-white">
@@ -106,8 +107,16 @@ function AdminPages() {
                     {user?.email}
                   </td>
                   <td className="px-4 py-3 text-xs border">
-                    <span className="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-sm">
-                      blokkolt
+                    <span className="px-2 py-1 font-semibold leading-tight rounded-sm">
+                    {user?.isBlocked ===true ? (
+                      <p className="text-red-700">
+                        Blocked
+                      </p>):(
+                        <p className="text-green-700">
+                          unblock
+                        </p>
+                      
+                    )}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm border">
@@ -115,6 +124,7 @@ function AdminPages() {
                   </td>
                   <td className="px-4 py-3 text-sm border" onClick={() => handleAdminBlockUser(user?.id)}>Blocked</td>
                   <td className="px-4 py-3 text-sm border" onClick={() =>adminUnBlockUser(user?.id)}>Unblock</td>
+                  <td className="px-4 py-3 text-sm border">{user?.lastLogin}</td>
                   <td className="px-4 py-3 text-sm border ">
                     <div className="flex items-center justify-center">
                       <Link to={`/profile/${user?.id}`}>
