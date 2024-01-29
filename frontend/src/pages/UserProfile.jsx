@@ -2,10 +2,20 @@ import React, { useContext } from "react";
 import { UserContext } from "../context/UserContext";
 import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
-import UserProfileNavigation from "../components/UserProfileNavigation"
+import UserProfileNavigation from "../components/UserProfileNavigation";
+import { TfiCup } from "react-icons/tfi";
 
 function UserProfile() {
   const { user, setUser } = useContext(UserContext);
+  const awardColor = () => {
+    if (user?.userAward === "Bronze") {
+      return "text-8xl text-orange-500 ";
+    } else if (user?.userAward === "Silver") {
+      return "text-8xl text-stone-300";
+    } else if (user?.userAward === "Gold") {
+      return "text-8xl text-yellow-400";
+    } 
+  };
   return (
     <>
       <div className="mt-5 ml-5 icon text-lg">
@@ -53,13 +63,9 @@ function UserProfile() {
               </div>
             </div>
 
-            <div className="space-x-2 md:space-x-4 flex mt-32 md:mt-0 justify-center items-center">
-              <Link
-                to={`/settings/${user?.id}`}
-                className="profilButton  bg-gray-700 hover:bg-gray-800 p-3"
-              >
-                Setting
-              </Link>
+            <div className="mx-auto">
+             <p>  <TfiCup className={awardColor()} /></p>
+             <p className="text-center pt-3 font-bold text-gray-700 text-xl"> {user?.userAward}</p>
             </div>
           </div>
           <div className="mt-20 text-center border-b pb-12">
@@ -69,7 +75,6 @@ function UserProfile() {
             <p>{user?.email}</p>
           </div>
           <UserProfileNavigation />
-        
         </div>
       </div>
     </>
