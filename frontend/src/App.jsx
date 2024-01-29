@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -13,7 +18,6 @@ import { UserContextProvider } from "./context/UserContext";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
-import { getAccessToken } from "./common/utils";
 import PostService from "./services/PostsServices";
 import AdminPages from "./pages/AdminPages";
 
@@ -21,9 +25,8 @@ function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
   const [posts, setPosts] = useState([]);
   const [searchPost, setSearchPost] = useState("");
-  const access_token = getAccessToken();
   const isAdmin = authUser?.data?.isAdmin;
-  const token = authUser?.data?.token;
+  const access_token = authUser?.data?.token;
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -32,7 +35,7 @@ function App() {
     }
   }, []);
 
-useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         let fetchedPosts;
@@ -40,33 +43,38 @@ useEffect(() => {
           fetchedPosts = await PostService.getAllPosts(access_token);
         } else {
           fetchedPosts = await PostService.getAllPosts();
-        }  
+        }
         setPosts(fetchedPosts);
       } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error("Error fetching posts:", error);
       }
     };
 
     fetchData();
-  }, [access_token, searchPost]);  
+  }, [access_token, searchPost]);
 
   const filteredPosts = posts.filter((post) =>
-  post.title.toLowerCase().includes(searchPost.toLowerCase())
-);
-
+    post.title.toLowerCase().includes(searchPost.toLowerCase())
+  );
 
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
         <UserContextProvider>
-          <Router>          
+          <Router>
             <Navbar searchPost={searchPost} setSearchPost={setSearchPost} />
             <Routes>
               <Route path="/" element={<Home posts={filteredPosts} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
-              <Route path="/write" element={ token?  <WritePost />: <Navigate to="/" />}  />
-              <Route path="/adminPage" element={isAdmin ? <AdminPages /> : <Navigate to="/" />} />
+              <Route
+                path="/write"
+                element={access_token ? <WritePost /> : <Navigate to="/" />}
+              />
+              <Route
+                path="/adminPage"
+                element={isAdmin ? <AdminPages /> : <Navigate to="/" />}
+              />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route path="/profile/:userId" element={<Profile />} />
