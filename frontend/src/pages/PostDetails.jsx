@@ -82,6 +82,7 @@ function PostDetails() {
           postId,
           description: comment,
         });
+        setComment("")
         setComments((prevComments) => [...prevComments, newComment]);
         // window.location.reload(true)
       }
