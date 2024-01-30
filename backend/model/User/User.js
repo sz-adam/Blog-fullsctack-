@@ -89,6 +89,10 @@ const userSchema = new mongoose.Schema(
       enum: ["Bronze", "Silver", "Gold"],
       default: "Bronze",
     },
+    lastLoginDate: {
+      type: Date,
+      default: null,
+    },
   },
   {
     timestamps: true,
@@ -182,7 +186,7 @@ userSchema.virtual("blockedCount").get(function () {
   return this.blocked.length;
 });
 userSchema.virtual("lastLogin").get(function () {
-  const lastLogin = this?.updatedAt;
+  const lastLogin = this?.lastLoginDate;
   const currentDate = new Date();
   const diff = currentDate - lastLogin;
   const diffInDays = diff / (1000 * 3600 * 24);
@@ -200,7 +204,7 @@ userSchema.virtual("lastLogin").get(function () {
   }
 });
 userSchema.virtual("isInactive").get(function () {
-  const lastLogin = this?.updatedAt;
+  const lastLogin = this?.lastLoginDate;
   const currentDate = new Date();
   const diff = currentDate - lastLogin;
   const diffInDays = diff / (1000 * 3600 * 24);

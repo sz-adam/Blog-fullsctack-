@@ -57,6 +57,9 @@ const userLoginCtrl = async (req, res, next) => {
       return next(appErr("Invalid login credentials"));
     }
 
+    userFound.lastLoginDate = new Date();
+    await userFound.save();
+
     res.json({
       status: "success",
       data: {
