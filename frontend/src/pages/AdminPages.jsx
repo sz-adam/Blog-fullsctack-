@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState } from "react";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { IoEyeOutline } from "react-icons/io5";
@@ -8,6 +8,7 @@ function AdminPages() {
   const access_token = getAccessToken();
   const [fullUser, setFullUser] = useState([]);
   console.log(fullUser)
+  //Block funkciot befejezni
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,6 +16,7 @@ function AdminPages() {
         if (access_token) {
           const allUser = await UserService.allUser(access_token);
           setFullUser(allUser);
+        
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -30,27 +32,32 @@ function AdminPages() {
       if (access_token && blockedUserId) {
         await UserService.adminBlockUser(access_token, blockedUserId);
         console.log("Admin blokkolva", blockedUserId);
-       
+        setFullUser((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === blockedUserId ? { ...user, isBlocked: true } : user
+          )
+        );
       }
     } catch (error) {
       console.error("Error adminBlocked user:", error);
     }
   };
-  const adminUnBlockUser =async(blockedUserId) => {
-    try{
-        if(access_token &&blockedUserId){
-          await UserService.adminUnBlockUser(access_token,blockedUserId);
+  const adminUnBlockUser = async (blockedUserId) => {
+    try {
+      if (access_token && blockedUserId) {
+        await UserService.adminUnBlockUser(access_token, blockedUserId);
         console.log("Admin blokk feloldva", blockedUserId);
-      
-        }
-    }
-    catch(error) {
+
+        setFullUser((prevUsers) =>
+          prevUsers.map((user) =>
+            user.id === blockedUserId ? { ...user, isBlocked: false } : user
+          )
+        );
+      }
+    } catch (error) {
       console.error("Error adminBlocked user:", error);
     }
-  }
-
-
-
+  };
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
