@@ -305,8 +305,6 @@ const UserService = {
   },
 
   adminBlockUser: async (access_token, blockedUserId) => {
-    console.log(blockedUserId);
-
     try {
       if (access_token) {
         const response = await axios.put(
