@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { IoEyeOutline } from "react-icons/io5";
@@ -7,8 +7,6 @@ import { Link } from "react-router-dom";
 function AdminPages() {
   const access_token = getAccessToken();
   const [fullUser, setFullUser] = useState([]);
-  console.log(fullUser)
-  //Block funkciot befejezni
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,7 +14,6 @@ function AdminPages() {
         if (access_token) {
           const allUser = await UserService.allUser(access_token);
           setFullUser(allUser);
-        
         }
       } catch (error) {
         console.error("Error fetching posts:", error);
@@ -26,36 +23,25 @@ function AdminPages() {
     fetchData();
   }, [access_token]);
 
-
-  const handleAdminBlockUser = async (blockedUserId) => {
+  const handleAdminUserBlockUnblock = async (blockedUserId, isBlocked) => {
     try {
       if (access_token && blockedUserId) {
-        await UserService.adminBlockUser(access_token, blockedUserId);
-        console.log("Admin blokkolva", blockedUserId);
+        if (isBlocked) {
+          await UserService.adminUnBlockUser(access_token, blockedUserId);
+        } else {
+          await UserService.adminBlockUser(access_token, blockedUserId);
+        }
+
         setFullUser((prevUsers) =>
           prevUsers.map((user) =>
-            user.id === blockedUserId ? { ...user, isBlocked: true } : user
+            user.id === blockedUserId
+              ? { ...user, isBlocked: !isBlocked }
+              : user
           )
         );
       }
     } catch (error) {
-      console.error("Error adminBlocked user:", error);
-    }
-  };
-  const adminUnBlockUser = async (blockedUserId) => {
-    try {
-      if (access_token && blockedUserId) {
-        await UserService.adminUnBlockUser(access_token, blockedUserId);
-        console.log("Admin blokk feloldva", blockedUserId);
-
-        setFullUser((prevUsers) =>
-          prevUsers.map((user) =>
-            user.id === blockedUserId ? { ...user, isBlocked: false } : user
-          )
-        );
-      }
-    } catch (error) {
-      console.error("Error adminBlocked user:", error);
+      console.error("Error toggling user status:", error);
     }
   };
 
@@ -66,11 +52,14 @@ function AdminPages() {
   return (
     <section className="container mx-auto p-6 font-mono">
       {fullUser?.map((user) => (
-        <div className="w-full mb-8 overflow-hidden rounded-lg shadow-lg" key={user?.id}>
+        <div
+          className="w-full mb-8 overflow-hidden rounded-lg shadow-lg"
+          key={user?.id}
+        >
           <div className="w-full overflow-x-auto" key={user?.id}>
             <table className="w-full">
               <thead>
-                <tr className="text-md font-semibold tracking-wide text-left text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                <tr className="text-md text-center font-semibold tracking-wide text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
                   <th className="px-4 py-3 w-64 md:w-52">Name</th>
                   <th className="px-4 py-3 w-52">Registration</th>
                   <th className="px-4 py-3 w-52">last login</th>
@@ -78,13 +67,12 @@ function AdminPages() {
                   <th className="px-4 py-3">Status</th>
                   <th className="px-4 py-3">Post</th>
                   <th className="px-4 py-3">Blocked</th>
-                  <th className="px-4 py-3">Unblock</th>
                   <th className="px-4 py-3">View</th>
                   <th className="px-4 py-3">Last Login</th>
                 </tr>
               </thead>
               <tbody className="bg-white">
-                <tr className="text-gray-700 ">
+                <tr className="text-gray-700 text-center">
                   <td className="px-4 py-3 border ">
                     <div className="flex items-center text-sm">
                       <div className="relative w-8 h-8 mr-3 rounded-full md:block">
@@ -115,23 +103,28 @@ function AdminPages() {
                   </td>
                   <td className="px-4 py-3 text-xs border">
                     <span className="px-2 py-1 font-semibold leading-tight rounded-sm">
-                    {user?.isBlocked ===true ? (
-                      <p className="text-red-700">
-                        Blocked
-                      </p>):(
-                        <p className="text-green-700">
-                          unblock
-                        </p>
-                      
-                    )}
+                      {user?.isBlocked === true ? (
+                        <p className="text-red-700">Blocked</p>
+                      ) : (
+                        <p className="text-green-700">unblock</p>
+                      )}
                     </span>
                   </td>
                   <td className="px-4 py-3 text-sm border">
                     {user?.postCounts}
                   </td>
-                  <td className="px-4 py-3 text-sm border" onClick={() => handleAdminBlockUser(user?.id)}>Blocked</td>
-                  <td className="px-4 py-3 text-sm border" onClick={() =>adminUnBlockUser(user?.id)}>Unblock</td>
-                  <td className="px-4 py-3 text-sm border">{user?.lastLogin}</td>
+                  <td
+                    className="px-4 py-3 text-sm border cursor-pointer"
+                    onClick={() =>
+                      handleAdminUserBlockUnblock(user?.id, user?.isBlocked)
+                    }
+                  >
+                    {user?.isBlocked ? "Unblock" : "Block"}
+                  </td>
+
+                  <td className="px-4 py-3 text-sm border">
+                    {user?.lastLogin}
+                  </td>
                   <td className="px-4 py-3 text-sm border ">
                     <div className="flex items-center justify-center">
                       <Link to={`/profile/${user?.id}`}>
