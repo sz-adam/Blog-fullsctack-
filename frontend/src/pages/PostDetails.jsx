@@ -70,7 +70,6 @@ function PostDetails() {
     fetchCommentsPost();
     fetchPost();
   }, [postId, access_token]);
-
   //create comments
   const fetchCreateComment = async (event) => {
     event.preventDefault();
@@ -82,8 +81,10 @@ function PostDetails() {
           postId,
           description: comment,
         });
+                
         setComments((prevComments) => [...prevComments, newComment]);
         // window.location.reload(true)
+        setComment("");
       }
     } catch (error) {
       // Log and handle errors if any occur during the comment creation
