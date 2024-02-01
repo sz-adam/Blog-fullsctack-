@@ -23,7 +23,6 @@ import AdminPages from "./pages/AdminPages";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
-  const [posts, setPosts] = useState([]);
   const [searchPost, setSearchPost] = useState("");
   const isAdmin = authUser?.data?.isAdmin;
   const access_token = authUser?.data?.token;
@@ -35,28 +34,6 @@ function App() {
     }
   }, []);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        let fetchedPosts;
-        if (access_token) {
-          fetchedPosts = await PostService.getAllPosts(access_token);
-        } else {
-          fetchedPosts = await PostService.getAllPosts();
-        }
-        setPosts(fetchedPosts);
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchData();
-  }, [access_token, searchPost]);
-
-  const filteredPosts = posts.filter((post) =>
-    post.title.toLowerCase().includes(searchPost.toLowerCase())
-  );
-
   return (
     <>
       <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
@@ -64,7 +41,7 @@ function App() {
           <Router>
             <Navbar searchPost={searchPost} setSearchPost={setSearchPost} />
             <Routes>
-              <Route path="/" element={<Home posts={filteredPosts} />} />
+              <Route path="/" element={<Home  searchPost={searchPost} setSearchPost={setSearchPost}/>} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route
