@@ -68,7 +68,6 @@ function AdminPages() {
                   <th className="px-4 py-3">Post</th>
                   <th className="px-4 py-3">Blocked</th>
                   <th className="px-4 py-3">View</th>
-                  <th className="px-4 py-3">Last Login</th>
                 </tr>
               </thead>
               <tbody className="bg-white">
@@ -94,9 +93,10 @@ function AdminPages() {
                   </td>
                   <td className="px-4 py-3 text-ms font-semibold border">
                     {formatDate(user?.createdAt)}
+                    <p className="text-xs pt-2"> {user?.lastLogin}</p>
                   </td>
                   <td className="px-4 py-3 text-ms font-semibold border">
-                    {formatDate(user?.updatedAt)}
+                    {formatDate(user?.lastLoginDate)}
                   </td>
                   <td className="px-4 py-3 text-ms font-semibold border">
                     {user?.email}
@@ -120,10 +120,6 @@ function AdminPages() {
                     }
                   >
                     {user?.isBlocked ? "Unblock" : "Block"}
-                  </td>
-
-                  <td className="px-4 py-3 text-sm border">
-                    {user?.lastLogin}
                   </td>
                   <td className="px-4 py-3 text-sm border ">
                     <div className="flex items-center justify-center">
