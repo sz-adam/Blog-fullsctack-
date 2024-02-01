@@ -7,10 +7,10 @@ function PostSearch({searchPost, setSearchPost}) {
   return (
     <>
       <button
-        className="md:hidden bg-grey w-10 h-10 border-2 rounded-full border-green-400 flex items-center justify-center text-xl animate-pulse"
+        className="md:hidden bg-grey w-10 h-10 border-2 rounded-full  border-green-400 flex items-center justify-center text-xl animate-pulse"
         onClick={() => setSearchVisibility(!searchVisibility)}
       >
-        <CiSearch />
+        <CiSearch className="text-TextWhite"/>
       </button>
       <div
         className={
@@ -26,7 +26,7 @@ function PostSearch({searchPost, setSearchPost}) {
           className="w-full border-2 py-2.5 border-green-400  focus:outline-none rounded-full px-3 md:pl-12"
         />
 
-        <CiSearch className="absolute right-10 md:pointer-events-none md:left-5 top-1/2 -translate-y-1/2 text-xl text-dark-grey" />
+        <CiSearch className="absolute  right-10 md:pointer-events-none md:left-5 top-1/2 -translate-y-1/2 text-xl text-DeepGray" />
       </div>
     </>
   );

@@ -7,7 +7,7 @@ import PostSearch from "./PostSearch";
 function Navbar({searchPost, setSearchPost}) {
   const access_token = getAccessToken();
   return (
-    <div className="navbar justify-between p-4">
+    <div className="navbar justify-between p-4 bg-DeepGray text-TextWhite font-semibold">
       <div>
         <Link to="/">
           <p className="text-xl md:text-3xl font-extrabold bg-gradient-to-r text-transparent from-green-500 to-blue-500 bg-clip-text">
