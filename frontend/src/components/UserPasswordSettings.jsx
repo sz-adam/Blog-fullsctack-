@@ -29,6 +29,7 @@ function UserPasswordSettings() {
           }
         );
         setUser({ ...user, ...updatedPassword });
+        setNewPassword('')
       }
       toast.success("You have successfully changed your password!");
     } catch (error) {
