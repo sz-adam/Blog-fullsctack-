@@ -8,6 +8,9 @@ const Category = require("../../model/Category/Category");
 const Comment = require("../../model/Comment/Comment");
 require("dotenv").config();
 
+let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
+let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
+
 //Register
 const userRegisterCtrl = async (req, res, next) => {
   const { firstname, lastname, email, password } = req.body;
@@ -16,6 +19,16 @@ const userRegisterCtrl = async (req, res, next) => {
     const userFound = await User.findOne({ email });
     if (userFound) {
       return next(new AppErr("User already exist", 500));
+    }
+    if (!emailRegex.test(email)) {
+      return next(appErr("Email is invalid"));
+    }
+    if (!passwordRegex.test(password)) {
+      return next(
+        appErr(
+          "Password should be 6 to 20 character long with a numeric m lowercase and 1 uppercase constters"
+        )
+      );
     }
 
     // hash password
@@ -442,7 +455,6 @@ const userFollowingArrayCtrl = async (req, res, next) => {
   }
 };
 
-
 const userFollowersgArrayCtrl = async (req, res, next) => {
   try {
     // 1. bejelentkezett felhasználót
@@ -469,7 +481,6 @@ const userFollowersgArrayCtrl = async (req, res, next) => {
     next(appErr(error.message));
   }
 };
-
 
 const userBlockedArrayCtrl = async (req, res, next) => {
   try {
@@ -524,7 +535,6 @@ const userViewedArrayCtrl = async (req, res, next) => {
   }
 };
 
-
 const profilePhotoUpdatectrl = async (req, res, next) => {
   try {
     // Felhasználó megkeresése
@@ -552,8 +562,6 @@ const profilePhotoUpdatectrl = async (req, res, next) => {
   }
 };
 
-
-
 module.exports = {
   userRegisterCtrl,
   userLoginCtrl,
@@ -573,5 +581,5 @@ module.exports = {
   profilePhotoUpdatectrl,
   userBlockedArrayCtrl,
   userFollowersgArrayCtrl,
-  userViewedArrayCtrl
+  userViewedArrayCtrl,
 };

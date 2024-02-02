@@ -16,8 +16,16 @@ function Register() {
 
   const handleRegistration = async (event) => {
     event.preventDefault();
-
+    let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
+    let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
+    if (!emailRegex.test(email)) {
+      return alert("Email is invalid")
+  }
+  if (!passwordRegex.test(password)) {
+      return alert("Password should be 6 to 20 character long with a numeric m lowercase and 1 uppercase letters")
+  }
     try {
+
       await UserService.register(firstname, lastname, email, password);
       navigate("/");
     } catch (error) {
