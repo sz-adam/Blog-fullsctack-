@@ -6,11 +6,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { storeInSession } from "../common/session";
 import UserService from "../services/UserServices";
 import { AuthUserContext } from "../context/AuthUserContext";
+import { Toaster, toast } from "react-hot-toast";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
   const {  setAuthUser } = useContext(AuthUserContext);
 
@@ -23,12 +23,13 @@ function Login() {
       setAuthUser(userData);
       navigate("/");
     } catch (error) {
-      setError(error);
+      toast.error(error)
     }
   };
 
   return (
     <div className="flex justify-center items-center w-full h-[85vh] ">
+      <Toaster />
       <form className="w-[85%] max-w-[400px]" onSubmit={handleLogin}>
         <h1 className="entryText log-reg-color mb-2">Welcome to the blog</h1>
         <h2 className="entryText log-reg-color mb-24">Login</h2>
@@ -45,8 +46,7 @@ function Login() {
           icon={IoKeyOutline}
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-        />
-        <div className="text-center text-red-600">{error}</div>
+        />       
         <div className="flex justify-center items-center mt-10">
           <button
             className="border-2 log-reg-color text-white p-3 px-10 rounded-full font-bold"

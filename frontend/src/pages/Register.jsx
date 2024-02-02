@@ -5,6 +5,7 @@ import { IoKeyOutline } from "react-icons/io5";
 import { IoManOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
 import UserService from "../services/UserServices";
+import { Toaster, toast } from "react-hot-toast";
 
 function Register() {
   const [firstname, setFirstname] = useState("");
@@ -19,10 +20,10 @@ function Register() {
     let emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; // regex for email
     let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
     if (!emailRegex.test(email)) {
-      return alert("Email is invalid")
+      return toast.error("Email is invalid")
   }
   if (!passwordRegex.test(password)) {
-      return alert("Password should be 6 to 20 character long with a numeric m lowercase and 1 uppercase letters")
+      return toast.error("Password should be 6 to 20 character long with a numeric m lowercase and 1 uppercase letters")
   }
     try {
 
@@ -35,6 +36,7 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center w-full h-[85vh]">
+      <Toaster />
       <form className="w-[85%] max-w-[400px]" onSubmit={handleRegistration}>
         <h1 className="entryText log-reg-color mb-24">Registration</h1>
         <InputBox
