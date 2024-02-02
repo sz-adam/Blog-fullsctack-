@@ -4,6 +4,7 @@ import { IoKeyOutline } from "react-icons/io5";
 import InputBox from "../components/InputBox";
 import { getAccessToken } from "../common/utils";
 import { UserContext } from "../context/UserContext";
+import { Toaster, toast } from "react-hot-toast";
 
 function UserPasswordSettings() {
   const [newPassword, setNewPassword] = useState("");
@@ -12,6 +13,13 @@ function UserPasswordSettings() {
   //password update
   const handleProfilePasswordUpdate = async (event) => {
     event.preventDefault();
+    let passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/; // regex for password
+    
+    if (!passwordRegex.test(newPassword)) {
+      return toast.error(
+        "Password should be 6 to 20 character long with a numeric m lowercase and 1 uppercase letters"
+      );
+    }
     try {
       if (access_token) {
         const updatedPassword = await UserService.userUpdatePassword(
@@ -22,15 +30,16 @@ function UserPasswordSettings() {
         );
         setUser({ ...user, ...updatedPassword });
       }
+      toast.success("You have successfully changed your password!");
     } catch (error) {
       console.error("Error updating profile:", error);
+      toast.error(error?.response?.data?.message);
     }
   };
   return (
     <div>
       <h1 className="text-2xl font-semibold mb-6 text-center">
-        {" "}
-        Change password
+        <Toaster /> Change password
       </h1>
       <div className="flex justify-center items-center w-full h-full md:h-[85vh]">
         <form

@@ -5,6 +5,8 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import UserService from "../services/UserServices";
 import { UserContext } from "../context/UserContext";
 import { getAccessToken } from "../common/utils";
+import { Toaster, toast } from "react-hot-toast";
+
 
 function UserProfileSettings() {
   const [newFirstname, setNewFirstname] = useState("");
@@ -30,14 +32,16 @@ function UserProfileSettings() {
         setNewFirstname("");
         setNewLastname("");
         setNewEmail("");
+        toast.success('You have successfully modified the user data !')
       }
-    } catch (error) {
-      console.error("Error updating profile:", error);
+    } catch (error) {     
+      toast.error(error?.response?.data?.message)
     }
   };
 
   return (
     <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
+       <Toaster />
       <form className="w-[85%] max-w-[400px]" onSubmit={handleProfileUpdate}>
         <InputBox
           type="text"
@@ -61,6 +65,7 @@ function UserProfileSettings() {
           placeholder="New Email"
           icon={MdOutlineMailOutline}
           value={newEmail}
+          required={true}
           onChange={(event) => setNewEmail(event.target.value)}
         />
         <div className="flex justify-center items-center mt-10">
