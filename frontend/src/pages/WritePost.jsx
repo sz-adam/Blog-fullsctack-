@@ -2,9 +2,10 @@ import React, { useContext, useState } from "react";
 import InputBox from "../components/InputBox";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
+import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getAccessToken } from "../common/utils";
-
+import { FaArrowLeft } from "react-icons/fa";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { TbFileDescription } from "react-icons/tb";
@@ -47,7 +48,12 @@ function WritePost() {
   };
 
   return (
+    <>
+     <Link to="/" >
+          <FaArrowLeft className="mr-1 m-2 hover:text-zinc-400" />
+        </Link>
     <div className="flex justify-center items-center text-center">
+      
       <form className="w-2/3" onSubmit={handlePostCreate}>
         <h1 className="text-3xl font-extrabold bg-gradient-to-r text-transparent from-green-500 to-blue-500 bg-clip-text my-10">
           Write Post
@@ -89,6 +95,7 @@ function WritePost() {
         </button>
       </form>
     </div>
+    </>
   );
 }
 
