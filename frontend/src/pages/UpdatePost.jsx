@@ -4,7 +4,7 @@ import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
 import { useNavigate, useParams } from "react-router-dom";
 import { getAccessToken } from "../common/utils";
-
+import { Toaster, toast } from "react-hot-toast";
 import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { TbFileDescription } from "react-icons/tb";
@@ -66,8 +66,11 @@ const handleUpdatePost = async (event) => {
       // Send the updated post data to the server for updating the post / Küldje el a frissített bejegyzés adatait a szervernek a bejegyzés frissítéséhez
       await PostService.updatePost(access_token, postId, updatedPostData);
       // Navigate to the home page after a successful update / Navigáljon a kezdőoldalra sikeres frissítés után
-      navigate("/");
-      window.location.reload(true)
+      toast.success("You have successfully update the post !");
+      setTimeout(() => {
+        navigate("/");
+      }, 1500);
+     
     }
   } catch (error) {
     console.error("Error updating category or post:", error);
@@ -77,6 +80,7 @@ const handleUpdatePost = async (event) => {
 
   return (
     <div className="flex justify-center items-center text-center">
+       <Toaster />
       <form className="w-2/3" onSubmit={handleUpdatePost}>
         <h1 className="text-3xl font-extrabold bg-gradient-to-r text-transparent from-green-500 to-blue-500 bg-clip-text my-10">
           Update Post

@@ -12,6 +12,8 @@ import { TbFileDescription } from "react-icons/tb";
 import { MdOutlineSubtitles } from "react-icons/md";
 import UserService from "../services/UserServices";
 import { UserContext } from "../context/UserContext";
+import { Toaster, toast } from "react-hot-toast";
+
 
 function WritePost() {
   const [title, setTitle] = useState("");
@@ -40,7 +42,10 @@ function WritePost() {
         });
        const userData = await UserService.userProfile(access_token);
         setUser(userData);
-        navigate('/')
+        toast.success('You have successfully created a post!')
+        setTimeout(() => {
+          navigate('/');
+        }, 1500);
       }
     } catch (error) {
       console.log(error);
@@ -53,7 +58,7 @@ function WritePost() {
           <FaArrowLeft className="mr-1 m-2 hover:text-zinc-400" />
         </Link>
     <div className="flex justify-center items-center text-center">
-      
+    <Toaster />
       <form className="w-2/3" onSubmit={handlePostCreate}>
         <h1 className="text-3xl font-extrabold bg-gradient-to-r text-transparent from-green-500 to-blue-500 bg-clip-text my-10">
           Write Post
@@ -89,7 +94,6 @@ function WritePost() {
           onChange={(event) => setPhoto(event.target.value)}
           required={true}
         />
-
         <button type="submit" className="btn-dark">
           Sending
         </button>
