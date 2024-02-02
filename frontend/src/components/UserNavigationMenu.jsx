@@ -22,7 +22,7 @@ const UserNavigationPanel = () => {
   };
 
   return (
-    <div className="relative hover:text-slate-500">
+    <div className="relative hover:text-blue-500">
       <div
         onClick={toggleDropdown}
         className="flex justify-center items-center cursor-pointer"
@@ -44,10 +44,10 @@ const UserNavigationPanel = () => {
           </Link>
           <span className="absolute border-t border-grey w-full text-black "></span>
           <div
-            className=" p-4 hover:bg-grey w-full pl-8 py-4 cursor-pointer text-center bg-blue-500"
+            className=" p-4 hover:bg-grey w-full pl-8 py-4 cursor-pointer text-center bg-blue-500 hover:bg-blue-600"
             onClick={handleLogout}
           >
-            <h1 className="font-bold text-xl my-1 text-black">Sign Out</h1>
+            <h1 className="font-bold text-xl my-1 text-black ">Sign Out</h1>
             <p className="text-dark-grey text-black">
               @{user?.fullname}
             </p>

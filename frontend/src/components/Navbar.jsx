@@ -20,7 +20,7 @@ function Navbar({searchPost, setSearchPost}) {
           <div className="pr-4">
             <PostSearch searchPost={searchPost} setSearchPost={setSearchPost}/>
           </div>
-          <Link to="/write" className="mr-10 hover:text-slate-500">
+          <Link to="/write" className="mr-10 hover:text-blue-500">
             {" "}
             Write{" "}
           </Link>
