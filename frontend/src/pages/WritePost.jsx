@@ -13,6 +13,7 @@ import { MdOutlineSubtitles } from "react-icons/md";
 import UserService from "../services/UserServices";
 import { UserContext } from "../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 
 function WritePost() {
@@ -54,6 +55,7 @@ function WritePost() {
 
   return (
     <>
+     <AnimatedMotion animationName="pageAnimation">
      <Link to="/" >
           <FaArrowLeft className="mr-1 m-2 hover:text-zinc-400" />
         </Link>
@@ -99,6 +101,8 @@ function WritePost() {
         </button>
       </form>
     </div>
+     </AnimatedMotion>
+    
     </>
   );
 }

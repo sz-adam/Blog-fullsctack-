@@ -5,6 +5,7 @@ import InputBox from "../components/InputBox";
 import { getAccessToken } from "../common/utils";
 import { UserContext } from "../context/UserContext";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function UserPasswordSettings() {
   const [newPassword, setNewPassword] = useState("");
@@ -38,7 +39,8 @@ function UserPasswordSettings() {
     }
   };
   return (
-    <div>
+    <AnimatedMotion animationName="pageAnimation">
+      <div>
       <h1 className="text-2xl font-semibold mb-6 text-center">
         <Toaster /> Change password
       </h1>
@@ -66,6 +68,9 @@ function UserPasswordSettings() {
         </form>
       </div>
     </div>
+    </AnimatedMotion>
+
+    
   );
 }
 

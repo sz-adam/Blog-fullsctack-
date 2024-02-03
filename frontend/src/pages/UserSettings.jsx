@@ -7,6 +7,7 @@ import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
 import UserProfileSettings from "../components/UserProfileSettings";
 import UserPasswordSettings from "../components/UserPasswordSettings";
 import UserDeleteAccount from "../components/UserDeleteAccount";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function UserSettings() {
   const [activeTab, setActiveTab] = useState("userData");
@@ -18,7 +19,8 @@ function UserSettings() {
   };
 
   return (
-    <div className="md:flex  min-h-screen">
+    <AnimatedMotion animationName="pageAnimation">
+      <div className="md:flex  min-h-screen">
       {/* Oldalsáv */}
       <div className="bg-gray-400 w-full md:w-1/6  p-4 ">
         <div className="mt-5 ml-5 icon text-lg">
@@ -97,6 +99,8 @@ function UserSettings() {
         {activeTab === "deleteUser" && <UserDeleteAccount />}
       </div>
     </div>
+    </AnimatedMotion>
+    
   );
 }
 

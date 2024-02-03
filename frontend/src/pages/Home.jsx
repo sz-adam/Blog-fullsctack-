@@ -3,6 +3,7 @@ import PostCard from "../components/PostCard";
 import CarouselHome from "../components/CarouselHome";
 import { getAccessToken } from "../common/utils";
 import PostService from "../services/PostsServices";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function Home({ searchPost }) {
   const access_token = getAccessToken();
@@ -32,6 +33,7 @@ function Home({ searchPost }) {
 
   return (
     <>
+     <AnimatedMotion animationName="pageAnimation">
      {filteredPosts.length > 0 && <CarouselHome posts={filteredPosts} />}
       {filteredPosts.length === 0 ? (
         <div className="flex items-center justify-center h-screen">
@@ -46,6 +48,7 @@ function Home({ searchPost }) {
           ))}
         </div>
       )}
+         </AnimatedMotion>
     </>
   );
 }

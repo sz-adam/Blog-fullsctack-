@@ -10,6 +10,8 @@ import { getAccessToken } from "../common/utils";
 import UserBlockUnblockButton from "../components/UserBlockUnblockButton";
 import UserFollowUnFollowButton from "../components/UserFollowUnFollowButton";
 import UserService from "../services/UserServices";
+import AnimatedMotion from "../common/AnimatedMotion";
+
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -82,6 +84,7 @@ function Profile() {
 
   return (
     <>
+    <AnimatedMotion animationName="pageAnimation">
       <div className="mt-5 ml-5 icon text-lg">
         <Link to="/">
           <FaArrowLeft className="mr-1 " />
@@ -162,6 +165,7 @@ function Profile() {
           </div>
         </div>
       </div>
+      </AnimatedMotion>
     </>
   );
 }

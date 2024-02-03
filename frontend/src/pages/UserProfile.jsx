@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";
 import UserProfileNavigation from "../components/UserProfileNavigation";
 import { TfiCup } from "react-icons/tfi";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function UserProfile() {
   const { user, setUser } = useContext(UserContext);
@@ -18,6 +19,7 @@ function UserProfile() {
   };
   return (
     <>
+     <AnimatedMotion animationName="pageAnimation">
       <div className="mt-5 ml-5 icon text-lg">
         <Link to="/">
           <FaArrowLeft className="mr-1 " />
@@ -77,6 +79,7 @@ function UserProfile() {
           <UserProfileNavigation />
         </div>
       </div>
+      </AnimatedMotion>
     </>
   );
 }

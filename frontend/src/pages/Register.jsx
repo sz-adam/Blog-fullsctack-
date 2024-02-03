@@ -6,6 +6,8 @@ import { IoManOutline } from "react-icons/io5";
 import { useNavigate, Link } from "react-router-dom";
 import UserService from "../services/UserServices";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
+
 
 function Register() {
   const [firstname, setFirstname] = useState("");
@@ -35,6 +37,7 @@ function Register() {
   };
 
   return (
+    <AnimatedMotion animationName="pageAnimation">
     <div className="flex justify-center items-center w-full h-[85vh]">
       <Toaster />
       <form className="w-[85%] max-w-[400px]" onSubmit={handleRegistration}>
@@ -87,6 +90,7 @@ function Register() {
         </p>
       </form>
     </div>
+    </AnimatedMotion>
   );
 }
 

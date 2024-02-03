@@ -7,6 +7,8 @@ import { storeInSession } from "../common/session";
 import UserService from "../services/UserServices";
 import { AuthUserContext } from "../context/AuthUserContext";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
+
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -28,6 +30,7 @@ function Login() {
   };
 
   return (
+    <AnimatedMotion animationName="pageAnimation">
     <div className="flex justify-center items-center w-full h-[85vh] ">
       <Toaster />
       <form className="w-[85%] max-w-[400px]" onSubmit={handleLogin}>
@@ -63,6 +66,7 @@ function Login() {
         </p>
       </form>
     </div>
+    </AnimatedMotion>
   );
 }
 

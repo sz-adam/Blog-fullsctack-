@@ -4,6 +4,7 @@ import { AuthUserContext } from "../context/AuthUserContext";
 import { getAccessToken } from "../common/utils";
 import { useNavigate } from "react-router-dom";
 import { removeFormSession } from "../common/session";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function UserDeleteAccount() {
   const { setAuthUser } = useContext(AuthUserContext);
@@ -23,6 +24,8 @@ function UserDeleteAccount() {
     }
   };
   return (
+    <AnimatedMotion animationName="pageAnimation">
+
     <div className="flex justify-center items-center w-full h-full md:h-[85vh] text-center">
       <div>
         <h1 className="text-2xl font-semibold mb-6">
@@ -37,6 +40,7 @@ function UserDeleteAccount() {
         </button>
       </div>
     </div>
+    </AnimatedMotion>
   );
 }
 

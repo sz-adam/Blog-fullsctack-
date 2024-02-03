@@ -4,6 +4,7 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { UserContext } from "../context/UserContext";
 import { getAccessToken } from "../common/utils";
 import UserService from "../services/UserServices";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function UpdateProfilePhoto({ setUpdateProfilePhotos }) {
   const [newPhoto, setNewPhoto] = useState("");
@@ -28,6 +29,8 @@ function UpdateProfilePhoto({ setUpdateProfilePhotos }) {
   };
 
   return (
+    <AnimatedMotion animationName="pageAnimation">
+
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
       <form
         className="bg-white p-8 rounded shadow-md w-full md:w-1/2"
@@ -62,6 +65,7 @@ function UpdateProfilePhoto({ setUpdateProfilePhotos }) {
         </div>
       </form>
     </div>
+    </AnimatedMotion>
   );
 }
 

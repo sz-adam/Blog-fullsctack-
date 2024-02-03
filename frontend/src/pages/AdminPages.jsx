@@ -3,6 +3,8 @@ import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { IoEyeOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
+import AnimatedMotion from "../common/AnimatedMotion";
+
 
 function AdminPages() {
   const access_token = getAccessToken();
@@ -50,6 +52,7 @@ function AdminPages() {
     return new Date(dateString).toLocaleDateString("en-US", options);
   };
   return (
+    <AnimatedMotion animationName="pageAnimation">
     <section className="container mx-auto p-6 font-mono">
       {fullUser?.map((user) => (
         <div
@@ -135,6 +138,7 @@ function AdminPages() {
         </div>
       ))}
     </section>
+    </AnimatedMotion>
   );
 }
 

@@ -15,6 +15,7 @@ import CreateComment from "../components/CreateComment";
 import UserService from "../services/UserServices";
 import { FaArrowLeft } from "react-icons/fa";
 import PostLikeDislike from "../components/PostLikeDislike";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function PostDetails() {
   const { postId } = useParams();
@@ -81,7 +82,7 @@ function PostDetails() {
           postId,
           description: comment,
         });
-                
+
         setComments((prevComments) => [...prevComments, newComment]);
         // window.location.reload(true)
         setComment("");
@@ -116,89 +117,91 @@ function PostDetails() {
   };
 
   return (
-    <div>
-      {loader ? (
-        <div className="h-[80vh] flex justify-center items-center w-full">
-          <Loader />
-        </div>
-      ) : (
-        <div className="px-8 md:px-[200px] mt-8 mb-8">
-          <p className="text-gray-500 mb-5">
-            <Link to="/" className="flex items-center">
-              <FaArrowLeft className="mr-1 " /> Back
-            </Link>
-          </p>
-          <div className="flex justify-between items-center">
-            <h1 className="text-2xl font-bold text-black md:text-3xl">
-              {post?.title}
-            </h1>
-            {user?._id === post?.user && (
-              <div className="flex items-center justify-center space-x-2">
-               <Link to={`/update/${postId}`}>
-                  <BiEdit className="cursor-pointer text-xl icon" />
-                </Link>
-                <p
-                  className="cursor-pointer"
-                  onClick={() => setDeleteModal(true)}
-                >
-                  <MdDelete className="cursor-pointer text-xl icon" />
-                </p>
-                {deleteModal && (
-                  <DeleteModal
-                    setDeleteModal={setDeleteModal}
-                    postId={postId}
-                  />
-                )}
-              </div>
-            )}
+    <AnimatedMotion animationName="pageAnimation">
+      <div>
+        {loader ? (
+          <div className="h-[80vh] flex justify-center items-center w-full">
+            <Loader />
           </div>
-          <div className="flex flex-col  mt-2 md:mt-4">
-            <p className="text-gray-500">
-              Create: {formatDate(post?.createdAt)}{" "}
+        ) : (
+          <div className="px-8 md:px-[200px] mt-8 mb-8">
+            <p className="text-gray-500 mb-5">
+              <Link to="/" className="flex items-center">
+                <FaArrowLeft className="mr-1 " /> Back
+              </Link>
             </p>
-            <Link to={`/profile/${searchUser?.id}`} key={searchUser?.id}>
-              <p className="text-gray-500">@{searchUser?.fullname}</p>
-            </Link>
-          </div>
-          <img
-            src={post?.photo}
-            className="w-full md:w-1/2 mx-auto mt-8"
-            alt=""
-          />
-          <p className="mx-auto mt-8">{post?.description}</p>
-          <div className="flex items-center justify-between mt-8 space-x-4 font-semibold">
-            <div className="flex">
-              <p className="pr-10">Categories:</p>
-              <p>{category?.title}</p>
+            <div className="flex justify-between items-center">
+              <h1 className="text-2xl font-bold text-black md:text-3xl">
+                {post?.title}
+              </h1>
+              {user?._id === post?.user && (
+                <div className="flex items-center justify-center space-x-2">
+                  <Link to={`/update/${postId}`}>
+                    <BiEdit className="cursor-pointer text-xl icon" />
+                  </Link>
+                  <p
+                    className="cursor-pointer"
+                    onClick={() => setDeleteModal(true)}
+                  >
+                    <MdDelete className="cursor-pointer text-xl icon" />
+                  </p>
+                  {deleteModal && (
+                    <DeleteModal
+                      setDeleteModal={setDeleteModal}
+                      postId={postId}
+                    />
+                  )}
+                </div>
+              )}
             </div>
-            {user?._id === post?.user ? (
-              ""
-            ) : (
-              <PostLikeDislike setPost={setPost} post={post} />
-            )}
-          </div>
-          <div className="flex flex-col justify-center items-center mt-4">
-            <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
-            {/* write a comment */}
-            <div className="mt-4 w-full md:w-1/2 ">
-              <CreateComment
-                fetchCreateComment={fetchCreateComment}
-                comment={comment}
-                setComment={setComment}
-              />
+            <div className="flex flex-col  mt-2 md:mt-4">
+              <p className="text-gray-500">
+                Create: {formatDate(post?.createdAt)}{" "}
+              </p>
+              <Link to={`/profile/${searchUser?.id}`} key={searchUser?.id}>
+                <p className="text-gray-500">@{searchUser?.fullname}</p>
+              </Link>
             </div>
-          </div>
-          {comments?.map((comment) => (
-            <PostAllComment
-              key={comment._id}
-              comment={comment}
-              post={post}
-              fetchCommentsPost={fetchCommentsPost}
+            <img
+              src={post?.photo}
+              className="w-full md:w-1/2 mx-auto mt-8"
+              alt=""
             />
-          ))}
-        </div>
-      )}
-    </div>
+            <p className="mx-auto mt-8">{post?.description}</p>
+            <div className="flex items-center justify-between mt-8 space-x-4 font-semibold">
+              <div className="flex">
+                <p className="pr-10">Categories:</p>
+                <p>{category?.title}</p>
+              </div>
+              {user?._id === post?.user ? (
+                ""
+              ) : (
+                <PostLikeDislike setPost={setPost} post={post} />
+              )}
+            </div>
+            <div className="flex flex-col justify-center items-center mt-4">
+              <h3 className="mt-6 mb-4 font-semibold">Comments:</h3>
+              {/* write a comment */}
+              <div className="mt-4 w-full md:w-1/2 ">
+                <CreateComment
+                  fetchCreateComment={fetchCreateComment}
+                  comment={comment}
+                  setComment={setComment}
+                />
+              </div>
+            </div>
+            {comments?.map((comment) => (
+              <PostAllComment
+                key={comment._id}
+                comment={comment}
+                post={post}
+                fetchCommentsPost={fetchCommentsPost}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </AnimatedMotion>
   );
 }
 

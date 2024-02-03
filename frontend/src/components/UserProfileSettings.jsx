@@ -6,6 +6,7 @@ import UserService from "../services/UserServices";
 import { UserContext } from "../context/UserContext";
 import { getAccessToken } from "../common/utils";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 
 function UserProfileSettings() {
@@ -40,7 +41,8 @@ function UserProfileSettings() {
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
+    <AnimatedMotion animationName="pageAnimation">
+       <div className="flex justify-center items-center w-full h-full md:h-[55vh] ">
        <Toaster />
       <form className="w-[85%] max-w-[400px]" onSubmit={handleProfileUpdate}>
         <InputBox
@@ -78,6 +80,9 @@ function UserProfileSettings() {
         </div>
       </form>
     </div>
+    </AnimatedMotion>
+
+   
   );
 }
 

@@ -9,6 +9,7 @@ import { MdOutlineAddAPhoto } from "react-icons/md";
 import { BiCategory } from "react-icons/bi";
 import { TbFileDescription } from "react-icons/tb";
 import { MdOutlineSubtitles } from "react-icons/md";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 
 function UpdatePost() {
@@ -79,6 +80,7 @@ const handleUpdatePost = async (event) => {
 };
 
   return (
+    <AnimatedMotion animationName="pageAnimation">
     <div className="flex justify-center items-center text-center">
        <Toaster />
       <form className="w-2/3" onSubmit={handleUpdatePost}>
@@ -122,6 +124,7 @@ const handleUpdatePost = async (event) => {
         </button>
       </form>
     </div>
+    </AnimatedMotion>
   );
 }
 
