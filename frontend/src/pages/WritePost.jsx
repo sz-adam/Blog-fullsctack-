@@ -48,7 +48,7 @@ function WritePost() {
         }, 1500);
       }
     } catch (error) {
-      console.log(error);
+      toast.error('Admin has blocked the user, you cannot create a post!')
     }
   };
 
