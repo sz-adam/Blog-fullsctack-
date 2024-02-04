@@ -28,13 +28,23 @@ function postCard({ post }) {
                 <p className="tracking-widest text-xs title-font font-medium text-gray-400 mr-3">
                   Creator:
                 </p>
-                <Link to={`/profile/${post?.user?.id}`}>
-                <img
-                  src={post?.user?.profilePhoto}
-                  alt={post?.user?.fullname}
-                  className="w-8 h-8 rounded-full "
-                />
-                 </Link>
+                {authUser?.status === "success" ? (
+                  <Link to={`/profile/${post?.user?.id}`}>
+                    <img
+                      src={post?.user?.profilePhoto}
+                      alt={post?.user?.fullname}
+                      className="w-8 h-8 rounded-full "
+                    />
+                  </Link>
+                ) : (
+                  <Link to="/">
+                    <img
+                      src={post?.user?.profilePhoto}
+                      alt={post?.user?.fullname}
+                      className="w-8 h-8 rounded-full "
+                    />
+                  </Link>
+                )}
               </div>
             </div>
 
