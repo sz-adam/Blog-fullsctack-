@@ -75,8 +75,8 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
         toast.success("You have successfully deleted the post !");
         setTimeout(() => {
           navigate("/");
-        }, 2500);
-        window.location.reload(true);
+        }, 1500);
+       // window.location.reload(true);
       }
     } catch (error) {
       console.error("Hiba a törlés közben:", error);
