@@ -6,12 +6,12 @@
 
 **Server:** Node, Express, MongoDB, Mongoose, JWT
 
-#Frontend Stack
--Vite
--React
--Axios
--Tailwind CSS
--React-hot-toast
--Framer Motion
--React-router-dom
--React Icon
+## Frontend Stack
+## -Vite
+## -React
+## -Axios
+## -Tailwind CSS
+## -React-hot-toast
+## -Framer Motion
+## -React-router-dom
+## -React Icon
