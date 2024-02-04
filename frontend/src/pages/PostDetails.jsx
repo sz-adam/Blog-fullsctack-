@@ -125,9 +125,9 @@ function PostDetails() {
           </div>
         ) : (
           <div className="px-8 md:px-[200px] mt-8 mb-8">
-            <p className="text-gray-500 mb-5">
+            <p className="text-gray-800 mb-5 hover:text-gray-500">
               <Link to="/" className="flex items-center">
-                <FaArrowLeft className="mr-1 " /> Back
+                <FaArrowLeft className="mr-1 " /> 
               </Link>
             </p>
             <div className="flex justify-between items-center">

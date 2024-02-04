@@ -24,9 +24,12 @@ function UserSettings() {
       {/* Oldalsáv */}
       <div className="bg-gray-400 w-full md:w-1/6  p-4 ">
         <div className="mt-5 ml-5 icon text-lg">
-          <Link to={`/userProfile/${user?.id}`}>
-            <FaArrowLeft className="mr-1 " />
-          </Link>
+        
+          <p className="text-gray-800 my-5 hover:text-gray-500">
+              <Link to={`/userProfile/${user?.id}`} className="flex items-center">
+                <FaArrowLeft className="mr-1 " />
+              </Link>
+            </p>
         </div>
         <h2 className="text-2xl font-semibold mb-4 pb-1 border-b-2 text-center">
           Settings

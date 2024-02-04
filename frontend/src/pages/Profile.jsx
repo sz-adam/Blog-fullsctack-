@@ -86,9 +86,11 @@ function Profile() {
     <>
     <AnimatedMotion animationName="pageAnimation">
       <div className="mt-5 ml-5 icon text-lg">
-        <Link to="/">
-          <FaArrowLeft className="mr-1 " />
-        </Link>
+      <p className="text-gray-800 mt-5 hover:text-gray-500">
+              <Link to="/" className="flex items-center">
+                <FaArrowLeft className="mr-1 " /> 
+              </Link>
+            </p>
       </div>
       <div className="p-4 md:p-10 flex justify-center items-center">
         <div className="pt-8 bg-white mt-5">

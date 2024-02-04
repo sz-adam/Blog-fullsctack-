@@ -21,9 +21,11 @@ function UserProfile() {
     <>
       <AnimatedMotion animationName="pageAnimation">
         <div className="mt-5 ml-5 icon text-lg">
-          <Link to="/">
-            <FaArrowLeft className="mr-1 " />
-          </Link>
+        <p className="text-gray-800 m-5 hover:text-gray-500">
+              <Link to="/" className="flex items-center">
+                <FaArrowLeft className="mr-1 " />
+              </Link>
+            </p>
         </div>
         <div className="flex-col flex md:flex-row justify-evenly items-center pt-10">
           <img
