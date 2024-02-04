@@ -18,8 +18,8 @@ import { UserContextProvider } from "./context/UserContext";
 import UserProfile from "./pages/UserProfile";
 import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
-import PostService from "./services/PostsServices";
 import AdminPages from "./pages/AdminPages";
+import Footer from "./components/Footer";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
@@ -35,13 +35,18 @@ function App() {
   }, []);
 
   return (
-    <>
-      <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
-        <UserContextProvider>
-          <Router>
+    <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
+      <UserContextProvider>
+        <Router>
+          <div className="flex flex-col min-h-screen relative pb-20">
             <Navbar searchPost={searchPost} setSearchPost={setSearchPost} />
             <Routes>
-              <Route path="/" element={<Home  searchPost={searchPost} setSearchPost={setSearchPost}/>} />
+              <Route
+                path="/"
+                element={
+                  <Home searchPost={searchPost} setSearchPost={setSearchPost} />
+                }
+              />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route
@@ -58,10 +63,13 @@ function App() {
               <Route path="/userprofile/:userId" element={<UserProfile />} />
               <Route path="/settings/:userId" element={<UserSettings />} />
             </Routes>
-          </Router>
-        </UserContextProvider>
-      </AuthUserContext.Provider>
-    </>
+            <div className="absolute bottom-0 w-full">
+              <Footer />
+            </div>
+          </div>
+        </Router>
+      </UserContextProvider>
+    </AuthUserContext.Provider>
   );
 }
 

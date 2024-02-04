@@ -11,7 +11,7 @@ function postCard({ post }) {
 
   return (
     <>
-      <div className="p-1 w-full md:w-3/4 mx-auto my-auto">
+      <div className="p-1 w-full md:w-3/4 mx-auto my-auto mb-10">
         <div className="h-full border-4 border-gray-200 border-opacity-60 rounded-2xl overflow-hidden">
           <img
             className="h-64 md:h-64 w-full object-cover object-center"

@@ -20,9 +20,9 @@ function UserSettings() {
 
   return (
     <AnimatedMotion animationName="pageAnimation">
-      <div className="md:flex  min-h-screen">
+      <div className="md:flex">
       {/* Oldalsáv */}
-      <div className="bg-gray-400 w-full md:w-1/6  p-4 ">
+      <div className="bg-gray-400 w-full md:w-1/6  ">
         <div className="mt-5 ml-5 icon text-lg">
         
           <p className="text-gray-800 my-5 hover:text-gray-500">
