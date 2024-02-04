@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { FaHeart } from "react-icons/fa6";
 
-function ProfilePostCard({ userCard }) {
+function ProfilePostCard({ userCard }) {  
+  const percentageNumber =parseFloat(userCard?.likesPercentage).toFixed(0);
   
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -19,7 +20,7 @@ function ProfilePostCard({ userCard }) {
             ) : (
               <div className="flex justify-end items-center">
                 <FaHeart className="text-red-600 mr-2 animate-pulse" />
-                <span className="text-white"> {userCard?.likesPercentage}</span>
+                <span className="text-white"> {percentageNumber} %</span>
               </div>
             )}
           </div>
