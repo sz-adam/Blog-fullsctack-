@@ -126,7 +126,7 @@ userSchema.pre("findOne", async function (next) {
     );
   }
   //check if the number of posts is greater than 10
-  if (numberOfPosts > 10) {
+  if (numberOfPosts > 5) {
     await User.findByIdAndUpdate(
       userId,
       {
@@ -139,7 +139,7 @@ userSchema.pre("findOne", async function (next) {
   }
 
   //check if the number of posts is greater than 20
-  if (numberOfPosts > 20) {
+  if (numberOfPosts > 10) {
     await User.findByIdAndUpdate(
       userId,
       {
