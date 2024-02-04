@@ -8,6 +8,11 @@ const animations = {
     },
     transition: { duration: 1.1 },
   },
+  userMenuNavitonAnimation: {
+    initial: { opacity: 0, y: -20 },
+    animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+  },
 };
 
 const AnimatedMotion = ({ animationName, children, className }) => {
