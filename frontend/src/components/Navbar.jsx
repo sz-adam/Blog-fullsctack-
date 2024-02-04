@@ -31,7 +31,7 @@ function Navbar({searchPost, setSearchPost}) {
           <Link to="/login" className="btn-dark">
             Login
           </Link>
-          <Link to="/register" className="btn-white">
+          <Link to="/register" className="btn-white hover:text-black">
             Register
           </Link>
         </div>
