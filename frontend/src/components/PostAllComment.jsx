@@ -75,7 +75,7 @@ function PostAllComment({ comment, post, fetchCommentsPost }) {
   };
 
   return (
-    <div className="px-2 py-2 bg-gray-200 rounded-lg my-2 w-1/2 mx-auto">
+    <div className="px-2 py-2 bg-gray-200 rounded-lg my-2 md:w-1/2 mx-auto">
       <div className="flex items-center justify-between text-center">
         {isEditing && editedCommentId === commentId ? (
           <EditComment
