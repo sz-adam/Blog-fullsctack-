@@ -8,7 +8,7 @@ function CreateComment({ fetchCreateComment, comment,setComment }) {
 
   return (
     <div className="flex w-full justify-center items-center" >
-      <form onSubmit={fetchCreateComment }>
+      <form onSubmit={fetchCreateComment } className="xl:flex  justify-center items-center ">
         <InputBox
           type="text"
           icon={TfiWrite}
@@ -18,7 +18,7 @@ function CreateComment({ fetchCreateComment, comment,setComment }) {
         />
         <button
           type="submit"
-          className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg "
+          className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg mx-10"
         >
           Add Comment
         </button>        

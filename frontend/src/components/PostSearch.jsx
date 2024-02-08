@@ -14,7 +14,7 @@ function PostSearch({searchPost, setSearchPost}) {
       </button>
       <div
         className={
-          "absolute  left-14 top-full  py-4 px-2 md:border-0 md:block md:relative md:inset-0 md:p-0 md:w-auto md:opacity-100 " +
+          "absolute  left-14 top-full  w-3/4 py-4 px-2 md:border-0 md:block md:relative md:inset-0 md:p-0 md:w-auto md:opacity-100 " +
           (searchVisibility ? "opacity-100" : "opacity-0")
         }
       >
