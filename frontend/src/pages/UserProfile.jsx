@@ -5,6 +5,7 @@ import { FaArrowLeft } from "react-icons/fa";
 import UserProfileNavigation from "../components/UserProfileNavigation";
 import { TfiCup } from "react-icons/tfi";
 import AnimatedMotion from "../common/AnimatedMotion";
+import AnimatedStat from "../common/AnimatedStat";
 
 function UserProfile() {
   const { user, setUser } = useContext(UserContext);
@@ -53,26 +54,10 @@ function UserProfile() {
         <div className="p-4 md:p-10 flex justify-center items-center">
           <div className="pt-8 bg-white md:mt-5 mt-0">
             <div className=" my-auto mx-auto">
-              <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">
-                <div>
-                  <p className="font-bold text-gray-700 text-xl">
-                    {user?.followersCount}
-                  </p>
-                  <p className="text-gray-400">Followers</p>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-700 text-xl">
-                    {user?.followingCount}
-                  </p>
-                  <p className="text-gray-400">Following</p>
-                </div>
-                <div>
-                  <p className="font-bold text-gray-700 text-xl">
-                    {user?.posts?.length}
-                  </p>
-                  <p className="text-gray-400">Post</p>
-                </div>
-
+              <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">               
+                <AnimatedStat value= {user?.followersCount} label="Followers" />
+                <AnimatedStat value= {user?.followingCount} label="Following" />
+                <AnimatedStat value=  {user?.posts?.length} label="Post" />   
                 <div>
                   <p className="font-bold text-gray-700 text-xl">
                     {user?.userAward}

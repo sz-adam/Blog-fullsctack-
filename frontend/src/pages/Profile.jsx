@@ -11,6 +11,9 @@ import UserBlockUnblockButton from "../components/UserBlockUnblockButton";
 import UserFollowUnFollowButton from "../components/UserFollowUnFollowButton";
 import UserService from "../services/UserServices";
 import AnimatedMotion from "../common/AnimatedMotion";
+import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import AnimatedStat from "../common/AnimatedStat";
+
 
 
 function Profile() {
@@ -22,6 +25,10 @@ function Profile() {
   const viewUser = filteredUser?.id;
   const userFollower = filteredUser?.followers?.includes(user?.id);
   const userBlocked =user?.blocked?.includes(filteredUser?.id);
+
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, Math.round);
+  
 
   const viewUserData = async () => {
     try {
@@ -82,44 +89,32 @@ function Profile() {
     fetchData();
   }, [access_token, filteredUser]);
 
+  useEffect(() => {
+    const animation = animate(count, 50, {
+      duration: 2
+    });
+
+    return animation.stop;
+  }, []);
+
   return (
     <>
     <AnimatedMotion animationName="pageAnimation">
       <div className="mt-5 ml-5 icon text-lg">
-      <p className="text-gray-800 mt-5 hover:text-gray-500">
-              <Link to="/" className="flex items-center">
-                <FaArrowLeft className="mr-1 " /> 
-              </Link>
-            </p>
+        <p className="text-gray-800 mt-5 hover:text-gray-500">
+          <Link to="/" className="flex items-center">
+            <FaArrowLeft className="mr-1 " />
+          </Link>
+        </p>
       </div>
       <div className="p-4 md:p-10 flex justify-center items-center">
         <div className="pt-8 bg-white mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">
-              <div>
-                <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.followersCount}
-                </p>
-                <p className="text-gray-400">Follower</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.postCounts}
-                </p>
-                <p className="text-gray-400">Post</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.viewersCount}
-                </p>
-                <p className="text-gray-400">viewers</p>
-              </div>
-              <div>
-                <p className="font-bold text-gray-700 text-xl">
-                  {filteredUser?.comments?.length}
-                </p>
-                <p className="text-gray-400">Comments</p>
-              </div>
+              <AnimatedStat value={filteredUser?.followersCount} label="Follower" />
+              <AnimatedStat value={filteredUser?.postCounts} label="Post" />
+              <AnimatedStat value={filteredUser?.viewersCount} label="Viewers" />
+              <AnimatedStat value={filteredUser?.comments?.length} label="Comments" />
             </div>
             <div className="relative">
               <div className="w-48 h-48 bg-indigo-100 mx-auto rounded-full shadow-2xl absolute inset-x-0 top-0 -mt-24 flex items-center justify-center text-indigo-500">
@@ -133,18 +128,26 @@ function Profile() {
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
               {user?.id !== filteredUser?.id && (
                 <>
-                      <button className={`profilButton ${userFollower ? 'bg-gray-400' : 'bg-gray-700'}`}  disabled={userFollower}>
-                        <UserBlockUnblockButton
-                          filteredUserId={filteredUser?.id}
-                        />
-                      </button>
-                    <button  className={`profilButton ${userBlocked ? 'bg-blue-300' : 'bg-blue-500'}`}  disabled={userBlocked}>
-                      <UserFollowUnFollowButton
-                        filteredUserId={filteredUser?.id}
-                        filteredUser={filteredUser}
-                        setFilteredUser={setFilteredUser}
-                      />
-                    </button>
+                  <button
+                    className={`profilButton ${
+                      userFollower ? "bg-gray-400" : "bg-gray-700"
+                    }`}
+                    disabled={userFollower}
+                  >
+                    <UserBlockUnblockButton filteredUserId={filteredUser?.id} />
+                  </button>
+                  <button
+                    className={`profilButton ${
+                      userBlocked ? "bg-blue-300" : "bg-blue-500"
+                    }`}
+                    disabled={userBlocked}
+                  >
+                    <UserFollowUnFollowButton
+                      filteredUserId={filteredUser?.id}
+                      filteredUser={filteredUser}
+                      setFilteredUser={setFilteredUser}
+                    />
+                  </button>
                 </>
               )}
             </div>
@@ -167,8 +170,8 @@ function Profile() {
           </div>
         </div>
       </div>
-      </AnimatedMotion>
-    </>
+    </AnimatedMotion>
+  </>
   );
 }
 
