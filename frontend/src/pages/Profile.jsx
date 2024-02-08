@@ -11,10 +11,7 @@ import UserBlockUnblockButton from "../components/UserBlockUnblockButton";
 import UserFollowUnFollowButton from "../components/UserFollowUnFollowButton";
 import UserService from "../services/UserServices";
 import AnimatedMotion from "../common/AnimatedMotion";
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import AnimatedStat from "../common/AnimatedStat";
-
-
 
 function Profile() {
   const { user } = useContext(UserContext);
@@ -24,11 +21,7 @@ function Profile() {
   const access_token = getAccessToken();
   const viewUser = filteredUser?.id;
   const userFollower = filteredUser?.followers?.includes(user?.id);
-  const userBlocked =user?.blocked?.includes(filteredUser?.id);
-
-  const count = useMotionValue(0);
-  const rounded = useTransform(count, Math.round);
-  
+  const userBlocked =user?.blocked?.includes(filteredUser?.id);  
 
   const viewUserData = async () => {
     try {
@@ -88,14 +81,6 @@ function Profile() {
 
     fetchData();
   }, [access_token, filteredUser]);
-
-  useEffect(() => {
-    const animation = animate(count, 50, {
-      duration: 2
-    });
-
-    return animation.stop;
-  }, []);
 
   return (
     <>
