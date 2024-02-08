@@ -9,11 +9,12 @@ function EditComment({
 }) {
     
   return (
-    <>
+    <div className="bg-white flex justify-center items-center mx-auto my-auto">
       <InputBox
         type="text"
         value={editedComment}
         onChange={(e) => setEditedComment(e.target.value)}
+       
       />
       <div className="flex justify-center items-center mr-5">
         <button
@@ -26,7 +27,7 @@ function EditComment({
           Cancel
         </button>
       </div>
-    </>
+    </div>
   );
 }
 
