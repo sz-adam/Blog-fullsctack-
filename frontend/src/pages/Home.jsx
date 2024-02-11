@@ -8,6 +8,7 @@ import AnimatedMotion from "../common/AnimatedMotion";
 function Home({ searchPost }) {
   const access_token = getAccessToken();
   const [posts, setPosts] = useState([]);
+  const [sortedPosts, setSortedPosts] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -18,12 +19,14 @@ function Home({ searchPost }) {
         } else {
           fetchedPosts = await PostService.getAllPosts();
         }
-        setPosts(fetchedPosts);
+        //sorted date
+        const sortedByDate = fetchedPosts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setPosts(sortedByDate);
       } catch (error) {
         console.error("Error fetching posts:", error);
       }
     };
-
+  
     fetchData();
   }, [access_token, searchPost]);
 
