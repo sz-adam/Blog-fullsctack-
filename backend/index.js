@@ -5,6 +5,7 @@ const categoryRouter = require("./routes/categories/categoryRoutes");
 const commentRouter = require("./routes/comments/commentsRoutes");
 const globalErrorHandler = require("./middlewares/globalErrorhandler");
 const cors = require("cors");
+const messageRouter = require("./routes/message/messageRoutes");
 require("dotenv").config();
 require("./config/dbConnect");
 
@@ -24,6 +25,8 @@ app.use("/api/v1/posts", postRouter);
 app.use("/api/v1/comments", commentRouter);
 // category route
 app.use("/api/v1/categories", categoryRouter);
+//messages route
+app.use("/api/v1/messages", messageRouter);
 
 //Error handlers middleware
 app.use(globalErrorHandler);
