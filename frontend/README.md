@@ -4,3 +4,11 @@ Az oldalt megnyitva lehet látni egy carusellt és a posztokat. De a posztokat n
 
 
 Upon opening the page, you can see a carousel and the posts. However, the posts can only be viewed after logging in. The carousel displays the top 3 posts with the most likes. You can search and sort posts among them. When viewing posts, you can modify and delete a post if you created it. For comments on a post, you can edit and delete them if you are the commenter. On the post page, you can check the profile of the user who created the post, where all their posts are visible. Here, you can block and follow the user. Your own user profile can be viewed, indicating Bronze, Silver, or Gold status based on posts. Additionally, you can see whom you are following, who is following you, users you've blocked, and who has viewed your profile. There is a settings page where you can modify profile pictures and registration data, and delete the profile. An admin page is available, where the administrator can block any user, preventing them from creating posts.
+
+
+![Home](https://github.com/sz-adam/Blog-fullsctack-/blob/master/frontend/src/post%20screenshot/homePage.jpg)
+![Blog](https://github.com/sz-adam/Blog-fullsctack-/blob/master/frontend/src/post%20screenshot/blog%20post.jpg)
+![postProfil](https://github.com/sz-adam/Blog-fullsctack-/blob/master/frontend/src/post%20screenshot/post%20user.jpg)
+![userProfil](https://github.com/sz-adam/Blog-fullsctack-/blob/master/frontend/src/post%20screenshot/user.jpg)
+![userSettings](https://github.com/sz-adam/Blog-fullsctack-/blob/master/frontend/src/post%20screenshot/user%20settings.jpg)
+![adminPages](https://github.com/sz-adam/Blog-fullsctack-/blob/master/frontend/src/post%20screenshot/adminPages.jpg)
