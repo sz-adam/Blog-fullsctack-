@@ -1,11 +1,25 @@
 const Message = require("../../model/Message/message");
+const User = require("../../model/User/User")
 const { appErr } = require("../../utils/appErr");
 
 const createAdminMessage = async (req, res, next) => {
+  const { message } = req.body;
   try {
-    console.log('A createAdminMessage útvonal működik!');
+    const user = await User.findById(req.userAuth);
+    const admin = await User.findOne({ isAdmin: true });
+    console.log(admin.firstname)
+
+    //mi történjen ha a felhasználo blokkolva van? 
+    if (user.isBlocked) {
+    
+    }
+
+   
+  
+
     res.status(200).json({
       status: "success",
+       //data:message
       message: "Az üzenet sikeresen létrehozva.",
     });
   } catch (error) {
@@ -13,5 +27,6 @@ const createAdminMessage = async (req, res, next) => {
     return next(appErr(error.message));
   }
 };
+
 
 module.exports = { createAdminMessage };
