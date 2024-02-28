@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import CarouselHome from "../components/CarouselHome";
 import { getAccessToken } from "../common/utils";
 import PostService from "../services/PostsServices";
 import AnimatedMotion from "../common/AnimatedMotion";
 import SortedPost from "../components/SortedPost";
+import { UserContext } from "../context/UserContext";
 
 function Home({ searchPost }) {
   const access_token = getAccessToken();
   const [posts, setPosts] = useState([]);
+  const { user } = useContext(UserContext);
   const [sortBy, setSortBy] = useState("date");
   const handleSortChange = (selectedValue) => {
     setSortBy(selectedValue);
@@ -78,6 +80,13 @@ function Home({ searchPost }) {
   return (
     <>
       <AnimatedMotion animationName="pageAnimation">
+        {user?.isBlocked && (
+          <div className="w-full flex justify-center items-center">
+            <p className="text-center font-semibold text-xl border rounded-full bg-rose-500 text-TextWhite p-2 px-5 m-2">
+              Write a message when the user is blocked Click!{" "}
+            </p>
+          </div>
+        )}
         {filteredPosts.length > 0 && <CarouselHome posts={filteredPosts} />}
         <SortedPost sortBy={sortBy} handleSortChange={handleSortChange} />
         {filteredPosts.length === 0 ? (
