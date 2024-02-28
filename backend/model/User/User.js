@@ -71,6 +71,13 @@ const userSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
+
+    message:[
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"Message"
+      }
+    ],
     blocked: [
       {
         type: mongoose.Schema.Types.ObjectId,
