@@ -10,7 +10,6 @@ function Home({ searchPost }) {
   const access_token = getAccessToken();
   const [posts, setPosts] = useState([]);
   const [sortBy, setSortBy] = useState("date");
-  console.log(posts[0]);
   const handleSortChange = (selectedValue) => {
     setSortBy(selectedValue);
   };
