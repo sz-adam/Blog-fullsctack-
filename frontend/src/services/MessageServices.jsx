@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const messageService ={
-
-    
-
-}
+const messageService = {
+  createAdminMessage: async () => {
+    try {
+    } catch (e) {}
+  },
+};
