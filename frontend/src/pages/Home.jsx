@@ -97,8 +97,7 @@ function Home({ searchPost }) {
           </div>
         )}
         {showAdminWrite && (
-          <AdminWritemodal
-            showAdminWrite={showAdminWrite}
+          <AdminWritemodal            
             setShowAdminWrite={setShowAdminWrite}
           />
         )}

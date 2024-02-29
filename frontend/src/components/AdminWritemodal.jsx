@@ -1,17 +1,33 @@
 import React, { useState } from "react";
+import MessageService from "../services/MessageServices";
+import { getAccessToken } from "../common/utils";
+import { Toaster, toast } from "react-hot-toast";
 
-function AdminWritemodal({ showAdminWrite, setShowAdminWrite }) {
+function AdminWritemodal({ setShowAdminWrite }) {
   const [adminMessage, setAdminMessage] = useState("");
+  const access_token = getAccessToken();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
     console.log(adminMessage);
-    setShowAdminWrite(false);
+    try {       
+      await MessageService.createAdminMessage(access_token, {
+        message: adminMessage,
+      });
+      toast.success("Message successfully delivered.");
+      setTimeout(() => {
+        setShowAdminWrite(false);
+      }, 1500);
+    } catch (error) {
+        console.log(error);
+        toast.error(error?.response?.data?.message);
+    }
   };
 
   return (
     <div>
       {" "}
+      <Toaster />
       <form
         className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none"
         onSubmit={handleSubmit}
@@ -33,6 +49,7 @@ function AdminWritemodal({ showAdminWrite, setShowAdminWrite }) {
                 rows="8"
                 className="resize-none w-full md:w-30 lg:w-50"
                 onChange={(event) => setAdminMessage(event.target.value)}
+                required
               />
             </div>
             {/*footer*/}
