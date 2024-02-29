@@ -46,13 +46,21 @@ const UserNavigationPanel = () => {
               Profile
             </Link>
             {authUser?.data.isAdmin === true ? (
-              <Link
+              <div>
+                <Link
                 to="/adminPage"
                 className="link pl-8 py-4 block text-black hover:text-slate-500"
                 onClick={() => setIsOpen(false)}
               >
                 Admin panel
               </Link>
+              <Link to="messages"
+              className="link pl-8 py-4 block text-black hover:text-slate-500"
+              onClick={() => setIsOpen(false)}
+              >
+              Messages
+              </Link>
+              </div>
             ) : (
               ""
             )}

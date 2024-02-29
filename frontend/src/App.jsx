@@ -20,6 +20,7 @@ import Profile from "./pages/Profile";
 import UserSettings from "./pages/UserSettings";
 import AdminPages from "./pages/AdminPages";
 import Footer from "./components/Footer";
+import AdminMessages from "./pages/AdminMessages";
 
 function App() {
   const [authUser, setAuthUser] = useState(AuthUserContext);
@@ -57,6 +58,9 @@ function App() {
                 path="/adminPage"
                 element={isAdmin ? <AdminPages /> : <Navigate to="/" />}
               />
+              <Route 
+              path="/messages"
+              element={isAdmin ? <AdminMessages /> : <Navigate to="/" />} />
               <Route path="/update/:postId" element={<UpdatePost />} />
               <Route path="/post/:postId" element={<PostDetails />} />
               <Route path="/profile/:userId" element={<Profile />} />
