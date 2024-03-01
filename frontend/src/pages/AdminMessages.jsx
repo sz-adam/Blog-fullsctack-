@@ -3,13 +3,14 @@ import { GoPlus } from "react-icons/go";
 import { LuMinus } from "react-icons/lu";
 import { getAccessToken } from "../common/utils";
 import UserService from "../services/UserServices";
+import MessageService from "../services/MessageServices";
 
 function AdminMessages() {
   const [openAccordionId, setOpenAccordionId] = useState(null);
   const [fullUser, setFullUser] = useState([]);
+  const [adminMessageId, setAdminMessageId] = useState("");
   const access_token = getAccessToken();
-  console.log(fullUser);
-
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,7 +26,25 @@ function AdminMessages() {
     fetchData();
   }, [access_token]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        if (access_token && adminMessageId) {
+          const adminMessage = await MessageService.singleAdminMessage(
+            access_token,
+            adminMessageId
+          );
+          console.log(adminMessage);
+        }
+      } catch (error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchData();
+  }, [access_token, adminMessageId]);
+
   const handleToggleAccordion = (userId) => {
+    setAdminMessageId(userId);
     setOpenAccordionId((prevId) => (prevId === userId ? null : userId));
   };
 
@@ -42,6 +61,7 @@ function AdminMessages() {
             key={user?.id}
           >
             <div className="py-5 w-3/4 border rounded-xl m-1 px-2">
+              {console.log(user)}
               <button
                 onClick={() => handleToggleAccordion(user?.id)}
                 className="flex justify-between w-full"
