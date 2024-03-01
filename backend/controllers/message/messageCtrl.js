@@ -30,14 +30,19 @@ const createAdminMessage = async (req, res, next) => {
 
 const singleAdminMessage = async (req, res, next) => {
   try {
-    const singleAdminMessage = await Message.findById(req.params.id);
+    //felhasználó ID
+    const userId = req.params.id;
+    // adott felhasználó üzeneteit ID alapján
+
+    //admin jogosultság ??? 
+    const userMessages = await Message.find({ user: userId });
+
     res.json({
       status: "success",
-      data: singleAdminMessage,
+      data: userMessages,
     });
   } catch (error) {
     return next(appErr(error.message));
   }
 };
-
-module.exports = { createAdminMessage, singleAdminMessage };
+module.exports = { createAdminMessage ,singleAdminMessage};
