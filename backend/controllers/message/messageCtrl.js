@@ -19,8 +19,7 @@ const createAdminMessage = async (req, res, next) => {
     } else {
       res.status(403).json({
         status: "error",
-        message:
-          "The user is not blocked and cannot send message",
+        message: "The user is not blocked and cannot send message",
       });
     }
   } catch (error) {
@@ -29,4 +28,16 @@ const createAdminMessage = async (req, res, next) => {
   }
 };
 
-module.exports = { createAdminMessage };
+const singleAdminMessage = async (req, res, next) => {
+  try {
+    const singleAdminMessage = await Message.findById(req.params.id);
+    res.json({
+      status: "success",
+      data: singleAdminMessage,
+    });
+  } catch (error) {
+    return next(appErr(error.message));
+  }
+};
+
+module.exports = { createAdminMessage, singleAdminMessage };
