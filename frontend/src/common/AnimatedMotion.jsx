@@ -13,9 +13,26 @@ const animations = {
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
   },
+  messageAnimation : {
+    initial: {
+      opacity: 0,
+      y: -20,
+    },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.5,
+      },
+    },
+    },
+
+    buttonAnimation:{
+      whileTap:{scale:0.85}
+    }
 };
 
-const AnimatedMotion = ({ animationName, children, className }) => {
+const AnimatedMotion = ({ animationName, children, className , onClick}) => {
   const animation = animations[animationName];
 
   return (
@@ -26,6 +43,8 @@ const AnimatedMotion = ({ animationName, children, className }) => {
       transition={animation.transition}
       variants={animation.variants}
       whileHover={animation.whileHover}
+      whileTap={animation.whileTap}
+      onClick={onClick}
       className={className}
     >
       {children}

@@ -1,6 +1,7 @@
 import React from "react";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function AdminBlockButton({ user, setFullUser, buttonStyle }) {
   const access_token = getAccessToken();
@@ -28,12 +29,13 @@ function AdminBlockButton({ user, setFullUser, buttonStyle }) {
   };
 
   return (
-    <div
+    <AnimatedMotion
+    animationName="buttonAnimation"
       className={`px-4 py-3 text-sm cursor-pointer ${buttonStyle}`}
       onClick={() => handleAdminUserBlockUnblock(user?.id, user?.isBlocked)}
     >
       {user?.isBlocked ? "Unblock" : "Block"}
-    </div>
+    </AnimatedMotion>
   );
 }
 
