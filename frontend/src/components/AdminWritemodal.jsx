@@ -9,7 +9,6 @@ function AdminWritemodal({ setShowAdminWrite }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log(adminMessage);
     try {       
       await MessageService.createAdminMessage(access_token, {
         message: adminMessage,
