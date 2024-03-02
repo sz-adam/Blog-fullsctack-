@@ -45,11 +45,12 @@ function AdminWritemodal({ setShowAdminWrite }) {
             <div className="relative p-6 flex-auto">
               <textarea
                 value={adminMessage}
-                placeholder="Message to admin"
+                placeholder="Message to admin maximum 200 caracters"
                 rows="8"
                 className="resize-none w-full md:w-30 lg:w-50"
                 onChange={(event) => setAdminMessage(event.target.value)}
                 required
+                maxlength="200"
               />
             </div>
             {/*footer*/}
