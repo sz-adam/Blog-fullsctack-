@@ -4,6 +4,7 @@ import { getAccessToken } from "../common/utils";
 import { IoEyeOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import AnimatedMotion from "../common/AnimatedMotion";
+import AdminBlockButton from "../components/AdminBlockButton";
 
 
 function AdminPages() {
@@ -24,28 +25,6 @@ function AdminPages() {
 
     fetchData();
   }, [access_token]);
-
-  const handleAdminUserBlockUnblock = async (blockedUserId, isBlocked) => {
-    try {
-      if (access_token && blockedUserId) {
-        if (isBlocked) {
-          await UserService.adminUnBlockUser(access_token, blockedUserId);
-        } else {
-          await UserService.adminBlockUser(access_token, blockedUserId);
-        }
-
-        setFullUser((prevUsers) =>
-          prevUsers.map((user) =>
-            user.id === blockedUserId
-              ? { ...user, isBlocked: !isBlocked }
-              : user
-          )
-        );
-      }
-    } catch (error) {
-      console.error("Error toggling user status:", error);
-    }
-  };
 
   const formatDate = (dateString) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
@@ -116,14 +95,11 @@ function AdminPages() {
                   <td className="px-4 py-3 text-sm border">
                     {user?.postCounts}
                   </td>
-                  <td
-                    className="px-4 py-3 text-sm border cursor-pointer"
-                    onClick={() =>
-                      handleAdminUserBlockUnblock(user?.id, user?.isBlocked)
-                    }
-                  >
-                    {user?.isBlocked ? "Unblock" : "Block"}
-                  </td>
+              
+                   <td className="px-4 py-3 text-sm border">
+                   <AdminBlockButton user={user} setFullUser={setFullUser}/>
+                   </td>
+                  
                   <td className="px-4 py-3 text-sm border ">
                     <div className="flex items-center justify-center">
                       <Link to={`/profile/${user?.id}`}>
