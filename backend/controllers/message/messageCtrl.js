@@ -10,8 +10,8 @@ const createAdminMessage = async (req, res, next) => {
     const blockedUser = await User.findById(req.userAuth);
     if (blockedUser.isBlocked) {
       const newMessages = await Message.create({ message, user: req.userAuth });
-      admin.message.push(newMessages);
-      await admin.save();
+      blockedUser.message.push(newMessages);
+      await blockedUser.save();
       res.json({
         status: "success",
         data: newMessages,
