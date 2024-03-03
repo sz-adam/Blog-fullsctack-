@@ -5,21 +5,32 @@ const { appErr } = require("../../utils/appErr");
 const createAdminMessage = async (req, res, next) => {
   const { message } = req.body;
   try {
-    const admin = await User.findOne({ isAdmin: true });
-    //mi történjen ha a felhasználo blokkolva van?
+    // Ellenőrizd, hogy a felhasználó blokkolva van-e
     const blockedUser = await User.findById(req.userAuth);
     if (blockedUser.isBlocked) {
-      const newMessages = await Message.create({ message, user: req.userAuth });
-      blockedUser.message.push(newMessages);
+      // felhasználó már küldött-e üzenetet
+      const alreadySentMessage = await Message.findOne({ user: req.userAuth });
+
+      if (alreadySentMessage) {
+        return res.status(403).json({
+          status: "error",
+          message: "The user has already sent a message and cannot send another one.",
+        });
+      }
+
+      // nem küldött még üzenetet akkor küld
+      const newMessage = await Message.create({ message, user: req.userAuth });
+      blockedUser.message.push(newMessage);
       await blockedUser.save();
-      res.json({
+
+      return res.json({
         status: "success",
-        data: newMessages,
+        data: newMessage,
       });
     } else {
-      res.status(403).json({
+      return res.status(403).json({
         status: "error",
-        message: "The user is not blocked and cannot send message",
+        message: "The user is not blocked and cannot send a message.",
       });
     }
   } catch (error) {
@@ -27,6 +38,7 @@ const createAdminMessage = async (req, res, next) => {
     return next(appErr(error.message));
   }
 };
+
 
 const singleAdminMessage = async (req, res, next) => {
   try {
