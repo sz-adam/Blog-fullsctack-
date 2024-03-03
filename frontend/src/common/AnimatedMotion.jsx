@@ -29,10 +29,26 @@ const animations = {
 
     buttonAnimation:{
       whileTap:{scale:0.85}
-    }
+    },
+    navigationAnimatio: {
+      initial: "hidden",
+      animate: "visible",
+      variants: {
+        visible: { transition: { staggerChildren: 0.2 } },
+        hidden: {},
+      },
+    },
+    navigationItemAnimatio: {
+      variants: {
+        hidden: { opacity: 0, scale: 0.5 },
+        visible: { opacity: 1, scale: 1 },
+      },
+      exit: { opacity: 1, scale: 1 },
+      transition: { type: "spring" },
+    },
 };
 
-const AnimatedMotion = ({ animationName, children, className , onClick}) => {
+const AnimatedMotion = ({ animationName, children, className , onClick ,style}) => {
   const animation = animations[animationName];
 
   return (
@@ -46,6 +62,7 @@ const AnimatedMotion = ({ animationName, children, className , onClick}) => {
       whileTap={animation.whileTap}
       onClick={onClick}
       className={className}
+      style={style}
     >
       {children}
     </motion.div>

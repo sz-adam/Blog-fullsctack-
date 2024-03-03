@@ -4,6 +4,7 @@ import ProfilePostCard from "./ProfilePostCard";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import UserList from "./UserProfileList";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 const UserProfileNavigation = () => {
   const [activeTab, setActiveTab] = useState("posts");
@@ -11,7 +12,7 @@ const UserProfileNavigation = () => {
   const access_token = getAccessToken();
 
   const userPosts = user?.posts || []; //ne legyen undefined
-  
+
   const followUserData = async () => {
     try {
       if (access_token) {
@@ -44,32 +45,32 @@ const UserProfileNavigation = () => {
   };
 
   const viewersData = async () => {
-    try{
-      if(access_token) {
+    try {
+      if (access_token) {
         const viewersuser = await UserService.viewersArray(access_token);
         return viewersuser;
       }
     } catch (error) {
       console.error("Error fetching posts:", error);
     }
-  }
+  };
 
   const userPostsComponents =
-  userPosts.length > 0 ? (
-    <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
-      {userPosts.map((userCard) => (
-        <div key={userCard._id}>
-          <ProfilePostCard userCard={userCard} />
-        </div>
-      ))}
-    </div>
-  ) : (
-    <div className="place-items-center py-10 text-center w-full">
-      <h1 className="text-2xl md:text-6xl font-extrabold text-transparent bg-clip-text log-reg-color">
-        You haven't published a post yet!
-      </h1>
-    </div>
-  );
+    userPosts.length > 0 ? (
+      <div className="md:grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-10">
+        {userPosts.map((userCard) => (
+          <div key={userCard._id}>
+            <ProfilePostCard userCard={userCard} />
+          </div>
+        ))}
+      </div>
+    ) : (
+      <div className="place-items-center py-10 text-center w-full">
+        <h1 className="text-2xl md:text-6xl font-extrabold text-transparent bg-clip-text log-reg-color">
+          You haven't published a post yet!
+        </h1>
+      </div>
+    );
 
   const userPorifileTabs = [
     { id: "posts", label: "Posts", component: userPostsComponents },
@@ -102,18 +103,22 @@ const UserProfileNavigation = () => {
   return (
     <div>
       <div className="grid md:flex items-center justify-center mt-12">
-        {userPorifileTabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => handleTabClick(tab.id)}
-            style={{
-              color: activeTab === tab.id ? "MediumSpringGreen" : "black",
-            }}
-            className="font-semibold mx-2 text-base md:text-xl my-2 md:my-0"
-          >
-            {tab.label}
-          </button>
-        ))}
+        <AnimatedMotion animationName="navigationAnimatio">
+          {userPorifileTabs.map((tab) => (
+            <button key={tab.id}>
+              <AnimatedMotion
+                animationName="navigationItemAnimatio"
+                onClick={() => handleTabClick(tab.id)}
+                style={{
+                  color: activeTab === tab.id ? "MediumSpringGreen" : "black",
+                }}
+                className="font-semibold mx-2 text-base md:text-xl my-2 md:my-0 "
+              >
+                {tab.label}
+              </AnimatedMotion>
+            </button>
+          ))}
+        </AnimatedMotion>
       </div>
 
       {userPorifileTabs.map((tab) => (
