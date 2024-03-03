@@ -58,12 +58,14 @@ function UserPasswordSettings() {
             required={true}
           />
           <div className="flex justify-center items-center mt-10">
+          <AnimatedMotion animationName="buttonAnimation">
             <button
               className="border-2 bg-slate-500 text-white p-3 px-10 rounded-full font-bold hover:bg-slate-700"
               type="submit"
             >
               Save
             </button>
+            </AnimatedMotion>
           </div>
         </form>
       </div>

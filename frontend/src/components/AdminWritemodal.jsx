@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import MessageService from "../services/MessageServices";
 import { getAccessToken } from "../common/utils";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 function AdminWritemodal({ setShowAdminWrite }) {
   const [adminMessage, setAdminMessage] = useState("");
@@ -9,7 +10,7 @@ function AdminWritemodal({ setShowAdminWrite }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    try {       
+    try {
       await MessageService.createAdminMessage(access_token, {
         message: adminMessage,
       });
@@ -18,8 +19,8 @@ function AdminWritemodal({ setShowAdminWrite }) {
         setShowAdminWrite(false);
       }, 1500);
     } catch (error) {
-        console.log(error);
-        toast.error(error?.response?.data?.message);
+      console.log(error);
+      toast.error(error?.response?.data?.message);
     }
   };
 
@@ -54,16 +55,20 @@ function AdminWritemodal({ setShowAdminWrite }) {
             </div>
             {/*footer*/}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-              <button
-                className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                type="button"
-                onClick={() => setShowAdminWrite(false)}
-              >
-                Close
-              </button>
-              <button className="btn-dark  px-6 py-2 mr-1 mb-1" type="submit">
-                Send
-              </button>
+              <AnimatedMotion animationName="buttonAnimation">
+                <button
+                  className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                  type="button"
+                  onClick={() => setShowAdminWrite(false)}
+                >
+                  Close
+                </button>
+              </AnimatedMotion>
+              <AnimatedMotion animationName="buttonAnimation">
+                <button className="btn-dark  px-6 py-2 mr-1 mb-1" type="submit">
+                  Send
+                </button>
+              </AnimatedMotion>
             </div>
           </div>
         </div>

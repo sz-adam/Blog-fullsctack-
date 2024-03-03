@@ -31,13 +31,14 @@ function UserDeleteAccount() {
         <h1 className="text-2xl font-semibold mb-6">
           Are you sure you want to delete the registration?
         </h1>
-
+        <AnimatedMotion animationName="buttonAnimation">
         <button
           className="bg-red-500 py-2 px-10 text-white font-semibold text-xl rounded-full hover:bg-red-800"
           onClick={handleProfileDelete}
         >
           Yes
         </button>
+        </AnimatedMotion>
       </div>
     </div>
     </AnimatedMotion>

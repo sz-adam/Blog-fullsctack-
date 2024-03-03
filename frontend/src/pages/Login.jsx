@@ -51,12 +51,14 @@ function Login() {
           onChange={(event) => setPassword(event.target.value)}
         />       
         <div className="flex justify-center items-center mt-10">
+        <AnimatedMotion animationName="buttonAnimation">
           <button
             className="border-2 log-reg-color text-white p-3 px-10 rounded-full font-bold"
             type="submit"
           >
             Login
           </button>
+          </AnimatedMotion>
         </div>
         <p className="mt-6 text-slate-400 text-lg text-center">
           Don't have account ?{" "}

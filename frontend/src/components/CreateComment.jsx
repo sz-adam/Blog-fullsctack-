@@ -1,6 +1,7 @@
 import React from "react";
 import InputBox from "./InputBox";
 import { TfiWrite } from "react-icons/tfi";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 
 function CreateComment({ fetchCreateComment, comment,setComment }) {
@@ -16,12 +17,14 @@ function CreateComment({ fetchCreateComment, comment,setComment }) {
           value={comment}
           onChange={(event) => setComment(event.target.value)}
         />
+           <AnimatedMotion animationName="buttonAnimation">
         <button
           type="submit"
           className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg mx-10"
         >
           Add Comment
         </button>        
+        </AnimatedMotion>
       </form>
     </div>
   );

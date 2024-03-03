@@ -113,6 +113,7 @@ function Profile() {
             <div className="space-x-2 md:space-x-4  flex justify-between mt-32 md:mt-0 md:justify-center ">
               {user?.id !== filteredUser?.id && (
                 <>
+                <AnimatedMotion animationName="buttonAnimation">
                   <button
                     className={`profilButton ${
                       userFollower ? "bg-gray-400" : "bg-gray-700"
@@ -121,6 +122,8 @@ function Profile() {
                   >
                     <UserBlockUnblockButton filteredUserId={filteredUser?.id} />
                   </button>
+                  </AnimatedMotion>
+                  <AnimatedMotion animationName="buttonAnimation">
                   <button
                     className={`profilButton ${
                       userBlocked ? "bg-blue-300" : "bg-blue-500"
@@ -133,6 +136,7 @@ function Profile() {
                       setFilteredUser={setFilteredUser}
                     />
                   </button>
+                  </AnimatedMotion>
                 </>
               )}
             </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../context/UserContext";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 const UserProfileList = ({ fetchData }) => {
   const [userList, setUserList] = useState();
@@ -73,9 +74,11 @@ const UserProfileList = ({ fetchData }) => {
                 </div>
               </div>
               <div className="mt-5 text-center">
+              <AnimatedMotion animationName="buttonAnimation">
                 <Link to={`/profile/${user.id}`} className="btn-dark">
                   View
                 </Link>
+                </AnimatedMotion>
               </div>
             </div>
           ))}

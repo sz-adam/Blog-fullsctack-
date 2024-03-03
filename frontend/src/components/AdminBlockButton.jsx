@@ -30,7 +30,7 @@ function AdminBlockButton({ user, setFullUser, buttonStyle }) {
 
   return (
     <AnimatedMotion
-    animationName="buttonAnimation"
+      animationName="buttonAnimation"
       className={`px-4 py-3 text-sm cursor-pointer ${buttonStyle}`}
       onClick={() => handleAdminUserBlockUnblock(user?.id, user?.isBlocked)}
     >

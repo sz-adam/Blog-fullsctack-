@@ -6,6 +6,7 @@ import { getAccessToken } from "../common/utils";
 import { UserContext } from "../context/UserContext";
 import UserService from "../services/UserServices";
 import { Toaster, toast } from "react-hot-toast";
+import AnimatedMotion from "../common/AnimatedMotion";
 
 const DeleteModal = ({ setDeleteModal, postId }) => {
   const [post, setPost] = useState(null);
@@ -76,7 +77,7 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
         setTimeout(() => {
           navigate("/");
         }, 1500);
-       // window.location.reload(true);
+        // window.location.reload(true);
       }
     } catch (error) {
       console.error("Hiba a törlés közben:", error);
@@ -109,20 +110,24 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
             </div>
             {/* Footer */}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
-              <button
-                className="editText focus:ring focus:ring-red-500 bg-red-400 text-white text-lg"
-                type="button"
-                onClick={() => setDeleteModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg"
-                type="button"
-                onClick={handleDeletePost}
-              >
-                Delete
-              </button>
+              <AnimatedMotion animationName="buttonAnimation">
+                <button
+                  className="editText focus:ring focus:ring-red-500 bg-red-400 text-white text-lg"
+                  type="button"
+                  onClick={() => setDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+              </AnimatedMotion>
+              <AnimatedMotion animationName="buttonAnimation">
+                <button
+                  className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg"
+                  type="button"
+                  onClick={handleDeletePost}
+                >
+                  Delete
+                </button>
+              </AnimatedMotion>
             </div>
           </div>
         </div>

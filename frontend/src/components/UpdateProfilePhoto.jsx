@@ -49,12 +49,15 @@ function UpdateProfilePhoto({ setUpdateProfilePhotos }) {
          
         />
         <div className="flex justify-evenly mt-4">
+        <AnimatedMotion animationName="buttonAnimation">
           <button
             type="submit"
             className="editText focus:ring focus:ring-green-500 bg-green-400 text-white text-lg"
           >
             Save
           </button>
+          </AnimatedMotion>
+          <AnimatedMotion animationName="buttonAnimation">
           <button
             type="button"
             onClick={() => setUpdateProfilePhotos(false)}
@@ -62,6 +65,7 @@ function UpdateProfilePhoto({ setUpdateProfilePhotos }) {
           >
             Close
           </button>
+          </AnimatedMotion>
         </div>
       </form>
     </div>

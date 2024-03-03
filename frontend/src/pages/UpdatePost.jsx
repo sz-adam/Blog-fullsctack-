@@ -122,9 +122,11 @@ function UpdatePost() {
             onChange={(event) => setPhoto(event.target.value)}
             required={true}
           />
+          <AnimatedMotion animationName="buttonAnimation">
           <button type="submit" className="btn-dark">
             Update
           </button>
+          </AnimatedMotion>
         </form>
       </div>
     </AnimatedMotion>

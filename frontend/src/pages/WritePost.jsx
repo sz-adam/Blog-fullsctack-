@@ -57,7 +57,7 @@ function WritePost() {
       <AnimatedMotion animationName="pageAnimation">
         <p className="text-gray-800 m-5 hover:text-gray-500">
           <Link to="/" className="flex items-center">
-            <FaArrowLeft className="mr-1 " /> 
+            <FaArrowLeft className="mr-1 " />
           </Link>
         </p>
         <div className="flex justify-center items-center text-center">
@@ -97,9 +97,11 @@ function WritePost() {
               onChange={(event) => setPhoto(event.target.value)}
               required={true}
             />
-            <button type="submit" className="btn-dark">
-              Sending
-            </button>
+            <AnimatedMotion animationName="buttonAnimation">
+              <button type="submit" className="btn-dark">
+                Sending
+              </button>
+            </AnimatedMotion>
           </form>
         </div>
       </AnimatedMotion>
