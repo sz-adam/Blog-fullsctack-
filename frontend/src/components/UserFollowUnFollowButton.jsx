@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { UserContext } from "../context/UserContext";

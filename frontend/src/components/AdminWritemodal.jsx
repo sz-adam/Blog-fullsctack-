@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import MessageService from "../services/MessageServices";
 import { getAccessToken } from "../common/utils";
 import { Toaster, toast } from "react-hot-toast";

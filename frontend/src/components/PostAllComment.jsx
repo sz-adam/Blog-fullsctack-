@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CommentServices from "../services/CommentServices";
 import { getAccessToken } from "../common/utils";
 import { AiTwotoneDelete } from "react-icons/ai";
@@ -8,7 +8,7 @@ import { UserContext } from "../context/UserContext";
 import UserService from "../services/UserServices";
 import { Link } from "react-router-dom";
 
-function PostAllComment({ comment, post, fetchCommentsPost }) {
+function PostAllComment({ comment, fetchCommentsPost }) {
   const { user } = useContext(UserContext);
   const access_token = getAccessToken();
   const commentId = comment?._id;

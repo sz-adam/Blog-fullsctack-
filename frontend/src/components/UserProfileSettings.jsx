@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import InputBox from "./InputBox";
 import { IoManOutline } from "react-icons/io5";
 import { MdOutlineMailOutline } from "react-icons/md";

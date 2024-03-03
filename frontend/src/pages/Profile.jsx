@@ -1,5 +1,5 @@
 //Post létrehozoja  profile
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import { useParams } from "react-router-dom";
 import { FaArrowLeft } from "react-icons/fa";

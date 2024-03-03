@@ -1,4 +1,3 @@
-import React from "react";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import AnimatedMotion from "../common/AnimatedMotion";

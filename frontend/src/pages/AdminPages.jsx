@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import { IoEyeOutline } from "react-icons/io5";

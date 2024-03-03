@@ -8,7 +8,7 @@ import AnimatedMotion from "../common/AnimatedMotion";
 
 const UserNavigationPanel = () => {
   const { authUser, setAuthUser } = useContext(AuthUserContext);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 

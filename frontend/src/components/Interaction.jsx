@@ -1,4 +1,3 @@
-import React from "react";
 import { AiOutlineLike } from "react-icons/ai";
 import { AiOutlineDislike } from "react-icons/ai";
 

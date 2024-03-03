@@ -1,5 +1,3 @@
-import React from "react";
-
 function SortedPost({ sortBy, handleSortChange }) {
   return (
     <div className="flex items-center justify-center md:justify-start md:px-10 mb-4 space-x-2">

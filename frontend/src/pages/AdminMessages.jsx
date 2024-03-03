@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { GoPlus } from "react-icons/go";
 import { LuMinus } from "react-icons/lu";
 import { getAccessToken } from "../common/utils";

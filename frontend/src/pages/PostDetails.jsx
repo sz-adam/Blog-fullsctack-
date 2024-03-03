@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import { Link } from "react-router-dom";
@@ -24,7 +24,7 @@ function PostDetails() {
   const access_token = getAccessToken();
   const [comment, setComment] = useState("");
   const [loader, setLoader] = useState(false);
-  const { user, setUser } = useContext(UserContext);
+  const { user } = useContext(UserContext);
   const [category, setCategory] = useState("");
   const categoryId = post?.category;
   const [deleteModal, setDeleteModal] = useState(false);
@@ -127,7 +127,7 @@ function PostDetails() {
           <div className="px-8 md:px-[200px] mt-8 mb-8">
             <p className="text-gray-800 mb-5 hover:text-gray-500">
               <Link to="/" className="flex items-center">
-                <FaArrowLeft className="mr-1 " /> 
+                <FaArrowLeft className="mr-1 " />
               </Link>
             </p>
             <div className="flex justify-between items-center">

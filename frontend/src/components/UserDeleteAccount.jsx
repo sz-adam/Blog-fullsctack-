@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import UserService from "../services/UserServices";
 import { AuthUserContext } from "../context/AuthUserContext";
 import { getAccessToken } from "../common/utils";

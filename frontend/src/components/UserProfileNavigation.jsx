@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../context/UserContext";
 import ProfilePostCard from "./ProfilePostCard";
 import UserService from "../services/UserServices";

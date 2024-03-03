@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 
-function PostSearch({searchPost, setSearchPost}) {
+function PostSearch({ searchPost, setSearchPost }) {
   const [searchVisibility, setSearchVisibility] = useState(false);
 
   return (
@@ -10,7 +10,7 @@ function PostSearch({searchPost, setSearchPost}) {
         className="md:hidden bg-grey w-10 h-10 border-2 rounded-full  border-green-400 flex items-center justify-center text-xl animate-pulse"
         onClick={() => setSearchVisibility(!searchVisibility)}
       >
-        <CiSearch className="text-TextWhite"/>
+        <CiSearch className="text-TextWhite" />
       </button>
       <div
         className={

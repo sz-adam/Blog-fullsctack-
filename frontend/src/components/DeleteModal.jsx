@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
@@ -12,7 +12,7 @@ const DeleteModal = ({ setDeleteModal, postId }) => {
   const [post, setPost] = useState(null);
   const [category, setCategory] = useState(null);
   const access_token = getAccessToken();
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const navigate = useNavigate();
   const categoryId = post?.category;

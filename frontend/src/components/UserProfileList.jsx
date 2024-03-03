@@ -1,6 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
 import AnimatedMotion from "../common/AnimatedMotion";
 
 const UserProfileList = ({ fetchData }) => {
@@ -40,9 +39,7 @@ const UserProfileList = ({ fetchData }) => {
             >
               <div className="flex items-center justify-between">
                 <p className="text-emerald-400 font-semibold mt-2.5">Active:</p>
-                <span className="text-gray-400 text-sm">
-                  {user?.lastLogin}
-                </span>
+                <span className="text-gray-400 text-sm">{user?.lastLogin}</span>
               </div>
               <div className="mt-6 w-fit mx-auto">
                 <img
@@ -74,10 +71,10 @@ const UserProfileList = ({ fetchData }) => {
                 </div>
               </div>
               <div className="mt-5 text-center">
-              <AnimatedMotion animationName="buttonAnimation">
-                <Link to={`/profile/${user.id}`} className="btn-dark">
-                  View
-                </Link>
+                <AnimatedMotion animationName="buttonAnimation">
+                  <Link to={`/profile/${user.id}`} className="btn-dark">
+                    View
+                  </Link>
                 </AnimatedMotion>
               </div>
             </div>

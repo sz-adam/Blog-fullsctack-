@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PostCard from "../components/PostCard";
 import CarouselHome from "../components/CarouselHome";
 import { getAccessToken } from "../common/utils";

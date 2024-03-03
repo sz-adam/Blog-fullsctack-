@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AiFillLike, AiFillDislike } from "react-icons/ai";
 import { useParams } from "react-router-dom";
 import { getAccessToken } from "../common/utils";

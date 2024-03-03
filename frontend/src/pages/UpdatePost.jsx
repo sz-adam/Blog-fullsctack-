@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import InputBox from "../components/InputBox";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
@@ -123,9 +123,9 @@ function UpdatePost() {
             required={true}
           />
           <AnimatedMotion animationName="buttonAnimation">
-          <button type="submit" className="btn-dark">
-            Update
-          </button>
+            <button type="submit" className="btn-dark">
+              Update
+            </button>
           </AnimatedMotion>
         </form>
       </div>

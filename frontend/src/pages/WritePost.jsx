@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import InputBox from "../components/InputBox";
 import PostService from "../services/PostsServices";
 import CategoryService from "../services/CategoryServices";
@@ -22,7 +22,7 @@ function WritePost() {
   const [photo, setPhoto] = useState("");
   const access_token = getAccessToken();
   const navigate = useNavigate();
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const handlePostCreate = async (event) => {
     event.preventDefault();
