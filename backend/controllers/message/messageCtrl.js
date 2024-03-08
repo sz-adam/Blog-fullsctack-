@@ -14,7 +14,8 @@ const createAdminMessage = async (req, res, next) => {
       if (alreadySentMessage) {
         return res.status(403).json({
           status: "error",
-          message: "The user has already sent a message and cannot send another one.",
+          message:
+            "The user has already sent a message and cannot send another one.",
         });
       }
 
@@ -39,14 +40,13 @@ const createAdminMessage = async (req, res, next) => {
   }
 };
 
-
 const singleAdminMessage = async (req, res, next) => {
   try {
     //felhasználó ID
     const userId = req.params.id;
     // adott felhasználó üzeneteit ID alapján
 
-    //admin jogosultság ??? 
+    //admin jogosultság ???
     const userMessages = await Message.find({ user: userId });
 
     res.json({
@@ -57,4 +57,31 @@ const singleAdminMessage = async (req, res, next) => {
     return next(appErr(error.message));
   }
 };
-module.exports = { createAdminMessage ,singleAdminMessage};
+
+const deleteMessage = async (req, res, next) => {
+  try {
+    // üzenet megkeresése
+    const message = await Message.findById(req.params.id);
+    //console.log(message);
+    // felhasználó megkeresése message user id alapján 
+    const user = await User.findById(message.user);
+    
+    user.message = user.message.filter(messageItem => messageItem._id.toString() !== message._id.toString());
+    // üzenet eltávolítása a felhasználó üzenetei közül
+    await user.save();
+
+    // üzenet törlése
+    await Message.findByIdAndDelete(message._id);
+
+    return res.json({
+      status: "success",
+      message: "Message deleted successfully",
+    });
+  } catch (error) {
+    console.error(error);
+    return next(appErr(error.message));
+  }
+};
+
+
+module.exports = { createAdminMessage, singleAdminMessage, deleteMessage };
