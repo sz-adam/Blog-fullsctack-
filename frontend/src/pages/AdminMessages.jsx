@@ -21,18 +21,7 @@ function AdminMessages() {
           const allUser = await UserService.allUser(access_token);
           setFullUser(allUser);
         }
-      } catch (error) {
-        console.error("Error fetching posts:", error);
-      }
-    };
-
-    fetchData();
-  }, [access_token]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (access_token && adminMessageId) {
+        if (access_token && adminMessageId) {        
           const adminMessage = await MessageService.singleAdminMessage(
             access_token,
             adminMessageId
