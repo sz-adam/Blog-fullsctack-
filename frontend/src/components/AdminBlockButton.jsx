@@ -1,15 +1,19 @@
 import UserService from "../services/UserServices";
 import { getAccessToken } from "../common/utils";
 import AnimatedMotion from "../common/AnimatedMotion";
+import MessageService from "../services/MessageServices";
 
-function AdminBlockButton({ user, setFullUser, buttonStyle }) {
+function AdminBlockButton({ user, setFullUser, buttonStyle,messageID }) {
   const access_token = getAccessToken();
-
+  
   const handleAdminUserBlockUnblock = async (blockedUserId, isBlocked) => {
     try {
       if (access_token && blockedUserId) {
+        
         if (isBlocked) {
+          await MessageService.deleteMessage(access_token, messageID);
           await UserService.adminUnBlockUser(access_token, blockedUserId);
+        
         } else {
           await UserService.adminBlockUser(access_token, blockedUserId);
         }

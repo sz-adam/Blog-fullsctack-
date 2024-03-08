@@ -38,7 +38,26 @@ const MessageService = {
       console.error("Error fetching posts:", error);
       throw error;
     }
-  }
+  },
+
+  deleteMessage: async (access_token, messageID) => {
+    try {
+      if (access_token) {
+        const response = await axios.delete(
+          `${import.meta.env.VITE_API_DELETE_ADMIN_MESSAGE}${messageID}`,
+          {
+            headers: {
+              Authorization: `Bearer ${access_token}`,
+            },
+          }
+        );
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Error fetching posts:", error);
+      throw error;
+    }
+  },
 };
 
 export default MessageService;

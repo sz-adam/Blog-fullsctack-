@@ -35,7 +35,8 @@ function AdminMessages() {
     fetchData();
   }, [access_token, adminMessageId]);
 
-  const handleToggleAccordion = (userId) => {
+  const handleToggleAccordion = (userId,userMessage) => {
+    setMessages(userMessage)
     setAdminMessageId(userId);
     setOpenAccordionId((prevId) => (prevId === userId ? null : userId));
   };
@@ -62,7 +63,7 @@ function AdminMessages() {
             >
               <div className="py-5 w-3/4 border rounded-xl m-1 px-2">
                 <button
-                  onClick={() => handleToggleAccordion(user?.id)}
+                  onClick={() => handleToggleAccordion(user?.id,user?.message)}
                   className="flex justify-between w-full"
                 >
                   <div className="flex items-center ">
@@ -89,13 +90,14 @@ function AdminMessages() {
                     {messages &&
                       messages.length > 0 &&
                       messages.map((message) => (
-                        <div key={message._id}>
+                        <div key={message?._id}>
                           <div className="m-3 text-justify text-lg">
                             <p>{message?.message}</p>
                           </div>
                           <div className="flex justify-end">
                             <button className="m-3">
                               <AdminBlockButton
+                                messageID={messages[0]?._id}
                                 user={user}
                                 setFullUser={setFullUser}
                                 buttonStyle={"btn-dark px-6 py-2 mr-1 mb-1"}
