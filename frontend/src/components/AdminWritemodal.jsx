@@ -50,7 +50,7 @@ function AdminWritemodal({ setShowAdminWrite }) {
                 className="resize-none w-full md:w-30 lg:w-50"
                 onChange={(event) => setAdminMessage(event.target.value)}
                 required
-                maxlength="200"
+                maxLength="200"
               />
             </div>
             {/*footer*/}

@@ -21,7 +21,7 @@ function AdminMessages() {
           const allUser = await UserService.allUser(access_token);
           setFullUser(allUser);
         }
-        if (access_token && adminMessageId) {        
+        if (access_token && adminMessageId) {
           const adminMessage = await MessageService.singleAdminMessage(
             access_token,
             adminMessageId
@@ -35,8 +35,8 @@ function AdminMessages() {
     fetchData();
   }, [access_token, adminMessageId]);
 
-  const handleToggleAccordion = (userId,userMessage) => {
-    setMessages(userMessage)
+  const handleToggleAccordion = (userId, userMessage) => {
+    setMessages(userMessage);
     setAdminMessageId(userId);
     setOpenAccordionId((prevId) => (prevId === userId ? null : userId));
   };
@@ -63,7 +63,7 @@ function AdminMessages() {
             >
               <div className="py-5 w-3/4 border rounded-xl m-1 px-2">
                 <button
-                  onClick={() => handleToggleAccordion(user?.id,user?.message)}
+                  onClick={() => handleToggleAccordion(user?.id, user?.message)}
                   className="flex justify-between w-full"
                 >
                   <div className="flex items-center ">
