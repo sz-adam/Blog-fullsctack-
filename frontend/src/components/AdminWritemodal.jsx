@@ -47,11 +47,18 @@ function AdminWritemodal({ setShowAdminWrite }) {
                 value={adminMessage}
                 placeholder="Message to admin maximum 200 caracters"
                 rows="8"
-                className="resize-none w-full md:w-30 lg:w-50"
+                className="resize-none w-full md:w-30 lg:w-50 border"
                 onChange={(event) => setAdminMessage(event.target.value)}
                 required
                 maxLength="200"
               />
+              {adminMessage?.length > 0 ? (
+                <div className="text-end mr-5 text-xs ">
+                  {adminMessage.length}
+                </div>
+              ) : (
+                ""
+              )}
             </div>
             {/*footer*/}
             <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
