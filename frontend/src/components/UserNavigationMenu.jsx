@@ -9,6 +9,7 @@ import AnimatedMotion from "../common/AnimatedMotion";
 const UserNavigationPanel = () => {
   const { authUser, setAuthUser } = useContext(AuthUserContext);
   const { user } = useContext(UserContext);
+  const { messageNumber } = useContext(UserContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -30,6 +31,7 @@ const UserNavigationPanel = () => {
       >
         <img src={user?.profilePhoto} className="w-10 h-10 rounded-full" />
         <p className="px-2">{user?.firstname}</p>
+        {messageNumber}
       </div>
       <AnimatePresence>
         {isOpen && (
