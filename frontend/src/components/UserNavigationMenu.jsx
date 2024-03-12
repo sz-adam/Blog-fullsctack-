@@ -31,7 +31,14 @@ const UserNavigationPanel = () => {
       >
         <img src={user?.profilePhoto} className="w-10 h-10 rounded-full" />
         <p className="px-2">{user?.firstname}</p>
-        {authUser?.data.isAdmin === true ? <sup className="text-red-700 font-bold">{ messageNumber }</sup> : ""}
+        <div >
+          {" "}
+          {authUser?.data.isAdmin === true ? (
+            <sup className="text-red-700 font-bold text-lg animate-pulse" >{messageNumber}</sup>
+          ) : (
+            ""
+          )}
+        </div>
       </div>
       <AnimatePresence>
         {isOpen && (
@@ -62,7 +69,9 @@ const UserNavigationPanel = () => {
                   onClick={() => setIsOpen(false)}
                 >
                   Messages
-                  <sup className="text-red-700 font-bold m-2">{ messageNumber }</sup>
+                  <sup className="text-red-700 font-bold m-2 text-lg animate-pulse">
+                    {messageNumber}
+                  </sup>
                 </Link>
               </div>
             ) : (
