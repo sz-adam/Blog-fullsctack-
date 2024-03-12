@@ -25,9 +25,9 @@ function postCard({ post }) {
                 CATEGORY: {post?.category?.title}
               </h2>
 
-              <div className="flex items-center">
-                <p className="tracking-widest text-xs title-font font-medium text-gray-400 mr-3">
-                  Creator:
+              <div className="flex flex-col-reverse items-center justify-center">
+                <p className="tracking-widest text-xs title-font font-medium text-gray-400  mt-2">
+                <p> {post?.user?.fullname}</p>
                 </p>
                 {authUser?.status === "success" ? (
                   <Link to={`/profile/${post?.user?.id}`}>
