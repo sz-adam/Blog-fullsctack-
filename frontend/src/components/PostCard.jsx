@@ -26,9 +26,9 @@ function postCard({ post }) {
               </h2>
 
               <div className="flex flex-col-reverse items-center justify-center">
-                <p className="tracking-widest text-xs title-font font-medium text-gray-400  mt-2">
+                <div className="tracking-widest text-xs title-font font-medium text-gray-400  mt-2">
                 <p> {post?.user?.fullname}</p>
-                </p>
+                </div>
                 {authUser?.status === "success" ? (
                   <Link to={`/profile/${post?.user?.id}`}>
                     <img
