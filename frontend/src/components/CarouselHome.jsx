@@ -49,7 +49,7 @@ function CarouselHome({ posts }) {
             className="w-full h-full object-cover rounded-2xl"
           />
           <div className="flex">
-            <p className="absolute bottom-0 w-full bg-white opacity-75 p-3 font-bold text-xl ">
+            <p className="absolute rounded-b-2xl bottom-0 w-full bg-white opacity-75 p-3 font-bold text-xl ">
               {post?.title}
             </p>
             {authUser?.status === "success" && (
