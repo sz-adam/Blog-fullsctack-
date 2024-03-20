@@ -100,6 +100,10 @@ const userSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    darkMode: {
+      type: Boolean,
+      default: false 
+    }
   },
   {
     timestamps: true,

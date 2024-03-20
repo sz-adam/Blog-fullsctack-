@@ -18,11 +18,11 @@ const {
   profilePhotoUpdatectrl,
   userBlockedArrayCtrl,
   userFollowersgArrayCtrl,
-  userViewedArrayCtrl
+  userViewedArrayCtrl,
+  darkModeCtrl,
 } = require("../../controllers/users/userCtrl");
 const isLogin = require("../../middlewares/ISlogin");
 const isAdmin = require("../../middlewares/isAdmin");
-
 
 const userRouter = express.Router();
 
@@ -81,5 +81,6 @@ userRouter.put("/update-password", isLogin, updateUserpasswordCtrl);
 
 userRouter.put("/update-photo", isLogin, profilePhotoUpdatectrl);
 
+userRouter.get("/darkmode", isLogin, darkModeCtrl);
 
 module.exports = userRouter;

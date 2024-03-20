@@ -562,6 +562,23 @@ const profilePhotoUpdatectrl = async (req, res, next) => {
   }
 };
 
+const darkModeCtrl = async (req, res, next) => {
+  try {
+    //1. Find the user
+    const darkModeUser = await User.findById(req.userAuth);
+
+    darkModeUser.darkMode = true;
+    await darkModeUser.save();
+
+    res.json({
+      status: "success",
+      data: "Dark mode is active",
+    });
+  } catch (error) {
+    next(appErr(error.message));
+  }
+};
+
 module.exports = {
   userRegisterCtrl,
   userLoginCtrl,
@@ -582,4 +599,5 @@ module.exports = {
   userBlockedArrayCtrl,
   userFollowersgArrayCtrl,
   userViewedArrayCtrl,
+  darkModeCtrl,
 };
