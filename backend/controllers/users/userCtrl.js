@@ -567,7 +567,11 @@ const darkModeCtrl = async (req, res, next) => {
     //1. Find the user
     const darkModeUser = await User.findById(req.userAuth);
 
-    darkModeUser.darkMode = true;
+    if (darkModeUser.darkMode) {     
+      darkModeUser.darkMode = false;
+    } else {   
+      darkModeUser.darkMode = true;
+    }
     await darkModeUser.save();
 
     res.json({
