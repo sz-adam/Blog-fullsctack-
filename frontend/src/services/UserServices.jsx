@@ -345,6 +345,22 @@ const UserService = {
       throw error;
     }
   },
+
+  userDarkMode: async (access_token) => {
+    try {
+      if (access_token) {
+        const response = await axios.get(import.meta.env.VITE_API_DARKMODE, {
+          headers: {
+            Authorization: `Bearer ${access_token}`,
+          },
+        });
+        return response.data.data;
+      }
+    } catch (error) {
+      console.error("Failed to fetch user's dark mode preference:", error);
+      throw error;
+    }
+  },
 };
 
 export default UserService;

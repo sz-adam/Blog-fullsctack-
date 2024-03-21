@@ -27,6 +27,7 @@ function App() {
   const [searchPost, setSearchPost] = useState("");
   const isAdmin = authUser?.data?.isAdmin;
   const access_token = authUser?.data?.token;
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
     const userInSession = lookInSession("user");
@@ -39,36 +40,47 @@ function App() {
     <AuthUserContext.Provider value={{ authUser, setAuthUser }}>
       <UserContextProvider>
         <Router>
-          <div className="flex flex-col min-h-screen relative pb-20">
-            <Navbar searchPost={searchPost} setSearchPost={setSearchPost} />
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <Home searchPost={searchPost} setSearchPost={setSearchPost} />
-                }
+          <div className={`${darkMode && "dark"}`}>
+            <div className=" flex flex-col min-h-screen relative pb-20 dark:bg-slate-800 dark:text-TextWhite">
+              <Navbar
+                searchPost={searchPost}
+                setSearchPost={setSearchPost}
+                darkMode={darkMode}
+                setDarkMode={setDarkMode}
               />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route
-                path="/write"
-                element={access_token ? <WritePost /> : <Navigate to="/" />}
-              />
-              <Route
-                path="/adminPage"
-                element={isAdmin ? <AdminPages /> : <Navigate to="/" />}
-              />
-              <Route 
-              path="/messages"
-              element={isAdmin ? <AdminMessages /> : <Navigate to="/" />} />
-              <Route path="/update/:postId" element={<UpdatePost />} />
-              <Route path="/post/:postId" element={<PostDetails />} />
-              <Route path="/profile/:userId" element={<Profile />} />
-              <Route path="/userprofile/:userId" element={<UserProfile />} />
-              <Route path="/settings/:userId" element={<UserSettings />} />
-            </Routes>
-            <div className="absolute bottom-0 w-full">
-              <Footer />
+              <Routes>
+                <Route
+                  path="/"
+                  element={
+                    <Home
+                      searchPost={searchPost}
+                      setSearchPost={setSearchPost}
+                    />
+                  }
+                />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route
+                  path="/write"
+                  element={access_token ? <WritePost /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/adminPage"
+                  element={isAdmin ? <AdminPages /> : <Navigate to="/" />}
+                />
+                <Route
+                  path="/messages"
+                  element={isAdmin ? <AdminMessages /> : <Navigate to="/" />}
+                />
+                <Route path="/update/:postId" element={<UpdatePost />} />
+                <Route path="/post/:postId" element={<PostDetails />} />
+                <Route path="/profile/:userId" element={<Profile />} />
+                <Route path="/userprofile/:userId" element={<UserProfile />} />
+                <Route path="/settings/:userId" element={<UserSettings />} />
+              </Routes>
+              <div className="absolute bottom-0 w-full">
+                <Footer />
+              </div>
             </div>
           </div>
         </Router>

@@ -5,8 +5,9 @@ import { AuthUserContext } from "../context/AuthUserContext";
 import { UserContext } from "../context/UserContext";
 import { AnimatePresence } from "framer-motion";
 import AnimatedMotion from "../common/AnimatedMotion";
+import DarkMode from "./DarkMode";
 
-const UserNavigationPanel = () => {
+const UserNavigationPanel = ({ darkMode, setDarkMode }) => {
   const { authUser, setAuthUser } = useContext(AuthUserContext);
   const { user } = useContext(UserContext);
   const { messageNumber } = useContext(UserContext);
@@ -31,10 +32,12 @@ const UserNavigationPanel = () => {
       >
         <img src={user?.profilePhoto} className="w-10 h-10 rounded-full" />
         <p className="px-2">{user?.firstname}</p>
-        <div >
+        <div>
           {" "}
           {authUser?.data.isAdmin === true ? (
-            <sup className="text-red-700 font-bold text-lg animate-pulse" >{messageNumber}</sup>
+            <sup className="text-red-700 font-bold text-lg animate-pulse">
+              {messageNumber}
+            </sup>
           ) : (
             ""
           )}
@@ -47,6 +50,7 @@ const UserNavigationPanel = () => {
             className="bg-white absolute right-10 top-12 border border-grey w-60 z-10 "
             onClick={() => setIsOpen(false)}
           >
+            <DarkMode darkMode={darkMode} setDarkMode={setDarkMode} />
             <Link
               to={`/userProfile/${user?.id}`}
               className="link pl-8 py-4 block text-black hover:text-slate-500"

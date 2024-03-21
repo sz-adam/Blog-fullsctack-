@@ -3,7 +3,7 @@ import UserNavigationMenu from "./UserNavigationMenu";
 import { getAccessToken } from "../common/utils";
 import PostSearch from "./PostSearch";
 
-function Navbar({searchPost, setSearchPost}) {
+function Navbar({ searchPost, setSearchPost, darkMode, setDarkMode }) {
   const access_token = getAccessToken();
   return (
     <div className="navbar justify-between p-4 bg-DeepGray text-TextWhite font-semibold">
@@ -17,13 +17,13 @@ function Navbar({searchPost, setSearchPost}) {
       {access_token ? (
         <div className="flex items-center">
           <div className="pr-4">
-            <PostSearch searchPost={searchPost} setSearchPost={setSearchPost}/>
+            <PostSearch searchPost={searchPost} setSearchPost={setSearchPost} />
           </div>
           <Link to="/write" className="mr-10 hover:text-blue-500">
             {" "}
             Write{" "}
           </Link>
-          <UserNavigationMenu />
+          <UserNavigationMenu darkMode={darkMode} setDarkMode={setDarkMode} />
         </div>
       ) : (
         <div className="flex space-x-4 items-center">
