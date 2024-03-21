@@ -85,19 +85,19 @@ function PostAllComment({ comment, fetchCommentsPost }) {
             closeEditing={closeEditing}
           />
         ) : (
-          <div className="text-center">
-            <p className="px-4  ">{comment.description}</p>
+          <div className="text-center ">
+            <p className="px-4 text-black ">{comment.description}</p>
           </div>
         )}
-        <div className="flex justify-center items-center space-x-4">
+        <div className="flex justify-center items-center space-x-4 ">
           {user?._id === comment?.user ? (
             <div className="flex items-center justify-center space-x-2">
               <BiEdit
                 onClick={() => openEditing(commentId, comment.description)}
-                className=" cursor-pointer text-xl icon"
+                className=" cursor-pointer text-xl icon text-black"
               />
               <AiTwotoneDelete
-                className="cursor-pointer text-xl icon"
+                className="cursor-pointer text-xl icon text-black"
                 onClick={() => deleteComment(commentId)}
               />
             </div>
@@ -106,12 +106,15 @@ function PostAllComment({ comment, fetchCommentsPost }) {
           )}
 
           <div>
-            <p className="text-sm"> {formatDate(comment?.createdAt)}</p>
+            <p className="text-sm text-black">
+              {" "}
+              {formatDate(comment?.createdAt)}
+            </p>
             <Link
               to={`/profile/${commentSearchUserName?.id}`}
               state={{ user: commentSearchUserName }}
             >
-              <p className="text-gray-500 text-sm">
+              <p className="text-black text-sm">
                 @{commentSearchUserName?.fullname}
               </p>
             </Link>

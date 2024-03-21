@@ -55,7 +55,7 @@ function WritePost() {
   return (
     <>
       <AnimatedMotion animationName="pageAnimation">
-        <p className="text-gray-800 m-5 hover:text-gray-500">
+        <p className="m-5 hover:text-gray-500">
           <Link to="/" className="flex items-center">
             <FaArrowLeft className="mr-1 " />
           </Link>
@@ -77,7 +77,7 @@ function WritePost() {
             <InputBox
               type="text"
               icon={TbFileDescription}
-              placeholder="description"
+              placeholder="Description"
               value={description}
               onChange={(event) => setDescription(event.target.value)}
               required={true}

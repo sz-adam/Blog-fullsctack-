@@ -80,7 +80,7 @@ function AdminMessages() {
                 </button>
 
                 <div
-                  className={`grid overflow-hidden transition-all duration-300 ease-in-out text-slate-600 text-sm ${
+                  className={`grid overflow-hidden transition-all duration-300 ease-in-out text-sm ${
                     openAccordionId === user?.id
                       ? "grid-rows-[1fr] opacity-100"
                       : "grid-rows-[0fr] opacity-0"

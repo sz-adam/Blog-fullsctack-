@@ -25,7 +25,7 @@ const UserNavigationPanel = ({ darkMode, setDarkMode }) => {
   };
 
   return (
-    <div className="relative hover:text-blue-500">
+    <div className="relative ">
       <div
         onClick={toggleDropdown}
         className="flex justify-center items-center cursor-pointer"

@@ -21,12 +21,12 @@ function postCard({ post }) {
           />
           <div className="p-6">
             <div className="flex justify-between items-center">
-              <h2 className="tracking-widest text-xs title-font font-medium text-gray-400 mb-1">
+              <h2 className="tracking-widest text-xs title-font font-medium  mb-1">
                 CATEGORY: {post?.category?.title}
               </h2>
 
               <div className="flex flex-col-reverse items-center justify-center">
-                <div className="tracking-widest text-xs title-font font-medium text-gray-400  mt-2">
+                <div className="tracking-widest text-xs title-font font-medium  mt-2">
                 <p> {post?.user?.fullname}</p>
                 </div>
                 {authUser?.status === "success" ? (
@@ -49,7 +49,7 @@ function postCard({ post }) {
               </div>
             </div>
 
-            <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
+            <h1 className="title-font text-lg font-medium  mb-3">
               {post.title}
             </h1>
 

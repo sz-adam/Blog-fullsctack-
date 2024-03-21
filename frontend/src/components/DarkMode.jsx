@@ -39,7 +39,7 @@ function DarkMode({ darkMode, setDarkMode }) {
 
   return (
     <div className="text-center pt-1 block">
-      <button onClick={toggleDarkMode} className="text-4xl">
+      <button onClick={toggleDarkMode} className="text-4xl text-black">
         {darkMode ? <IoMdSunny /> : <FaMoon />}
       </button>
     </div>

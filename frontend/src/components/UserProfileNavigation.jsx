@@ -110,7 +110,7 @@ const UserProfileNavigation = () => {
                 animationName="navigationItemAnimatio"
                 onClick={() => handleTabClick(tab.id)}
                 style={{
-                  color: activeTab === tab.id ? "MediumSpringGreen" : "black",
+                  color: activeTab === tab.id ? "MediumSpringGreen" : "",
                 }}
                 className="font-semibold mx-2 text-base md:text-xl my-2 md:my-0 "
               >

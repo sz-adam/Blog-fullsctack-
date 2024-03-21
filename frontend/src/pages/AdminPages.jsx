@@ -40,7 +40,7 @@ function AdminPages() {
             <div className="w-full overflow-x-auto" key={user?.id}>
               <table className="w-full">
                 <thead>
-                  <tr className="text-md text-center font-semibold tracking-wide text-gray-900 bg-gray-100 uppercase border-b border-gray-600">
+                  <tr className="text-md text-center font-semibold tracking-wide  uppercase border-b border-gray-600">
                     <th className="px-4 py-3 w-64 md:w-52">Name</th>
                     <th className="px-4 py-3 w-52">Registration</th>
                     <th className="px-4 py-3 w-52">last login</th>
@@ -51,8 +51,8 @@ function AdminPages() {
                     <th className="px-4 py-3">View</th>
                   </tr>
                 </thead>
-                <tbody className="bg-white">
-                  <tr className="text-gray-700 text-center">
+                <tbody >
+                  <tr className=" text-center">
                     <td className="px-4 py-3 border ">
                       <div className="flex items-center text-sm">
                         <div className="relative w-8 h-8 mr-3 rounded-full md:block">
@@ -66,7 +66,7 @@ function AdminPages() {
                           ></div>
                         </div>
                         <div>
-                          <p className="font-semibold text-black">
+                          <p className="font-semibold ">
                             {user?.fullname}
                           </p>
                         </div>

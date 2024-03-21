@@ -84,10 +84,10 @@ function Home({ searchPost }) {
       <AnimatedMotion animationName="pageAnimation">
         {user?.isBlocked && (
           <div className="w-full flex justify-center items-center">
-            <p className="text-center font-semibold text-xl border rounded-full bg-rose-500 text-TextWhite p-2 md:p-5 mt-10 md:m-2">
+            <p className="text-center font-semibold text-xl  rounded-full bg-rose-500 text-TextWhite p-2 md:p-5 mt-10 md:m-2">
               Write a message when the user is blocked{" "}
               <span
-                className="font-bold cursor-pointer"
+                className="font-bold cursor-pointer underline"
                 onClick={() => setShowAdminWrite(true)}
               >
                 Click
@@ -110,7 +110,7 @@ function Home({ searchPost }) {
             </h1>
           </div>
         ) : (
-          <div className="grid  sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
+          <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
             {filteredPosts.map((post) => (
               <PostCard key={post.id} post={post} />
             ))}

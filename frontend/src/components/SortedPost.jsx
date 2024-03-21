@@ -1,9 +1,9 @@
 function SortedPost({ sortBy, handleSortChange }) {
   return (
     <div className="flex items-center justify-center md:justify-start md:px-10 mb-4 space-x-2">
-      <label className="text-gray-700">Sort by:</label>
+      <label >Sort by:</label>
       <select
-        className="appearance-none border border-blue-400 px-4 py-2 rounded-full"
+        className="appearance-none border border-blue-400 px-4 py-2 rounded-full text-black"
         value={sortBy}
         onChange={(e) => handleSortChange(e.target.value)}
       >

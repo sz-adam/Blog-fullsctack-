@@ -86,14 +86,14 @@ function Profile() {
     <>
     <AnimatedMotion animationName="pageAnimation">
       <div className="mt-5 ml-5 icon text-lg">
-        <p className="text-gray-800 mt-5 hover:text-gray-500">
+        <p className="mt-5 hover:text-gray-500">
           <Link to="/" className="flex items-center">
             <FaArrowLeft className="mr-1 " />
           </Link>
         </p>
       </div>
       <div className="p-4 md:p-10 flex justify-center items-center">
-        <div className="pt-8 bg-white mt-5">
+        <div className="pt-8  mt-5">
           <div className="grid grid-cols-1 md:grid-cols-3">
             <div className="md:grid md:grid-cols-4 flex justify-around text-center order-last md:order-first mt-20 md:mt-0">
               <AnimatedStat value={filteredUser?.followersCount} label="Follower" />
@@ -142,13 +142,13 @@ function Profile() {
             </div>
           </div>
           <div className="mt-20 text-center border-b pb-12">
-            <h1 className="text-4xl font-medium text-gray-700">
+            <h1 className="text-4xl font-medium ">
               {filteredUser?.fullname}
             </h1>
             <p>{filteredUser?.email}</p>
           </div>
           <div className="mt-12 ">
-            <p className="text-gray-600 text-center font-light lg:px-16 text-4xl mb-8">
+            <p className=" text-center font-light lg:px-16 text-4xl mb-8">
               Posts
             </p>
             <div className="m-2 flex-wrap md:flex justify-center items-center">

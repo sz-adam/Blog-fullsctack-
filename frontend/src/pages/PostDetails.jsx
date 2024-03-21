@@ -125,13 +125,13 @@ function PostDetails() {
           </div>
         ) : (
           <div className="px-8 md:px-[200px] mt-8 mb-8">
-            <p className="text-gray-800 mb-5 hover:text-gray-500">
+            <p className="mb-5 hover:text-gray-500">
               <Link to="/" className="flex items-center">
                 <FaArrowLeft className="mr-1 " />
               </Link>
             </p>
             <div className="flex justify-between items-center">
-              <h1 className="text-2xl font-bold text-black md:text-3xl">
+              <h1 className="text-2xl font-bold md:text-3xl">
                 {post?.title}
               </h1>
               {user?._id === post?.user && (
@@ -155,11 +155,11 @@ function PostDetails() {
               )}
             </div>
             <div className="flex flex-col  mt-2 md:mt-4">
-              <p className="text-gray-500">
+              <p >
                 Create: {formatDate(post?.createdAt)}{" "}
               </p>
               <Link to={`/profile/${searchUser?.id}`} key={searchUser?.id}>
-                <p className="text-gray-500">@{searchUser?.fullname}</p>
+                <p >@{searchUser?.fullname}</p>
               </Link>
             </div>
             <img

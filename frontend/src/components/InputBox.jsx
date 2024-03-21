@@ -24,7 +24,7 @@ function InputBox({ name, type, placeholder, icon: Icon, defaultValue,value,onCh
 
       {Icon && (
         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <Icon className="text-gray-500" />
+          <Icon  />
         </div>
       )}
 

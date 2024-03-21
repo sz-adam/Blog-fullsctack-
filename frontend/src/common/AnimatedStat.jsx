@@ -19,8 +19,8 @@ const AnimatedStat = ({ value, label }) => {
 
   return (
     <motion.div className="flex flex-col items-center">
-      <motion.p className="font-bold text-gray-700 text-xl">{rounded}</motion.p>
-      <motion.p className="text-gray-400">{label}</motion.p>
+      <motion.p className="font-bold  text-xl">{rounded}</motion.p>
+      <motion.p >{label}</motion.p>
     </motion.div>
   );
 };
