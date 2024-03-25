@@ -89,8 +89,8 @@ function AdminMessages() {
                   <div className="overflow-hidden">
                     {messages &&
                       messages.length > 0 &&
-                      messages.map((message) => (
-                        <div key={message?._id}>
+                      messages.map((message, index) => (
+                        <div key={index}>
                           <div className="m-3 text-justify text-lg">
                             <p>{message?.message}</p>
                           </div>
