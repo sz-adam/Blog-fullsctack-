@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useContext } from "react";
 import { FaMoon } from "react-icons/fa";
 import { IoMdSunny } from "react-icons/io";
 import UserService from "../services/UserServices";
@@ -7,22 +7,7 @@ import { UserContext } from "../context/UserContext";
 
 function DarkMode({ darkMode, setDarkMode }) {
   const access_token = getAccessToken();
-  const { user, setUser } = useContext(UserContext);
-  //console.log(user);
-
-  //Javítani hogy ne csak a menü lenyitásra állítsa vissza a dark modot !!!!!!!!!!!!!!!!!!!!
-
-  useEffect(() => {
-    // Ha igaz,  sötét módot
-    if (user.darkMode) {
-      setDarkMode(true);
-      document.body.classList.add("dark");
-    } else {
-      // Ha  hamis, visszaváltunk 
-      setDarkMode(false);
-      document.body.classList.remove("dark");
-    }
-  }, [user.darkMode]);
+  const { setUser } = useContext(UserContext);
 
   const toggleDarkMode = async () => {
     try {

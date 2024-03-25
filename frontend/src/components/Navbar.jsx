@@ -2,9 +2,25 @@ import { Link } from "react-router-dom";
 import UserNavigationMenu from "./UserNavigationMenu";
 import { getAccessToken } from "../common/utils";
 import PostSearch from "./PostSearch";
+import { useContext, useEffect } from "react";
+import { UserContext } from "../context/UserContext";
 
 function Navbar({ searchPost, setSearchPost, darkMode, setDarkMode }) {
   const access_token = getAccessToken();
+  const { user } = useContext(UserContext);
+
+  useEffect(() => {
+    // Ha igaz,  sötét módot
+    if (user?.darkMode) {
+      setDarkMode(true);
+      document.body.classList.add("dark");
+    } else {
+      // Ha  hamis, visszaváltunk
+      setDarkMode(false);
+      document.body.classList.remove("dark");
+    }
+  }, [user?.darkMode]);
+
   return (
     <div className="navbar justify-between p-4 bg-DeepGray text-TextWhite font-semibold">
       <div>
