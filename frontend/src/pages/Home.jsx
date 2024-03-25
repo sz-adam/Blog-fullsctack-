@@ -7,9 +7,11 @@ import AnimatedMotion from "../common/AnimatedMotion";
 import SortedPost from "../components/SortedPost";
 import { UserContext } from "../context/UserContext";
 import AdminWritemodal from "../components/AdminWritemodal";
+import Loader from "../components/Loader";
 
 function Home({ searchPost }) {
   const access_token = getAccessToken();
+  const [loading, setLoading] = useState(true);
   const [posts, setPosts] = useState([]);
   const { user } = useContext(UserContext);
   const [sortBy, setSortBy] = useState("date");
@@ -24,8 +26,10 @@ function Home({ searchPost }) {
         let fetchedPosts;
         if (access_token) {
           fetchedPosts = await PostService.getAllPosts(access_token);
+          setLoading(false);
         } else {
           fetchedPosts = await PostService.getAllPosts();
+          setLoading(false);
         }
 
         let sortedPosts;
@@ -81,42 +85,46 @@ function Home({ searchPost }) {
 
   return (
     <>
-      <AnimatedMotion animationName="pageAnimation">
-        {user?.isBlocked && (
-          <div className="w-full flex justify-center items-center">
-            <p className="text-center font-semibold text-xl  rounded-full bg-rose-500 text-TextWhite p-2 md:p-5 mt-10 md:m-2">
-              Write a message when the user is blocked{" "}
-              <span
-                className="font-bold cursor-pointer underline"
-                onClick={() => setShowAdminWrite(true)}
-              >
-                Click
-              </span>
-              !{" "}
-            </p>
-          </div>
-        )}
-        {showAdminWrite && (
-          <AdminWritemodal            
-            setShowAdminWrite={setShowAdminWrite}
-          />
-        )}
-        {filteredPosts.length > 0 && <CarouselHome posts={filteredPosts} />}
-        <SortedPost sortBy={sortBy} handleSortChange={handleSortChange} />
-        {filteredPosts.length === 0 ? (
-          <div className="flex items-center justify-center h-screen">
-            <h1 className="text-2xl md:text-6xl text-center font-extrabold text-transparent bg-clip-text log-reg-color">
-              There are no results for your search criteria
-            </h1>
-          </div>
-        ) : (
-          <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
-            {filteredPosts.map((post) => (
-              <PostCard key={post.id} post={post} />
-            ))}
-          </div>
-        )}
-      </AnimatedMotion>
+      {loading ? (
+        <div className="mx-auto my-auto">
+          <Loader />
+        </div>
+      ) : (
+        <AnimatedMotion animationName="pageAnimation">
+          {user?.isBlocked && (
+            <div className="w-full flex justify-center items-center">
+              <p className="text-center font-semibold text-xl  rounded-full bg-rose-500 text-TextWhite p-2 md:p-5 mt-10 md:m-2">
+                Write a message when the user is blocked{" "}
+                <span
+                  className="font-bold cursor-pointer underline"
+                  onClick={() => setShowAdminWrite(true)}
+                >
+                  Click
+                </span>
+                !{" "}
+              </p>
+            </div>
+          )}
+          {showAdminWrite && (
+            <AdminWritemodal setShowAdminWrite={setShowAdminWrite} />
+          )}
+          {filteredPosts.length > 0 && <CarouselHome posts={filteredPosts} />}
+          <SortedPost sortBy={sortBy} handleSortChange={handleSortChange} />
+          {filteredPosts.length === 0 ? (
+            <div className="flex items-center justify-center h-screen">
+              <h1 className="text-2xl md:text-6xl text-center font-extrabold text-transparent bg-clip-text log-reg-color">
+                There are no results for your search criteria
+              </h1>
+            </div>
+          ) : (
+            <div className="grid sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 ">
+              {filteredPosts.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          )}
+        </AnimatedMotion>
+      )}
     </>
   );
 }
