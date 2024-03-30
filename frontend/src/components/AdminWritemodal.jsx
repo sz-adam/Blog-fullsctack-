@@ -37,7 +37,7 @@ function AdminWritemodal({ setShowAdminWrite }) {
           <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-800 outline-none focus:outline-none">
             {/*header*/}
             <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t relative">
-              <h3 className="text-3xl font-semibold">
+              <h3 className="text-3xl font-semibold text-TextWhite">
                 Write a message to the admin !!
               </h3>
             </div>
@@ -53,7 +53,7 @@ function AdminWritemodal({ setShowAdminWrite }) {
                 maxLength="200"
               />
               {adminMessage?.length > 0 ? (
-                <div className="text-end mr-5 text-xs ">
+                <div className="text-end mr-5 text-xs text-TextWhite">
                   {adminMessage.length}
                 </div>
               ) : (
