@@ -91,7 +91,7 @@ function Home({ searchPost }) {
         </div>
       ) : (
         <AnimatedMotion animationName="pageAnimation">
-          {user?.isBlocked && (
+          {user?.isBlocked && access_token && (
             <div className="w-full flex justify-center items-center">
               <p className="text-center font-semibold text-xl  rounded-full bg-rose-500 text-TextWhite p-2 md:p-5 mt-10 md:m-2">
                 Write a message when the user is blocked{" "}
