@@ -7,7 +7,7 @@ import { AnimatePresence } from "framer-motion";
 import AnimatedMotion from "../common/AnimatedMotion";
 import DarkMode from "./DarkMode";
 
-const UserNavigationPanel = ({ darkMode, setDarkMode }) => {
+const UserNavigationPanel = ({ darkMode, setDarkMode ,setSearchPost}) => {
   const { authUser, setAuthUser } = useContext(AuthUserContext);
   const { user } = useContext(UserContext);
   const { messageNumber } = useContext(UserContext);
@@ -21,6 +21,7 @@ const UserNavigationPanel = ({ darkMode, setDarkMode }) => {
   const handleLogout = () => {
     removeFormSession("user");
     setAuthUser(null);
+    setSearchPost('')
     navigate("/");
   };
 

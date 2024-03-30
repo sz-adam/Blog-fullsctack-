@@ -39,7 +39,7 @@ function Navbar({ searchPost, setSearchPost, darkMode, setDarkMode }) {
             {" "}
             Write{" "}
           </Link>
-          <UserNavigationMenu darkMode={darkMode} setDarkMode={setDarkMode} />
+          <UserNavigationMenu darkMode={darkMode} setDarkMode={setDarkMode} setSearchPost={setSearchPost}/>
         </div>
       ) : (
         <div className="flex space-x-4 items-center">
