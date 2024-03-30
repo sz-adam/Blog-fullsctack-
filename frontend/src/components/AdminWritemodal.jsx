@@ -47,7 +47,7 @@ function AdminWritemodal({ setShowAdminWrite }) {
                 value={adminMessage}
                 placeholder="Message to admin maximum 200 caracters"
                 rows="8"
-                className="resize-none w-full md:w-30 lg:w-50 border"
+                className="resize-none w-full md:w-30 lg:w-50 border text-black"
                 onChange={(event) => setAdminMessage(event.target.value)}
                 required
                 maxLength="200"
